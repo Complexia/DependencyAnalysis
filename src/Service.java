@@ -1,11 +1,11 @@
+
+//import relevant packages
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
- 
-public class Service implements Serializable 
-{
+public class Service implements Serializable {
 	public String name = null;
 	public List<IOVariable> localVariable = null;
 	public List<Service> sources = null;
@@ -16,84 +16,68 @@ public class Service implements Serializable
 	public HashMap<String, List<String>> DualIOstreams = null;
 	public ArrayList<Service> ElementaryServices = new ArrayList<Service>();
 	public List<Service> connectedServices = null;
-	
-	public List<String> getIOstreamsByKey(String Output)
-	{
+
+	public List<String> getIOstreamsByKey(String Output) {
 		return IOstreams.get(Output);
 	}
-	
-	public HashMap<String, List<String>> getIOstreams()
-	{
+
+	public HashMap<String, List<String>> getIOstreams() {
 		return IOstreams;
 	}
-	
-	public void setIOstreams(String list1,List<String> list2)
-	{
+
+	public void setIOstreams(String list1, List<String> list2) {
 		this.IOstreams.put(list1, list2);
 	}
-	
-	public void setDualIOstreams(String list1,List<String> list2)
-	{
+
+	public void setDualIOstreams(String list1, List<String> list2) {
 		this.DualIOstreams.put(list1, list2);
 	}
-	
-	public HashMap<String, List<String>> getDualIOstreams()
-	{
+
+	public HashMap<String, List<String>> getDualIOstreams() {
 		return DualIOstreams;
 	}
-	
-	public String getname() 
-	{
-		  return name;
+
+	public String getname() {
+		return name;
 	}
-	
-	public void setname(String name)
-	{
-		  this.name = name;
+
+	public void setname(String name) {
+		this.name = name;
 	}
-	
-	public List<IOVariable> getVariable()
-	{
+
+	public List<IOVariable> getVariable() {
 		return localVariable;
 	}
-	
-	public void setVariable(List<IOVariable> localVariable2)
-	{
+
+	public void setVariable(List<IOVariable> localVariable2) {
 		this.localVariable = localVariable2;
 	}
-	
-	public List<String> getInputs()
-	{
+
+	public List<String> getInputs() {
 		return inputs;
 	}
-	
-	public void setInputs(List<String> inputs)
-	{
+
+	public void setInputs(List<String> inputs) {
 		this.inputs = inputs;
 	}
-	
-	public List<String> getOutputs()
-	{
+
+	public List<String> getOutputs() {
 		return outputs;
 	}
-	
-	public List<Service> getelementaryServices()
-	{
+
+	public List<Service> getelementaryServices() {
 		return ElementaryServices;
 	}
-	
-	public void setelementaryServices(ArrayList<Service> elementaryServices)
-	{
+
+	public void setelementaryServices(ArrayList<Service> elementaryServices) {
 		this.ElementaryServices = elementaryServices;
 	}
-	
-	public void setOutputs(List<String> outputs)
-	{
+
+	public void setOutputs(List<String> outputs) {
 		this.outputs = outputs;
 	}
-	
-	public void addElementaryServices(Service ServicesOne)
-	{	
-		this.ElementaryServices.add(ServicesOne);		
+
+	public void addElementaryServices(Service ServicesOne) {
+		this.ElementaryServices.add(ServicesOne);
 	}
 }
