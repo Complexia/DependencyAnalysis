@@ -1,6 +1,21 @@
+/*
+This application was created in 2015 by: 
+3381049 Gor;Simon Paul, 3207568 Kim;Deok Yeon, 3318707 Yahya;Zohoor and 3405533 Deng;Yang
+under the guidance and supervision of Maria Spichkova.
 
-//Simon Miller
+The current iteration of this application has been edited between March and June 2016 by:
+Simon Miller s3353879
+Roman Lobanov s3399752
+Leslie Pang s3390257
+Jordan Mason s3423620
+...also under the direction and guidance of Maria Spichkova.
 
+The purpose of this application is to break down systems input from an .xml file using various analysis techniques
+and then provide easy to read results.
+
+ */
+
+//Import relevant packages
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
@@ -33,6 +48,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class DataServices extends JFrame implements ActionListener {
+	// Create button labels
 	private static final long serialVersionUID = 1L;
 	private final String BUTTON_LABEL_GENERATE_LO = "Generate L0";
 	private final String BUTTON_LABEL_UPLOAD = "Upload L0";
@@ -56,6 +72,7 @@ public class DataServices extends JFrame implements ActionListener {
 	ArrayList<ArrayList<StronglyConnectedService>> RSList = new ArrayList<ArrayList<StronglyConnectedService>>();
 	ArrayList<ArrayList<StronglyConnectedService>> RSList2 = new ArrayList<ArrayList<StronglyConnectedService>>();
 
+	// Create GUI buttons
 	private JButton btnUpload;
 	private JButton btnGenerateLO;
 	private JButton btnCheckElementaryService;
@@ -1295,7 +1312,7 @@ public class DataServices extends JFrame implements ActionListener {
 		return false;
 	}
 
-	// Combine two arrays and remove the duplicatation.
+	// Combine two arrays and remove the duplication.
 	private ArrayList<StronglyConnectedService> Combine(ArrayList<StronglyConnectedService> A1,
 			ArrayList<StronglyConnectedService> A2) {
 		ArrayList<StronglyConnectedService> combine = new ArrayList<StronglyConnectedService>();
