@@ -10,9 +10,12 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Got commands ###
 To pull:
-
 git pull
 
+To add you changes to the central repository:
+git add *
+git commit -m "Write a summary of changes you made here"
+git push
 
 
 ### How do I get set up? ###
