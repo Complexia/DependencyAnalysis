@@ -8,11 +8,14 @@ This README would normally document whatever steps are necessary to get your app
 * Version
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### Got commands ###
+### Git commands ###
+
 To pull:
+
 git pull
 
 To add you changes to the central repository:
+
 git add *
 
 git commit -m "Write a summary of changes you made here"
