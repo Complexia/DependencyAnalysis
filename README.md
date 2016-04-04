@@ -8,6 +8,13 @@ This README would normally document whatever steps are necessary to get your app
 * Version
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
+### Got commands ###
+To pull:
+
+git pull
+
+
+
 ### How do I get set up? ###
 
 * Summary of set up
