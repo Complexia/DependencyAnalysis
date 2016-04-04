@@ -1,4 +1,4 @@
-# README #jhvvuhj
+# README #
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
@@ -14,7 +14,9 @@ git pull
 
 To add you changes to the central repository:
 git add *
+
 git commit -m "Write a summary of changes you made here"
+
 git push
 
 
