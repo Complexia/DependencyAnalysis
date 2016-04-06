@@ -53,7 +53,8 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-public class DataServices extends JFrame implements ActionListener {
+public class DataServices extends JFrame implements ActionListener 
+{
 	// Create button labels
 	private static final long serialVersionUID = 1L;
 	private final String BUTTON_LABEL_GENERATE_LO = "Generate L0";
@@ -64,7 +65,7 @@ public class DataServices extends JFrame implements ActionListener {
 	private final String BUTTON_LABEL_GENERATE_L2 = "Generate L2";
 	private final String BUTTON_LABEL_CHECK_PROPERTY = "Check Prop.";
 	private final String BUTTON_LABEL_Remote_Computation = "Remote_Computation";
-
+	//used to hold the output from readFromGson
 	private List<Service> lstData = null;
 	private File inputFile;
 	private List<Service> elementaryServices = null;
@@ -95,15 +96,19 @@ public class DataServices extends JFrame implements ActionListener {
 	private JFileChooser fileChooser;
 
 	private JPanel dataPanel, programPanel;
+	//stores the column names for the displayResult method
 	private Object[] columnNames;
+	//stores the output data of any analysis to be given to the displayResult method
 	private Object[][] tableData;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		DataServices hello = new DataServices();
 		hello.setVisible(true);
 	}
 
-	public DataServices() {
+	public DataServices() 
+	{
 		btnUpload = new JButton(BUTTON_LABEL_UPLOAD);
 		btnGenerateLO = new JButton(BUTTON_LABEL_GENERATE_LO);
 		btnCheckElementaryService = new JButton(BUTTON_LABEL_CHECK_ELE_SERVICE);
@@ -121,7 +126,7 @@ public class DataServices extends JFrame implements ActionListener {
 		new JButton("RemoteCom HighPerf");
 
 		programButtons = new JButton[] { btnUpload, btnGenerateLO, btnCheckElementaryService, btnGenerateL1, btnFindSCS,
-				btnGenerateL2 };
+				                         btnGenerateL2 };
 		programPanel = new JPanel();
 		programPanel.setLayout(new FlowLayout());
 		final JPanel buttonPanel = new JPanel();
@@ -131,52 +136,66 @@ public class DataServices extends JFrame implements ActionListener {
 		// buttonPanel.setLocation(150, 150);
 		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
 		buttonPanel.setPreferredSize(new Dimension(150, 250));
-		for (JButton button : programButtons) {
+		for (JButton button : programButtons) 
+		{
 			buttonPanel.add(button);
 			button.addActionListener(this);
 		}
 
 		// Add the RemoteComputation button for High Load
 		buttonPanel.add(btnRemoteComputation);
-		btnRemoteComputation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnRemoteComputation.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
 				final Frame f = new Frame("Select the data");// Create frame
 																// objects
 				f.setBounds(300, 100, 600, 500);// set frame location and size
 				f.setLayout(new GridLayout(20, 1));// set the Grid Layout
-				if (Flag) {
-					for (int i = 0; i < AllData.size(); i++) {
+				if (Flag) //TODO: fix up whatever the reasoin this kluge is here for.
+				{
+					for (int i = 0; i < AllData.size(); i++) 
+					{
 						JCheckBox CB = new JCheckBox(AllData.get(i));
 						programCheckBoxes.add(CB);
 					}
 					Flag = false;
 				}
-				for (JCheckBox ok : programCheckBoxes) {
+				for (JCheckBox ok : programCheckBoxes) 
+				{
 					f.add(ok);
 				}
 				Button okBut = new Button("Submit");// Create button
 				Button okBut2 = new Button("High Performance");
 				f.add(okBut2);
-				okBut2.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+				okBut2.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent e) 
+					{
 						final Frame f2 = new Frame("Select the Service");
 						f2.setBounds(300, 100, 600, 500);
 						f2.setLayout(new GridLayout(20, 1));
-						for (int i = 0; i < nodes.size(); i++) {
+						for (int i = 0; i < nodes.size(); i++) 
+						{
 							JCheckBox CB = new JCheckBox(nodes.get(i).getService().name);
 							programCheckBoxes2.add(CB);
 						}
-						for (JCheckBox ok : programCheckBoxes2) {
+						for (JCheckBox ok : programCheckBoxes2) 
+						{
 							f2.add(ok);
 						}
 						Button okBut3 = new Button("Submit");
 						f2.add(okBut3);
 						f2.setVisible(true);
-						okBut3.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								for (JCheckBox CB : programCheckBoxes2) {
+						okBut3.addActionListener(new ActionListener() 
+						{
+							public void actionPerformed(ActionEvent e) 
+							{
+								for (JCheckBox CB : programCheckBoxes2) 
+								{
 									boolean selected = CB.isSelected();
-									if (selected) {
+									if (selected) 
+									{
 										DataStore2.add(CB.getText());
 									}
 									f2.setVisible(false);
@@ -197,9 +216,12 @@ public class DataServices extends JFrame implements ActionListener {
 				pack();
 				f.add(okBut);// Add the button to the frame
 				f.setVisible(true);// set visible
-				okBut.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						for (JCheckBox CB : programCheckBoxes) {
+				okBut.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent e) 
+					{
+						for (JCheckBox CB : programCheckBoxes) 
+						{
 							boolean selected = CB.isSelected();
 							if (selected) {
 								DataStore.add(CB.getText());
@@ -224,8 +246,10 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// display results on the screen
-	private void displayResult(Object[][] tableData, Object[] columnNames) {
-		if (tableData != null && columnNames != null) {
+	private void displayResult(Object[][] tableData, Object[] columnNames) 
+	{
+		if (tableData != null && columnNames != null) 
+		{
 			programPanel.remove(dataPanel);
 			dataPanel = new JPanel();
 			JTable table = new JTable(tableData, columnNames);
@@ -240,7 +264,8 @@ public class DataServices extends JFrame implements ActionListener {
 		}
 	}
 
-	private void displayResultCheckProperty(JScrollPane JSP) {
+	private void displayResultCheckProperty(JScrollPane JSP) 
+	{
 		programPanel.add(JSP);
 		programPanel.updateUI();
 		programPanel.revalidate();
@@ -258,7 +283,7 @@ public class DataServices extends JFrame implements ActionListener {
 			if (fileChooser.getSelectedFile() != null) 
 			{
 				setTitle("Evaluating " + fileChooser.getSelectedFile().getName() + " in "
-						+ fileChooser.getCurrentDirectory().toString());
+						 + fileChooser.getCurrentDirectory().toString());
 
 				hasFileBeenChoosed = true;
 
@@ -275,10 +300,15 @@ public class DataServices extends JFrame implements ActionListener {
 					e1.printStackTrace();
 				}
 			}
-		} else {
-			if (hasFileBeenChoosed == false) {
+		} 
+		else 
+		{
+			if (hasFileBeenChoosed == false) 
+			{
 				JOptionPane.showMessageDialog(this, "Please select an input file");
-			} else {
+			} 
+			else 
+			{
 				// generate level 0
 				if (clickBtnText.equals(BUTTON_LABEL_GENERATE_LO)) {
 					generateLevel0();
@@ -306,9 +336,9 @@ public class DataServices extends JFrame implements ActionListener {
 		List<Service> lstOfService = null;
 		try 
 		{
-			// convert the json string back to object
-			lstOfService = gson.fromJson(new BufferedReader(new FileReader(file)), new TypeToken<List<Service>>() {
-			}.getType());
+			// convert the json string back to a list<Service>
+			//TypeToken works as a container to run get type on to return a type value on a generic type
+			lstOfService = gson.fromJson(new BufferedReader(new FileReader(file)), new TypeToken<List<Service>>(){}.getType());
 			// System.out.println(obj);
 		} 
 		
@@ -322,12 +352,14 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// display level 0 in the GUI
-	private void generateLevel0() {
+	private void generateLevel0() 
+	{
 		columnNames = new Object[] { "name of service ", "input service", "output service", "name of variable",
-				"input variable", "output variable" };
+				                     "input variable", "output variable" };
 		tableData = new Object[lstData.size()][columnNames.length];
 		int rowIndex = 0;
-		for (Service eachService : lstData) {
+		for (Service eachService : lstData) 
+		{
 			tableData[rowIndex][0] = eachService.getname();
 			tableData[rowIndex][1] = eachService.getInputs();
 			tableData[rowIndex][2] = eachService.getOutputs();
@@ -335,7 +367,8 @@ public class DataServices extends JFrame implements ActionListener {
 			ArrayList<List<String>> Inputs = new ArrayList<List<String>>();
 			ArrayList<List<String>> Outputs = new ArrayList<List<String>>();
 
-			for (IOVariable var : eachService.getVariable()) {
+			for (IOVariable var : eachService.getVariable()) 
+			{
 				Name.add(var.GetName());
 				Inputs.add(var.getInputs());
 				Outputs.add(var.getOutputs());
@@ -345,14 +378,18 @@ public class DataServices extends JFrame implements ActionListener {
 			tableData[rowIndex][5] = Outputs;
 
 			rowIndex++;
-			for (String k : eachService.getInputs()) {
-				if (k != null) {
+			for (String k : eachService.getInputs()) 
+			{
+				if (k != null) 
+				{
 					AllData.add(k);
 				}
 			}
 			AllData.addAll(eachService.getInputs());
-			for (String m : eachService.getOutputs()) {
-				if (m != null) {
+			for (String m : eachService.getOutputs()) 
+			{
+				if (m != null) 
+				{
 					AllData.add(m);
 				}
 			}
@@ -364,21 +401,24 @@ public class DataServices extends JFrame implements ActionListener {
 		displayResult(tableData, columnNames);
 	}
 
-	public static void removeDuplicateWithOrder(ArrayList<String> list) {
+	public static void removeDuplicateWithOrder(ArrayList<String> list) 
+	{
 		Set set = new HashSet();
 		List newList = new ArrayList();
-		for (java.util.Iterator<String> iter = list.iterator(); iter.hasNext();) {
+		for (java.util.Iterator<String> iter = list.iterator(); iter.hasNext();) 
+		{
 			Object element = iter.next();
-			if (set.add(element)) {
+			if (set.add(element)) 
+			{
 				newList.add(element);
 			}
 		}
 		list.clear();
 		list.addAll(newList);
-		// System.out.println( " remove duplicate " + list);
 	}
 
-	private void checkElementaryService() {
+	private void checkElementaryService() 
+	{
 		// create column name for displaying in the grid
 		columnNames = new Object[] { "ServiceID ", "Generated elementary services" };
 		int rowIndex = 0;
@@ -386,17 +426,21 @@ public class DataServices extends JFrame implements ActionListener {
 		tableData = new Object[20][lstData.size()];
 		// ArrayList<ArrayList<String>> listOfLists = new
 		// ArrayList<ArrayList<String>>();
-		for (Service serviceObj : lstData) {
-			if (serviceObj.getOutputs().size() == 1) {
+		for (Service serviceObj : lstData) 
+		{
+			if (serviceObj.getOutputs().size() == 1) 
+			{
 				tableData[rowIndex][0] = serviceObj.name;
 				tableData[rowIndex][1] = serviceObj.name;
 				rowIndex++;
 			} else {
-				if (serviceObj.localVariable.size() == 0) {
+				if (serviceObj.localVariable.size() == 0) 
+				{
 					int intCount = 1;
 					List<String> OutputMerge = new ArrayList<String>();
 					OutputMerge = serviceObj.getOutputs();
-					while (OutputMerge.size() != 0) {
+					while (OutputMerge.size() != 0) 
+					{
 						List<String> Output = new ArrayList<String>();
 						Output.add(serviceObj.getOutputs().get(0));
 						List<String> InputList = serviceObj.getIOstreamsByKey(Output.get(0));
@@ -412,56 +456,64 @@ public class DataServices extends JFrame implements ActionListener {
 						intCount++;
 						rowIndex++;
 					}
-				} else if (serviceObj.localVariable.size() == 1) {
+				} 
+				else if (serviceObj.localVariable.size() == 1) 
+				{
 					int intCount = 1;
 					List<String> OutputMerge = new ArrayList<String>();
 					OutputMerge = serviceObj.getOutputs();
-					while (OutputMerge.size() != 0) {
+					while (OutputMerge.size() != 0) 
+					{
 						List<String> CheckedOutput = new ArrayList<String>();
 						CheckedOutput.clear();
 						List<String> CheckedOutput2 = new ArrayList<String>();
 						CheckedOutput2 = CheckType112(serviceObj, OutputMerge.get(0), CheckedOutput);
 
 						List<String> InputList = new ArrayList<String>();
-						for (int i = 0; i < CheckedOutput2.size(); i++) {
+						for (int i = 0; i < CheckedOutput2.size(); i++) 
+						{
 							InputList.addAll(serviceObj.getIOstreamsByKey(CheckedOutput2.get(i)));
 						}
 						InputList = removeDuplicate3(InputList);
 						List<IOVariable> VariableMerges = new ArrayList<IOVariable>();
-						for (int i = 0; i < CheckedOutput2.size(); i++) {
+						for (int i = 0; i < CheckedOutput2.size(); i++) 
+						{
 							VariableMerges.addAll(FindVariablesfromOut(serviceObj, OutputMerge.get(i)));
 						}
 						Service A5 = CreateSubService(serviceObj, intCount, InputList, CheckedOutput2, VariableMerges);
 						serviceObj.addElementaryServices(A5);
-						// System.out.println(A5.name+A5.getInputs()+A5.getOutputs()+A5.localVariable);
 						intCount++;
 						OutputMerge.removeAll(CheckedOutput2);
 						tableData[rowIndex][0] = serviceObj.name;
 						tableData[rowIndex][1] = A5.name;
 						rowIndex++;
 					}
-				} else {
+				} 
+				else 
+				{
 					int intCount = 1;
 					List<String> OutputMerge = new ArrayList<String>();
 					OutputMerge = serviceObj.getOutputs();
-					while (OutputMerge.size() != 0) {
+					while (OutputMerge.size() != 0) 
+					{
 						List<String> CheckedOutput = new ArrayList<String>();
 						CheckedOutput.clear();
 						List<String> CheckedOutput2 = new ArrayList<String>();
 						CheckedOutput2 = CheckType112(serviceObj, OutputMerge.get(0), CheckedOutput);
 
 						List<String> InputList = new ArrayList<String>();
-						for (int i = 0; i < CheckedOutput2.size(); i++) {
+						for (int i = 0; i < CheckedOutput2.size(); i++) 
+						{
 							InputList.addAll(serviceObj.getIOstreamsByKey(CheckedOutput2.get(i)));
 						}
 						InputList = removeDuplicate3(InputList);
 						List<IOVariable> VariableMerges = new ArrayList<IOVariable>();
-						for (int i = 0; i < CheckedOutput2.size(); i++) {
+						for (int i = 0; i < CheckedOutput2.size(); i++) 
+						{
 							VariableMerges.addAll(FindVariablesfromOut(serviceObj, OutputMerge.get(i)));
 						}
 						Service A5 = CreateSubService(serviceObj, intCount, InputList, CheckedOutput2, VariableMerges);
 						serviceObj.addElementaryServices(A5);
-						// System.out.println(A5.name+A5.getInputs()+A5.getOutputs()+A5.localVariable);
 						intCount++;
 						OutputMerge.removeAll(CheckedOutput2);
 						tableData[rowIndex][0] = serviceObj.name;
@@ -476,13 +528,17 @@ public class DataServices extends JFrame implements ActionListener {
 
 	}
 
-	public List<IOVariable> FindVariablesfromOut2(Service SER, List<String> Output) {
+	public List<IOVariable> FindVariablesfromOut2(Service SER, List<String> Output) 
+	{
 		List<IOVariable> Flag = new ArrayList<IOVariable>();
 		List<IOVariable> VariblesMerge = new ArrayList<IOVariable>();
 		VariblesMerge = SER.getVariable();
-		for (int i = 0; i < VariblesMerge.size(); i++) {
-			for (int j = 0; j < Output.size(); j++) {
-				if (VariblesMerge.get(i).getOutputs().contains(Output.get(j))) {
+		for (int i = 0; i < VariblesMerge.size(); i++) 
+		{
+			for (int j = 0; j < Output.size(); j++) 
+			{
+				if (VariblesMerge.get(i).getOutputs().contains(Output.get(j))) 
+				{
 					Flag.add(VariblesMerge.get(i));
 				}
 			}
@@ -490,20 +546,28 @@ public class DataServices extends JFrame implements ActionListener {
 		return Flag;
 	}
 
-	public void removeDuplicate(List<String> OutputMerge2) {
-		for (int i = 0; i < OutputMerge2.size(); i++) {
-			for (int j = OutputMerge2.size() - 1; j > i; j--) {
-				if (OutputMerge2.get(i) == OutputMerge2.get(j)) {
+	public void removeDuplicate(List<String> OutputMerge2) 
+	{
+		for (int i = 0; i < OutputMerge2.size(); i++) 
+		{
+			for (int j = OutputMerge2.size() - 1; j > i; j--) 
+			{
+				if (OutputMerge2.get(i) == OutputMerge2.get(j)) 
+				{
 					OutputMerge2.remove(j);
 				}
 			}
 		}
 	}
 
-	public List<String> removeDuplicate3(List<String> OutputMerge2) {
-		for (int i = 0; i < OutputMerge2.size(); i++) {
-			for (int j = OutputMerge2.size() - 1; j > i; j--) {
-				if (OutputMerge2.get(i) == OutputMerge2.get(j)) {
+	public List<String> removeDuplicate3(List<String> OutputMerge2) 
+	{
+		for (int i = 0; i < OutputMerge2.size(); i++) 
+		{
+			for (int j = OutputMerge2.size() - 1; j > i; j--) 
+			{
+				if (OutputMerge2.get(i) == OutputMerge2.get(j)) 
+				{
 					OutputMerge2.remove(j);
 				}
 			}
@@ -511,26 +575,33 @@ public class DataServices extends JFrame implements ActionListener {
 		return OutputMerge2;
 	}
 
-	public void removeDuplicate2(List<List<String>> OutputMerge2) {
+	public void removeDuplicate2(List<List<String>> OutputMerge2) 
+	{
 		OutputMerge2.sort(null);
-		for (int i = 0; i < OutputMerge2.size(); i++) {
-			for (int j = OutputMerge2.size() - 1; j > i; j--) {
-				if (OutputMerge2.get(i) == OutputMerge2.get(j)) {
+		for (int i = 0; i < OutputMerge2.size(); i++) 
+		{
+			for (int j = OutputMerge2.size() - 1; j > i; j--) 
+			{
+				if (OutputMerge2.get(i) == OutputMerge2.get(j)) 
+				{
 					OutputMerge2.remove(j);
 				}
 			}
 		}
-		// return OutputMerge2;
 	}
 
-	public boolean CheckContain(List<String> OutputMerge, List<String> CheckedOutput) {
+	public boolean CheckContain(List<String> OutputMerge, List<String> CheckedOutput) 
+	{
 		boolean Flag = true;
-		if (OutputMerge == null) {
+		if (OutputMerge == null) 
+		{
 			return Flag;
 		} else {
-			for (int j = 0; j < OutputMerge.size(); j++) {
+			for (int j = 0; j < OutputMerge.size(); j++) 
+			{
 				Flag = CheckedOutput.contains(OutputMerge.get(j));
-				if (!Flag) {
+				if (!Flag) 
+				{
 					Flag = false;
 					break;
 				}
@@ -539,19 +610,23 @@ public class DataServices extends JFrame implements ActionListener {
 		}
 	}
 
-	public List<IOVariable> FindVariablesfromOut(Service SER, String Output) {
+	public List<IOVariable> FindVariablesfromOut(Service SER, String Output) 
+	{
 		List<IOVariable> Flag = new ArrayList<IOVariable>();
 		List<IOVariable> VariblesMerge = new ArrayList<IOVariable>();
 		VariblesMerge = SER.getVariable();
-		for (int i = 0; i < VariblesMerge.size(); i++) {
-			if (VariblesMerge.get(i).getOutputs().contains(Output)) {
+		for (int i = 0; i < VariblesMerge.size(); i++) 
+		{
+			if (VariblesMerge.get(i).getOutputs().contains(Output)) 
+			{
 				Flag.add(VariblesMerge.get(i));
 			}
 		}
 		return Flag;
 	}
 
-	public List<String> CheckType112(Service One, String Output1, List<String> CheckedOut) {
+	public List<String> CheckType112(Service One, String Output1, List<String> CheckedOut) 
+	{
 		List<String> CheckedOutNew = new ArrayList<String>();
 		CheckedOutNew.addAll(CheckedOut);
 		CheckedOutNew.add(Output1);
@@ -559,30 +634,38 @@ public class DataServices extends JFrame implements ActionListener {
 		List<IOVariable> VariableMerges = new ArrayList<IOVariable>();
 		VariableMerges = FindVariablesfromOut(One, Output1);
 		List<String> OutputMerge = new ArrayList<String>();
-		for (int k = 0; k < VariableMerges.size(); k++) {
+		for (int k = 0; k < VariableMerges.size(); k++) 
+		{
 			OutputMerge.addAll(VariableMerges.get(k).getOutputs());
 		}
 		removeDuplicate(OutputMerge);
 
 		boolean check = CheckContain(OutputMerge, CheckedOutNew);
-		if (!check) {
+		if (!check) 
+		{
 			List<String> Diff = new ArrayList<String>();
-			for (int i = 0; i < OutputMerge.size(); i++) {
-				if (!CheckedOutNew.contains(OutputMerge.get(i))) {
+			for (int i = 0; i < OutputMerge.size(); i++) 
+			{
+				if (!CheckedOutNew.contains(OutputMerge.get(i))) 
+				{
 					Diff.add(OutputMerge.get(i));
 				}
 			}
-			for (int k = 0; k < Diff.size(); k++) {
+			for (int k = 0; k < Diff.size(); k++) 
+			{
 				CheckedOutNew = CheckType112(One, Diff.get(k), CheckedOutNew);
 			}
 			return CheckedOutNew;
-		} else {
+		} 
+		else 
+		{
 			return CheckedOutNew;
 		}
 	}
 
 	public Service CreateSubService(Service serviceObj, Object intCounter, List<String> inputs, List<String> outputs,
-			List<IOVariable> Variable) {
+			                        List<IOVariable> Variable) 
+	{
 		Service subService;
 		subService = new Service();
 		subService.setVariable(Variable);
@@ -590,24 +673,27 @@ public class DataServices extends JFrame implements ActionListener {
 		subService.setInputs(inputs);
 		subService.setOutputs(outputs);
 		return subService;
-		// serviceObj.AddOneElementaryServices(subService);
 	}
 
 	// generate level 1
-	private void generateLevel1() {
+	private void generateLevel1() 
+	{
 		elementaryServices = new ArrayList<Service>();
 		columnNames = new Object[] { "Main Service", "Sub Service", "inputs", "outputs", "name of variable",
-				"inputs  variable", "outputs variable" };
+				                     "inputs  variable", "outputs variable" };
 
 		tableData = new Object[20][columnNames.length];
 		int rowIndex = 0;
 		int index = 0;
 		// loop through each service
-		for (Service eachService : lstData) {
+		for (Service eachService : lstData) 
+		{
 			// check if service has elementary services
-			if (eachService.getelementaryServices().size() > 0) {
+			if (eachService.getelementaryServices().size() > 0) 
+			{
 				// loop through elementary services/ sub service
-				for (Service subService : eachService.getelementaryServices()) {
+				for (Service subService : eachService.getelementaryServices()) 
+				{
 					index = 0;
 					// System.out.println("index: " + index + " rowindex " +
 					// rowIndex + " each service: " + eachService.GetName());
@@ -620,8 +706,10 @@ public class DataServices extends JFrame implements ActionListener {
 					ArrayList<String> Name = new ArrayList<String>();
 					ArrayList<String> Inputs = new ArrayList<String>();
 					ArrayList<String> Outputs = new ArrayList<String>();
-					if (subService.getVariable().size() > 0) {
-						for (IOVariable IOV : subService.getVariable()) {
+					if (subService.getVariable().size() > 0) 
+					{
+						for (IOVariable IOV : subService.getVariable()) 
+						{
 							Name.add(IOV.GetName());
 						}
 						Inputs = (ArrayList<String>) subService.getInputs();
@@ -633,7 +721,8 @@ public class DataServices extends JFrame implements ActionListener {
 					elementaryServices.add(subService);
 					rowIndex++;
 				}
-			} else // has no elementary service
+			} 
+			else // has no elementary service
 			{
 				index = 0;
 				// System.out.println("index: " + index + " rowindex " +
@@ -652,39 +741,50 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// identify the strong connected services
-	private void identifyStronglyConnectedServices() {
+	private void identifyStronglyConnectedServices() 
+	{
 		columnNames = new Object[] { "Service", "Type of node", "Predecessors", "Successors", "Has System inputs",
-				"Has System outputs" };
+				                     "Has System outputs" };
 		tableData = new Object[20][columnNames.length];
 		int index, rowIndex = 0;
 		nodes = new ArrayList<ServiceNode>();
 		// Creates the initial list of service nodes
-		for (Service elem : elementaryServices) {
+		for (Service elem : elementaryServices) 
+		{
 			ServiceNode node = new ServiceNode(elem);
 			nodes.add(node);
 		}
 
-		for (Service eachService : lstData) {
+		for (Service eachService : lstData) 
+		{
 			// check if service has elementary services
-			if (eachService.getelementaryServices().size() == 0) {
+			if (eachService.getelementaryServices().size() == 0) 
+			{
 				ServiceNode node = new ServiceNode(eachService);
 				nodes.add(node);
 			}
 		}
 
 		// Connect the graphs of service nodes
-		for (ServiceNode n1 : nodes) {
+		for (ServiceNode n1 : nodes) 
+		{
 			List<String> outputs = n1.getService().getOutputs();
-			for (String output : outputs) {
+			for (String output : outputs) 
+			{
 				// Look for matching input to this output
-				for (ServiceNode n2 : nodes) {
-					for (String input : n2.getService().getInputs()) {
-						if (input.equals(output)) {
+				for (ServiceNode n2 : nodes) 
+				{
+					for (String input : n2.getService().getInputs()) 
+					{
+						if (input.equals(output)) 
+						{
 							// Attach nodes in graph
-							if (!n1.getSuccessors().contains(n2)) {
+							if (!n1.getSuccessors().contains(n2)) 
+							{
 								n1.getSuccessors().add(n2);
 							}
-							if (!n2.getPredecessors().contains(n1)) {
+							if (!n2.getPredecessors().contains(n1)) 
+							{
 								n2.getPredecessors().add(n1);
 							}
 						}
@@ -694,7 +794,8 @@ public class DataServices extends JFrame implements ActionListener {
 		}
 
 		// loop through each service
-		for (ServiceNode node : nodes) {
+		for (ServiceNode node : nodes) 
+		{
 			index = 0;
 			// System.out.println("index: " + index + " rowindex " + rowIndex +
 			// " each service: " + eachService.GetName());
@@ -716,7 +817,8 @@ public class DataServices extends JFrame implements ActionListener {
 	ArrayDeque<ServiceNode> tarjanStack;
 	ArrayList<StronglyConnectedService> scsList;
 
-	private void generateLevel2() {
+	private void generateLevel2() 
+	{
 		scsList = new ArrayList<StronglyConnectedService>();
 		tarjanIndex = 0;
 		// S := empty
@@ -728,7 +830,8 @@ public class DataServices extends JFrame implements ActionListener {
 		// end if
 		// end for
 
-		for (ServiceNode v : nodes) {
+		for (ServiceNode v : nodes) 
+		{
 			if (v.getTarjanIndex() == -1) {
 				strongConnect(v);
 			}
@@ -739,12 +842,14 @@ public class DataServices extends JFrame implements ActionListener {
 		int index, rowIndex = 0;
 		// Build table of results
 		// loop through each scc
-		for (StronglyConnectedService scs : scsList) {
+		for (StronglyConnectedService scs : scsList) 
+		{
 
 			// System.out.println("index: " + index + " rowindex " + rowIndex +
 			// " each service: " + eachService.GetName());
 			// System.out.println(" sub service: " + subService.GetName());
-			for (ServiceNode sn : scs.getServiceNodes()) {
+			for (ServiceNode sn : scs.getServiceNodes()) 
+			{
 				index = 0;
 				tableData[rowIndex][index++] = "S" + scs.getIndex();
 				tableData[rowIndex][index++] = sn.getName().toString();
@@ -766,7 +871,8 @@ public class DataServices extends JFrame implements ActionListener {
 	// S.push(v)
 	// v.onStack := true
 
-	void strongConnect(ServiceNode v) {
+	void strongConnect(ServiceNode v) 
+	{
 		v.setTarjanIndex(tarjanIndex);
 		v.setTarjanLowLink(tarjanIndex);
 		tarjanIndex++;
@@ -784,7 +890,8 @@ public class DataServices extends JFrame implements ActionListener {
 		// end if
 		// end for
 
-		for (ServiceNode w : v.getSuccessors()) {
+		for (ServiceNode w : v.getSuccessors()) 
+		{
 			if (w.getTarjanIndex() == -1) {
 				// Successor w has not yet been visited; recurse on it
 				strongConnect(w);
@@ -810,7 +917,8 @@ public class DataServices extends JFrame implements ActionListener {
 		if (v.getTarjanLowLink() == v.getTarjanIndex()) {
 			StronglyConnectedService scc = new StronglyConnectedService(scsList.size() + 1);
 			ServiceNode w;
-			do {
+			do 
+			{
 				w = tarjanStack.pop();
 				scc.add(w);
 			} while (w != v);
@@ -822,7 +930,8 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// checking properties
-	private void checkProperty() {
+	private void checkProperty() 
+	{
 		ArrayList<String> allLevel2Data = new ArrayList<String>();
 		ArrayList<String> systemInputs = new ArrayList<String>();
 		ArrayList<String> systemOutputs = new ArrayList<String>();
@@ -832,11 +941,14 @@ public class DataServices extends JFrame implements ActionListener {
 		// Populate the input and output lists
 
 		// Go through every strongly connected service
-		for (StronglyConnectedService scs : scsList) {
+		for (StronglyConnectedService scs : scsList) 
+		{
 			// Go through every elementary service node within that service
-			for (ServiceNode sn : scs.getServiceNodes()) {
+			for (ServiceNode sn : scs.getServiceNodes()) 
+			{
 				// Grab all of the system inputs from each elementary service
-				for (String input : sn.getSystemInputs()) {
+				for (String input : sn.getSystemInputs()) 
+				{
 					// Add the system input to our master list, unless it is
 					// already there
 					if (!systemInputs.contains(input)) {
@@ -845,31 +957,38 @@ public class DataServices extends JFrame implements ActionListener {
 				}
 
 				// Grab all of the system outputs from each elementary service
-				for (String output : sn.getSystemOutputs()) {
+				for (String output : sn.getSystemOutputs()) 
+				{
 					// Add the system outputs to our master list, unless it is
 					// already there
-					if (!systemOutputs.contains(output)) {
+					if (!systemOutputs.contains(output)) 
+					{
 						systemOutputs.add(output);
 					}
 				}
 			}
 
 			// Grab all of the data io from each elementary service
-			for (String data : scs.getDataFlows()) {
+			for (String data : scs.getDataFlows()) 
+			{
 				// Add the system outputs to our master list, unless it is
 				// already there
-				if (!allLevel2Data.contains(data)) {
+				if (!allLevel2Data.contains(data)) 
+				{
 					allLevel2Data.add(data);
 				}
 			}
 		}
 
 		// Filter the data. System inputs and outputs do not go in both lists
-		for (String data : allLevel2Data) {
-			if (!systemInputs.contains(data)) {
+		for (String data : allLevel2Data) 
+		{
+			if (!systemInputs.contains(data)) 
+			{
 				allOutputs.add(data);
 			}
-			if (!systemOutputs.contains(data)) {
+			if (!systemOutputs.contains(data)) 
+			{
 				allInputs.add(data);
 			}
 		}
@@ -907,7 +1026,8 @@ public class DataServices extends JFrame implements ActionListener {
 		// dataPanel.add(inputLabel);
 
 		// Create a checkbox for each input
-		for (String input : allInputs) {
+		for (String input : allInputs) 
+		{
 			JCheckBox cb = new JCheckBox(input);
 			inputCheckBoxes.add(cb);
 			// dataPanel.add(cb);
@@ -921,7 +1041,8 @@ public class DataServices extends JFrame implements ActionListener {
 		rightPanel.add(outputLabel);
 
 		// Create a checkbox for each output
-		for (String output : allOutputs) {
+		for (String output : allOutputs) 
+		{
 			JCheckBox cb = new JCheckBox(output);
 			outputCheckBoxes.add(cb);
 			// dataPanel.add(cb);
@@ -948,8 +1069,10 @@ public class DataServices extends JFrame implements ActionListener {
 		dataPanel.add(bottomPanel, BorderLayout.SOUTH);
 		// An action listener to respond to the user pressing the evaluate
 		// button
-		ActionListener evaluateButtonPressedHandler = new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		ActionListener evaluateButtonPressedHandler = new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
 
 				// Lists of the selected inputs and outputs stored here
 				ArrayList<String> selectedInputs = new ArrayList<String>();
@@ -957,13 +1080,16 @@ public class DataServices extends JFrame implements ActionListener {
 
 				// Reads the currently selected inputs and outputs from the
 				// check boxes
-				for (JCheckBox cb : inputCheckBoxes) {
+				for (JCheckBox cb : inputCheckBoxes) 
+				{
 					if (cb.isSelected()) {
 						selectedInputs.add(cb.getText());
 					}
 				}
-				for (JCheckBox cb : outputCheckBoxes) {
-					if (cb.isSelected()) {
+				for (JCheckBox cb : outputCheckBoxes) 
+				{
+					if (cb.isSelected()) 
+					{
 						selectedOutputs.add(cb.getText());
 					}
 				}
@@ -979,15 +1105,19 @@ public class DataServices extends JFrame implements ActionListener {
 				ArrayList<String> missingInputs = new ArrayList<String>();
 
 				// Extra inputs are ones that are selected but not required
-				for (String data : selectedInputs) {
-					if (!requiredInputs.contains(data)) {
+				for (String data : selectedInputs) 
+				{
+					if (!requiredInputs.contains(data)) 
+					{
 						extraInputs.add(data);
 					}
 				}
 
 				// Missing inputs are ones that are required but not selected
-				for (String data : requiredInputs) {
-					if (!selectedInputs.contains(data)) {
+				for (String data : requiredInputs) 
+				{
+					if (!selectedInputs.contains(data)) 
+					{
 						missingInputs.add(data);
 					}
 				}
@@ -995,14 +1125,18 @@ public class DataServices extends JFrame implements ActionListener {
 				String resultText = "<html>Result: ";
 
 				// First scenario: Exact match of selected and required inputs
-				if (extraInputs.size() == 0 && missingInputs.size() == 0) {
+				if (extraInputs.size() == 0 && missingInputs.size() == 0) 
+				{
 					resultText += "Selected inputs and required inputs exactly match.<br>";
-				} else // There are unmatched inputs, display them
+				} 
+				else // There are unmatched inputs, display them
 				{
 					// First display extra inputs if there are any
-					if (extraInputs.size() > 0) {
+					if (extraInputs.size() > 0) 
+					{
 						// Display name of each input
-						for (String extraInput : extraInputs) {
+						for (String extraInput : extraInputs) 
+						{
 							resultText += extraInput + ", ";
 						}
 
@@ -1011,9 +1145,11 @@ public class DataServices extends JFrame implements ActionListener {
 					}
 
 					// Then display missing inputs if there are any
-					if (missingInputs.size() > 0) {
+					if (missingInputs.size() > 0) 
+					{
 						// Display name of each input
-						for (String missingInput : missingInputs) {
+						for (String missingInput : missingInputs) 
+						{
 							resultText += missingInput + ", ";
 						}
 						// Display informative text
@@ -1024,7 +1160,8 @@ public class DataServices extends JFrame implements ActionListener {
 				// Finally, display the required components by iterating through
 				// the sources
 				resultText += "Required Components: ";
-				for (StronglyConnectedService scs : sources) {
+				for (StronglyConnectedService scs : sources) 
+				{
 					resultText += "S" + scs.getIndex() + ", ";
 				}
 
@@ -1048,14 +1185,18 @@ public class DataServices extends JFrame implements ActionListener {
 
 	// Returns a list of all inputs that are required for a list of scs
 	protected ArrayList<String> findRequiredInputs(ArrayList<StronglyConnectedService> sources,
-			ArrayList<String> allInputs) {
+			                                       ArrayList<String> allInputs) 
+	{
 		ArrayList<String> requiredInputs = new ArrayList<String>();
 
 		// Go through each SCS and find the inputs that feed it
-		for (StronglyConnectedService scs : sources) {
-			for (String input : allInputs) {
+		for (StronglyConnectedService scs : sources) 
+		{
+			for (String input : allInputs) 
+			{
 				// Check if it both feeds the SCS and is not a duplicate
-				if (canReachInput(scs, input) && !requiredInputs.contains(input)) {
+				if (canReachInput(scs, input) && !requiredInputs.contains(input)) 
+				{
 					requiredInputs.add(input);
 				}
 			}
@@ -1064,15 +1205,19 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Returns a list of all SCS that feed the outputs given
-	private ArrayList<StronglyConnectedService> findSources(ArrayList<String> outputs) {
+	private ArrayList<StronglyConnectedService> findSources(ArrayList<String> outputs) 
+	{
 		// sources list to store the end result
 		ArrayList<StronglyConnectedService> sources = new ArrayList<StronglyConnectedService>();
-		for (String output : outputs) {
+		for (String output : outputs) 
+		{
 			// Check every SCS we know of
-			for (StronglyConnectedService scs : scsList) {
+			for (StronglyConnectedService scs : scsList) 
+			{
 				// If this SCS can reach the output, it is a 'source' (also
 				// check duplicates)
-				if (canReachOutput(scs, output) && !sources.contains(scs)) {
+				if (canReachOutput(scs, output) && !sources.contains(scs)) 
+				{
 					sources.add(scs);
 				}
 			}
@@ -1081,7 +1226,8 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Checks if a SCS has a link to a particular data output
-	private boolean canReachOutput(StronglyConnectedService scs, String output) {
+	private boolean canReachOutput(StronglyConnectedService scs, String output) 
+	{
 		// Setup an empty list of dependents (A strongly connected service that
 		// depends (directly, or indirectly) on 'scs')
 		ArrayList<StronglyConnectedService> dependents = new ArrayList<StronglyConnectedService>();
@@ -1090,10 +1236,12 @@ public class DataServices extends JFrame implements ActionListener {
 		dependentSearch(scs, dependents);
 
 		// Check every dependent service
-		for (StronglyConnectedService service : dependents) {
+		for (StronglyConnectedService service : dependents) 
+		{
 			// If the service has an output that matches our final desintation
 			// output
-			if (service.hasOutput(output)) {
+			if (service.hasOutput(output)) 
+			{
 				// then this service can reach the output, therefore the scs can
 				// reach the output
 				return true;
@@ -1106,7 +1254,8 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Checks if a SCS has a link to a particular data input
-	private boolean canReachInput(StronglyConnectedService scs, String input) {
+	private boolean canReachInput(StronglyConnectedService scs, String input) 
+	{
 		// Setup empty list of dependencies
 		ArrayList<StronglyConnectedService> dependencies = new ArrayList<StronglyConnectedService>();
 
@@ -1115,7 +1264,8 @@ public class DataServices extends JFrame implements ActionListener {
 		dependencySearch(scs, dependencies);
 
 		// Check every dependency
-		for (StronglyConnectedService service : dependencies) {
+		for (StronglyConnectedService service : dependencies) 
+		{
 			// If the dependency has the input we're looking for
 			if (service.hasInput(input)) {
 				// then this dependency can reach the input, therefore our scs
@@ -1128,12 +1278,14 @@ public class DataServices extends JFrame implements ActionListener {
 
 	// Depth first search to find all dependencies of a scs, storing result in
 	// 'visited'
-	private void dependencySearch(StronglyConnectedService scs, ArrayList<StronglyConnectedService> visited) {
+	private void dependencySearch(StronglyConnectedService scs, ArrayList<StronglyConnectedService> visited) 
+	{
 		// Add the current scs to the visited list
 		visited.add(scs);
 
 		// Check all immediate dependencies of the scs
-		for (StronglyConnectedService dependency : getImmediateDependencies(scs)) {
+		for (StronglyConnectedService dependency : getImmediateDependencies(scs)) 
+		{
 			// If we have not searched it yet, then search it now
 			if (!visited.contains(dependency)) {
 				dependencySearch(dependency, visited);
@@ -1143,21 +1295,25 @@ public class DataServices extends JFrame implements ActionListener {
 
 	// Depth first search to find all dependents of a scs, storing result in
 	// 'visited'
-	private void dependentSearch(StronglyConnectedService scs, ArrayList<StronglyConnectedService> visited) {
+	private void dependentSearch(StronglyConnectedService scs, ArrayList<StronglyConnectedService> visited) 
+	{
 		// add the current scs to the visited list
 		visited.add(scs);
 
 		// Check all immediate dependents of the scs
-		for (StronglyConnectedService dependent : getImmediateDependents(scs)) {
+		for (StronglyConnectedService dependent : getImmediateDependents(scs)) 
+		{
 			// If we have not searched it yet, then search it now
-			if (!visited.contains(dependent)) {
+			if (!visited.contains(dependent)) 
+			{
 				dependentSearch(dependent, visited);
 			}
 		}
 	}
 
 	// Finds the SCS that are immediate dependencies of the target
-	public ArrayList<StronglyConnectedService> getImmediateDependencies(StronglyConnectedService target) {
+	public ArrayList<StronglyConnectedService> getImmediateDependencies(StronglyConnectedService target) 
+	{
 		// Start with empty list
 		ArrayList<StronglyConnectedService> dependencies = new ArrayList<StronglyConnectedService>();
 
@@ -1165,12 +1321,15 @@ public class DataServices extends JFrame implements ActionListener {
 		ArrayList<String> allInputsToTarget = target.getAllInputs();
 
 		// Check every source in the master list
-		for (StronglyConnectedService source : scsList) {
+		for (StronglyConnectedService source : scsList) 
+		{
 			// Check every input to the target scs
-			for (String input : allInputsToTarget) {
+			for (String input : allInputsToTarget) 
+			{
 				// If the source has an output that matches one of the inputs to
 				// the target (and we haven't already recorded it)
-				if (source.hasOutput(input) && !dependencies.contains(source)) {
+				if (source.hasOutput(input) && !dependencies.contains(source)) 
+				{
 					// Record it
 					dependencies.add(source);
 				}
@@ -1180,18 +1339,22 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Finds the SCS that are immediate dependents of the target
-	public ArrayList<StronglyConnectedService> getImmediateDependents(StronglyConnectedService target) {
+	public ArrayList<StronglyConnectedService> getImmediateDependents(StronglyConnectedService target) 
+	{
 		// Start with empty list
 		ArrayList<StronglyConnectedService> dependents = new ArrayList<StronglyConnectedService>();
 		// Find all outputs from the target scs
 		ArrayList<String> allOutputsFromTarget = target.getAllOutputs();
 		// Check every source in the master list
-		for (StronglyConnectedService source : scsList) {
+		for (StronglyConnectedService source : scsList) 
+		{
 			// Check every output of the target scs
-			for (String output : allOutputsFromTarget) {
+			for (String output : allOutputsFromTarget) 
+			{
 				// If the source has an input that matches one of the outputs to
 				// the target (and we haven't already recorded it)
-				if (source.hasInput(output) && !dependents.contains(source)) {
+				if (source.hasInput(output) && !dependents.contains(source)) 
+				{
 					// record it
 					dependents.add(source);
 				}
@@ -1202,9 +1365,11 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Remote Computation
-	private void RemoteComputation(ArrayList<String> AL) {
+	private void RemoteComputation(ArrayList<String> AL) 
+	{
 		ArrayList<StronglyConnectedService> TotalOringinal = new ArrayList<StronglyConnectedService>();
-		for (StronglyConnectedService scs : scsList) {
+		for (StronglyConnectedService scs : scsList) 
+		{
 			TotalOringinal.add(scs);
 		}
 		// Create a ArrayList to Store Service List for High Load Input
@@ -1214,7 +1379,8 @@ public class DataServices extends JFrame implements ActionListener {
 		ArrayList<ArrayList<StronglyConnectedService>> L2HE = new ArrayList<ArrayList<StronglyConnectedService>>();
 		ArrayList<StronglyConnectedService> Total = new ArrayList<StronglyConnectedService>();
 		ArrayList<StronglyConnectedService> Combine = new ArrayList<StronglyConnectedService>();
-		for (int i = 0; i < AL.size(); i++) {
+		for (int i = 0; i < AL.size(); i++) 
+		{
 			L2HLI[i] = getL2HLI(AL.get(i));
 			L2HLO[i] = getL2HLO(AL.get(i));
 			ArrayList<StronglyConnectedService> DataMerge = new ArrayList<StronglyConnectedService>();
@@ -1226,21 +1392,28 @@ public class DataServices extends JFrame implements ActionListener {
 		ArrayList<StronglyConnectedService> Mark1 = null;
 		ArrayList<StronglyConnectedService> Mark2 = null;
 		// Remove the empty element of the Array
-		for (int i = 0; i < L2HE.size(); i++) {
-			for (int j = L2HE.size() - 1; j > i; j--) {
-				if ((L2HE.get(i).isEmpty())) {
+		for (int i = 0; i < L2HE.size(); i++) 
+		{
+			for (int j = L2HE.size() - 1; j > i; j--) 
+			{
+				if ((L2HE.get(i).isEmpty())) 
+				{
 					L2HE.remove(i);
 				}
-				if ((L2HE.get(j).isEmpty())) {
+				if ((L2HE.get(j).isEmpty())) 
+				{
 					L2HE.remove(j);
 				}
 			}
 		}
 
 		// Combine the two elements and mark the Two should be deleted
-		for (int i = 0; i < L2HE.size(); i++) {
-			for (int j = L2HE.size() - 1; j > i; j--) {
-				if (CheckContain2(L2HE.get(i), L2HE.get(j))) {
+		for (int i = 0; i < L2HE.size(); i++) 
+		{
+			for (int j = L2HE.size() - 1; j > i; j--) 
+			{
+				if (CheckContain2(L2HE.get(i), L2HE.get(j))) 
+				{
 					Combine = Combine(L2HE.get(i), L2HE.get(j));
 					RSList.add(Combine);
 					Mark1 = L2HE.get(i);
@@ -1253,15 +1426,18 @@ public class DataServices extends JFrame implements ActionListener {
 		L2HE.remove(Mark2);
 		RSList.addAll(L2HE);
 
-		for (ArrayList<StronglyConnectedService> RSE : RefineData(RSList)) {
+		for (ArrayList<StronglyConnectedService> RSE : RefineData(RSList)) 
+		{
 			Total.addAll(RSE);
 		}
 
 		ArrayList<StronglyConnectedService> Diff = new ArrayList<StronglyConnectedService>();
 
 		TotalOringinal.removeAll(Total);
-		for (StronglyConnectedService SCS1 : Total) {
-			if (TotalOringinal.contains(SCS1)) {
+		for (StronglyConnectedService SCS1 : Total) 
+		{
+			if (TotalOringinal.contains(SCS1)) 
+			{
 				TotalOringinal.remove(SCS1);
 			}
 		}
@@ -1274,8 +1450,10 @@ public class DataServices extends JFrame implements ActionListener {
 		int index, rowIndex = 0;
 		int index2 = 1;
 
-		for (ArrayList<StronglyConnectedService> SCSList : RSList) {
-			for (StronglyConnectedService SCS : SCSList) {
+		for (ArrayList<StronglyConnectedService> SCSList : RSList) 
+		{
+			for (StronglyConnectedService SCS : SCSList) 
+			{
 				index = 0;
 				tableData[rowIndex][index++] = "S" + SCS.getIndex();
 				tableData[rowIndex][index++] = "YES";
@@ -1290,16 +1468,23 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Remove duplicate elements in one Array List
-	private ArrayList<ArrayList<StronglyConnectedService>> RefineData(
-			ArrayList<ArrayList<StronglyConnectedService>> DataList) {
+	private ArrayList<ArrayList<StronglyConnectedService>> RefineData(ArrayList<ArrayList<StronglyConnectedService>> DataList) 
+	{
 		ArrayList<ArrayList<StronglyConnectedService>> DataMerge = new ArrayList<ArrayList<StronglyConnectedService>>();
-		for (int i = 0; i < DataList.size(); i++) {
-			for (int j = DataList.size() - 1; j > i; j--) {
-				if ((DataList.get(i) == DataList.get(j))) {
+		for (int i = 0; i < DataList.size(); i++) 
+		{
+			for (int j = DataList.size() - 1; j > i; j--) 
+			{
+				if ((DataList.get(i) == DataList.get(j))) 
+				{
 					DataList.remove(j);
-				} else if (DataList.get(i).containsAll(DataList.get(j))) {
+				} 
+				else if (DataList.get(i).containsAll(DataList.get(j))) 
+				{
 					DataList.remove(j);
-				} else if (DataList.get(i).size() == 0) {
+				} 
+				else if (DataList.get(i).size() == 0) 
+				{
 					DataList.remove(i);
 				}
 			}
@@ -1309,11 +1494,15 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// remove the duplicate elements of SCS
-	public void removeDuplicateSCS(ArrayList<StronglyConnectedService> Combine) {
+	public void removeDuplicateSCS(ArrayList<StronglyConnectedService> Combine) 
+	{
 		// Combine.sort(null);
-		for (int i = 0; i < Combine.size(); i++) {
-			for (int j = Combine.size() - 1; j > i; j--) {
-				if (Combine.get(i) == Combine.get(j)) {
+		for (int i = 0; i < Combine.size(); i++) 
+		{
+			for (int j = Combine.size() - 1; j > i; j--) 
+			{
+				if (Combine.get(i) == Combine.get(j)) 
+				{
 					Combine.remove(j);
 				}
 			}
@@ -1322,9 +1511,12 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Check if an array list of scs contain a element of another array list
-	private boolean CheckContain2(ArrayList<StronglyConnectedService> A1, ArrayList<StronglyConnectedService> A2) {
-		for (StronglyConnectedService E : A2) {
-			if (A1.contains(E)) {
+	private boolean CheckContain2(ArrayList<StronglyConnectedService> A1, ArrayList<StronglyConnectedService> A2) 
+	{
+		for (StronglyConnectedService E : A2) 
+		{
+			if (A1.contains(E)) 
+			{
 				return true;
 			}
 		}
@@ -1333,7 +1525,8 @@ public class DataServices extends JFrame implements ActionListener {
 
 	// Combine two arrays and remove the duplication.
 	private ArrayList<StronglyConnectedService> Combine(ArrayList<StronglyConnectedService> A1,
-			ArrayList<StronglyConnectedService> A2) {
+			                                            ArrayList<StronglyConnectedService> A2) 
+	{
 		ArrayList<StronglyConnectedService> combine = new ArrayList<StronglyConnectedService>();
 		combine.addAll(A1);
 		combine.addAll(A2);
@@ -1342,11 +1535,15 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Get the Level2 High Load Inputs
-	public ArrayList<StronglyConnectedService> getL2HLI(String ALElementary) {
+	public ArrayList<StronglyConnectedService> getL2HLI(String ALElementary) 
+	{
 		ArrayList<StronglyConnectedService> ALOut = new ArrayList<StronglyConnectedService>();
-		for (StronglyConnectedService scs : scsList) {
-			if ((scs.getAllInputs().contains(ALElementary))) {
-				if (!CheckInternal(scs, ALElementary)) {
+		for (StronglyConnectedService scs : scsList) 
+		{
+			if ((scs.getAllInputs().contains(ALElementary))) 
+			{
+				if (!CheckInternal(scs, ALElementary)) 
+				{
 					ALOut.add(scs);
 				}
 			}
@@ -1355,11 +1552,15 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Get the Level2 High Load Outputs
-	public ArrayList<StronglyConnectedService> getL2HLO(String ALElementary) {
+	public ArrayList<StronglyConnectedService> getL2HLO(String ALElementary) 
+	{
 		ArrayList<StronglyConnectedService> ALOut = new ArrayList<StronglyConnectedService>();
-		for (StronglyConnectedService scs : scsList) {
-			if ((scs.getAllOutputs().contains(ALElementary))) {
-				if (!CheckInternal(scs, ALElementary)) {
+		for (StronglyConnectedService scs : scsList) 
+		{
+			if ((scs.getAllOutputs().contains(ALElementary))) 
+			{
+				if (!CheckInternal(scs, ALElementary)) 
+				{
 					ALOut.add(scs);
 				}
 			}
@@ -1368,15 +1569,18 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Check if the StronglyConnectedService contain the Data
-	public boolean CheckInternal(StronglyConnectedService SCS, String Data) {
+	public boolean CheckInternal(StronglyConnectedService SCS, String Data) 
+	{
 		ArrayList<ServiceNode> SCSN = new ArrayList<ServiceNode>();
 		SCSN = SCS.getServiceNodes();
 		for (int i = 0; i < SCSN.size(); i++) {
 			for (int j = SCSN.size() - 1; j > i; j--) {
-				if ((SCSN.get(i).service.outputs.contains(Data) && (SCSN.get(j).service.inputs.contains(Data)))) {
+				if ((SCSN.get(i).service.outputs.contains(Data) && (SCSN.get(j).service.inputs.contains(Data)))) 
+				{
 					return true;
 				} else if ((SCSN.get(i).service.inputs.contains(Data)
-						&& (SCSN.get(j).service.outputs.contains(Data)))) {
+						&& (SCSN.get(j).service.outputs.contains(Data)))) 
+				{
 					return true;
 				}
 			}
@@ -1385,31 +1589,39 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// High performance check
-	private void RemoteComputationHP(ArrayList<String> AL) {
+	private void RemoteComputationHP(ArrayList<String> AL) 
+	{
 		ArrayList<StronglyConnectedService> SCS = new ArrayList<StronglyConnectedService>();
 		ArrayList<ServiceNode> SNS = new ArrayList<ServiceNode>();
-		for (StronglyConnectedService source : scsList) {
+		for (StronglyConnectedService source : scsList) 
+		{
 			SNS = source.getServiceNodes();
-			for (ServiceNode SN : SNS) {
-				for (String Ser : AL) {
-					if (SN.getName().equals(Ser)) {
+			for (ServiceNode SN : SNS) 
+			{
+				for (String Ser : AL) 
+				{
+					if (SN.getName().equals(Ser)) 
+					{
 						SCS.add(source);
 					}
 				}
 			}
 		}
-		for (StronglyConnectedService source2 : SCS) {
-			for (ArrayList<StronglyConnectedService> Al : RSList) {
+		for (StronglyConnectedService source2 : SCS) 
+		{
+			for (ArrayList<StronglyConnectedService> Al : RSList) 
+			{
 				if (Al.contains(source2)) {
 					RSList2.add(Al);
 				}
 			}
 		}
 		columnNames = new Object[] { "The name of HighPerf Component ", "StronglyConnectedService(L2)",
-				"RemoteComp(L3)" };
+				                     "RemoteComp(L3)" };
 		tableData = new Object[lstData.size()][columnNames.length];
 		int index, rowIndex = 0;
-		for (String HPC : AL) {
+		for (String HPC : AL) 
+		{
 			index = 0;
 			tableData[rowIndex][index++] = HPC;
 			tableData[rowIndex][index++] = "S" + FindSCSbyString(HPC);
@@ -1420,12 +1632,17 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// get the SCS index by the String
-	public int FindSCSbyString(String AL1) {
+	public int FindSCSbyString(String AL1) 
+	{
 		int k = 0;
-		for (ArrayList<StronglyConnectedService> SCSList : RSList2) {
-			for (StronglyConnectedService SCS2 : SCSList) {
-				for (ServiceNode SN : SCS2.getServiceNodes()) {
-					if (SN.getService().name.equals(AL1)) {
+		for (ArrayList<StronglyConnectedService> SCSList : RSList2) 
+		{
+			for (StronglyConnectedService SCS2 : SCSList) 
+			{
+				for (ServiceNode SN : SCS2.getServiceNodes()) 
+				{
+					if (SN.getService().name.equals(AL1)) 
+					{
 						k = SCS2.index;
 					}
 				}
@@ -1435,11 +1652,15 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// get the RS index by the String
-	public int FindRSbyString(int SCS) {
+	public int FindRSbyString(int SCS) 
+	{
 		int j = 0;
-		for (ArrayList<StronglyConnectedService> SCSList : RSList) {
-			for (StronglyConnectedService scs : SCSList) {
-				if (scs.getIndex() == SCS) {
+		for (ArrayList<StronglyConnectedService> SCSList : RSList) 
+		{
+			for (StronglyConnectedService scs : SCSList) 
+			{
+				if (scs.getIndex() == SCS) 
+				{
 					j = RSList.indexOf(SCSList);
 				}
 			}
