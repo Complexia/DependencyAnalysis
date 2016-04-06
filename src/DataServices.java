@@ -247,25 +247,31 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// event by clicking on buttons
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		String clickBtnText = e.getActionCommand();
-		if (clickBtnText.equals(BUTTON_LABEL_UPLOAD)) {
+		if (clickBtnText.equals(BUTTON_LABEL_UPLOAD)) 
+		{
 			fileChooser = new JFileChooser();
 			fileChooser.showOpenDialog(this);
 
-			if (fileChooser.getSelectedFile() != null) {
+			if (fileChooser.getSelectedFile() != null) 
+			{
 				setTitle("Evaluating " + fileChooser.getSelectedFile().getName() + " in "
 						+ fileChooser.getCurrentDirectory().toString());
 
 				hasFileBeenChoosed = true;
 
 				// upload a file
-				try {
+				try 
+				{
 					inputFile = fileChooser.getSelectedFile();
 					lstData = readFromJson(inputFile);
-				} catch (JsonIOException e1) {
-					e1.printStackTrace();
-				} catch (JsonSyntaxException e1) {
+				} 
+				
+				catch (JsonIOException e1) 
+				{
+					System.out.println("error occured during reading of input file.");
 					e1.printStackTrace();
 				}
 			}
@@ -294,17 +300,24 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// read json file
-	private List<Service> readFromJson(File file) {
+	private List<Service> readFromJson(File file) 
+	{
 		Gson gson = new Gson();
 		List<Service> lstOfService = null;
-		try {
+		try 
+		{
 			// convert the json string back to object
 			lstOfService = gson.fromJson(new BufferedReader(new FileReader(file)), new TypeToken<List<Service>>() {
 			}.getType());
 			// System.out.println(obj);
-		} catch (IOException e) {
+		} 
+		
+		catch (IOException e) 
+		{
+			System.out.println("error occured during conversion of gson to service list");
 			e.printStackTrace();
 		}
+		
 		return lstOfService;
 	}
 
