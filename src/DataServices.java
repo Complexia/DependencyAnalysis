@@ -50,6 +50,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.reflect.TypeToken;
 
+//*******************************************************************************************************
+//Create GUI
 public class DataServices extends JFrame implements ActionListener
 {
    // Create button labels
@@ -153,7 +155,7 @@ public class DataServices extends JFrame implements ActionListener
             // objects
             f.setBounds(300, 100, 600, 500);// set frame location and size
             f.setLayout(new GridLayout(20, 1));// set the Grid Layout
-            if (Flag) // TODO: fix up whatever the reasoin this kluge is here
+            if (Flag) // TODO: fix up whatever the reason this kluge is here
                       // for.
             {
                for (int i = 0; i < AllData.size(); i++)
@@ -248,8 +250,10 @@ public class DataServices extends JFrame implements ActionListener
       add(programPanel);
       pack();
    }
+   // End GUI
+   // *****************************************************************************************************
 
-   // display results on the screen
+   // Display results in the GUI
    private void displayResult(Object[][] tableData, Object[] columnNames)
    {
       if (tableData != null && columnNames != null)
@@ -348,20 +352,21 @@ public class DataServices extends JFrame implements ActionListener
       }
    }
 
+   // ******************************************************************************************************
    // read json file
    private List<Service> readFromJson(File file)
    {
       Gson gson = new Gson();
-      List<Service> lstOfService = null;
+      List<Service> listOfService = null;
       try
       {
          // convert the json string back to a list<Service>
          // TypeToken works as a container to run get type on to return a type
          // value on a generic type
-         lstOfService = gson.fromJson(new BufferedReader(new FileReader(file)),
-                                      new TypeToken<List<Service>>()
-                                      {
-                                      }.getType());
+         listOfService = gson.fromJson(new BufferedReader(new FileReader(file)),
+                                       new TypeToken<List<Service>>()
+                                       {
+                                       }.getType());
          // System.out.println(obj);
       }
 
@@ -372,8 +377,9 @@ public class DataServices extends JFrame implements ActionListener
          e.printStackTrace();
       }
 
-      return lstOfService;
+      return listOfService;
    }
+   // *******************************************************************************************************
 
    // Display existing contents of the json file as Level 0 in the GUI
    // Create L0 method
@@ -428,7 +434,8 @@ public class DataServices extends JFrame implements ActionListener
       displayResult(tableData, columnNames);
    }
 
-   // ***************************************************************************
+   // **************************************************************************************************************
+   // Create method for removing duplicates?
    public static void removeDuplicateWithOrder(ArrayList<String> list)
    {
       Set set = new HashSet();
@@ -444,6 +451,8 @@ public class DataServices extends JFrame implements ActionListener
       list.clear();
       list.addAll(newList);
    }
+   // ********************************************************************************************************
+   // Create Check Elementary Service method
 
    private void checkElementaryService()
    {
@@ -571,25 +580,29 @@ public class DataServices extends JFrame implements ActionListener
       displayResult(tableData, columnNames);
 
    }
+   // End Elementary Service method
+   // ***************************************************************************************************
+   // Create getter method for Service variable
 
    public List<IOVariable> FindVariablesfromOut2(Service SER,
                                                  List<String> Output)
    {
       List<IOVariable> Flag = new ArrayList<IOVariable>();
-      List<IOVariable> VariblesMerge = new ArrayList<IOVariable>();
-      VariblesMerge = SER.getVariable();
-      for (int i = 0; i < VariblesMerge.size(); i++)
+      List<IOVariable> VariablesMerge = new ArrayList<IOVariable>();
+      VariablesMerge = SER.getVariable();
+      for (int i = 0; i < VariablesMerge.size(); i++)
       {
          for (int j = 0; j < Output.size(); j++)
          {
-            if (VariblesMerge.get(i).getOutputs().contains(Output.get(j)))
+            if (VariablesMerge.get(i).getOutputs().contains(Output.get(j)))
             {
-               Flag.add(VariblesMerge.get(i));
+               Flag.add(VariablesMerge.get(i));
             }
          }
       }
       return Flag;
    }
+   // ***************************************************************************************************
 
    public void removeDuplicate(List<String> OutputMerge2)
    {
@@ -661,13 +674,13 @@ public class DataServices extends JFrame implements ActionListener
    public List<IOVariable> FindVariablesfromOut(Service SER, String Output)
    {
       List<IOVariable> Flag = new ArrayList<IOVariable>();
-      List<IOVariable> VariblesMerge = new ArrayList<IOVariable>();
-      VariblesMerge = SER.getVariable();
-      for (int i = 0; i < VariblesMerge.size(); i++)
+      List<IOVariable> VariablesMerge = new ArrayList<IOVariable>();
+      VariablesMerge = SER.getVariable();
+      for (int i = 0; i < VariablesMerge.size(); i++)
       {
-         if (VariblesMerge.get(i).getOutputs().contains(Output))
+         if (VariablesMerge.get(i).getOutputs().contains(Output))
          {
-            Flag.add(VariblesMerge.get(i));
+            Flag.add(VariablesMerge.get(i));
          }
       }
       return Flag;
