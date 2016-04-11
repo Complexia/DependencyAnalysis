@@ -12,7 +12,6 @@ Jordan Mason s3423620
 
 The purpose of this application is to break down systems input from an .xml file using various analysis techniques
 and then provide easy to read results.
-jhgkjhgkjgkjb
  */
 
 //Import relevant packages
@@ -46,6 +45,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.reflect.TypeToken;
 
 public class DataServices extends JFrame implements ActionListener
 {
@@ -314,7 +317,8 @@ public class DataServices extends JFrame implements ActionListener
             // generate level 0
             if (clickBtnText.equals(BUTTON_LABEL_GENERATE_LO))
             {
-               generateLevel0();
+               // generateLevel0();
+               GenerateLO();
             }
             else if (clickBtnText.equals(BUTTON_LABEL_CHECK_ELE_SERVICE))
             {
@@ -371,9 +375,11 @@ public class DataServices extends JFrame implements ActionListener
       return lstOfService;
    }
 
-   // display level 0 in the GUI
-   private void generateLevel0()
+   // Display existing contents of the json file as Level 0 in the GUI
+   // Create L0 method
+   private void GenerateLO()
    {
+      // Create array for the table with column names
       columnNames = new Object[] { "name of service ", "input service",
             "output service", "name of variable", "input variable",
             "output variable" };
@@ -422,6 +428,7 @@ public class DataServices extends JFrame implements ActionListener
       displayResult(tableData, columnNames);
    }
 
+   // ***************************************************************************
    public static void removeDuplicateWithOrder(ArrayList<String> list)
    {
       Set set = new HashSet();

@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+// This is declaring the node type variables
+public enum NodeType {
+	LT, TT, DT, T, N
+}
+=======
+public enum NodeType { LT, TT, DT, T, N }
+
+//bla blab ba
+>>>>>>> a7e752183c16de3a8597db47a864a9681b26f5ff
