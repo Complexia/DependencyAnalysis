@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /UploadFile.class
 /DataServices$1$1$1.class
 /DataServices$1$1.class
@@ -5,3 +6,9 @@
 /DataServices$1.class
 /DataServices$2.class
 /DataServices$3.class
+=======
+/DataServices$3.class
+/UploadFile.class
+/SimpleService.class
+/DataServices$1$1$1.class
+>>>>>>> 76efcd6858ae239406dac536cc5cb2340726b8ee

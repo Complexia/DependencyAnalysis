@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Service implements Serializable {
-	public String name = null;
+	//public String name = null;
 	public List<IOVariable> localVariable = null;
 	public List<Service> sources = null;
 	public List<Service> dSources = null;
@@ -17,6 +17,21 @@ public class Service implements Serializable {
 	public ArrayList<Service> ElementaryServices = new ArrayList<Service>();
 	public List<Service> connectedServices = null;
 
+	public Service(){
+		
+	}
+	public String name;
+	private ArrayList<String> elements;
+	
+	public ArrayList<String> getElements(){
+		return elements;
+	}
+	public Service(String name, ArrayList<String> elements){
+		
+		this.name = name;
+		this.elements = elements;
+		
+	}
 	public List<String> getIOstreamsByKey(String Output) {
 		return IOstreams.get(Output);
 	}
