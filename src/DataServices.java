@@ -46,20 +46,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-<<<<<<< HEAD
-=======
 import org.w3c.dom.Document;
 
->>>>>>> 76efcd6858ae239406dac536cc5cb2340726b8ee
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.reflect.TypeToken;
 
-<<<<<<< HEAD
 //*******************************************************************************************************
 //Create GUI
-=======
->>>>>>> 76efcd6858ae239406dac536cc5cb2340726b8ee
+
 public class DataServices extends JFrame implements ActionListener
 {
    // Create button labels
@@ -368,8 +363,8 @@ public class DataServices extends JFrame implements ActionListener
       List<Service> listOfService = null;
       try
       {
-    	  Document doc = UploadFile.getDoc();
-    	  lstOfService = UploadFile.getElements();
+         Document doc = UploadFile.getDoc();
+         lstOfService = UploadFile.getElements();
          // convert the json string back to a list<Service>
          // TypeToken works as a container to run get type on to return a type
          // value on a generic type
@@ -378,7 +373,7 @@ public class DataServices extends JFrame implements ActionListener
                                        {
                                        }.getType());
          // System.out.println(obj);
-         
+
       }
 
       catch (IOException e)
@@ -411,12 +406,12 @@ public class DataServices extends JFrame implements ActionListener
          ArrayList<List<String>> Inputs = new ArrayList<List<String>>();
          ArrayList<List<String>> Outputs = new ArrayList<List<String>>();
          UploadFile.doStuff();
-         
 
-         for (int i = 0; i< UploadFile.getElements().size(); i++)
+         for (int i = 0; i < UploadFile.getElements().size(); i++)
          {
             Name.add(UploadFile.getElements().get(i).getElements().get(i));
-            System.out.println(UploadFile.getElements().get(i).getElements().get(i));
+            System.out.println(UploadFile.getElements().get(i).getElements()
+                  .get(i));
             Inputs.add(UploadFile.getElements().get(i).getElements());
             Outputs.add(UploadFile.getElements().get(i).getElements());
          }
