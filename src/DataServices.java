@@ -112,6 +112,7 @@ public class DataServices extends JFrame implements ActionListener
       hello.setVisible(true);
    }
 
+   // Create the button menu
    public DataServices()
    {
       btnUpload = new JButton(BUTTON_LABEL_UPLOAD);
@@ -242,6 +243,7 @@ public class DataServices extends JFrame implements ActionListener
             });
          }
       });
+      // Create and format GUI border
       buttonPanel.add(btnCheckProperty);
       btnCheckProperty.addActionListener(this);
       dataPanel.setPreferredSize(new Dimension(800, 350));
