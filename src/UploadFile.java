@@ -27,12 +27,12 @@ public class UploadFile
       return elements;
    }
 
-   public static void doStuff()
+   public static void doStuff(File file)
    {
       try
       {
 
-         File fXmlFile = new File("/Users/SimonMiller/test1.xml");
+         File fXmlFile = file;
          DocumentBuilderFactory dbFactory =
                DocumentBuilderFactory.newInstance();
          DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -100,7 +100,7 @@ public class UploadFile
    public static void main(String argv[])
    {
 
-      doStuff();
+      // doStuff();
 
    }
 }

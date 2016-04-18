@@ -24,10 +24,7 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,7 +47,6 @@ import org.w3c.dom.Document;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
-import com.google.gson.reflect.TypeToken;
 
 //*******************************************************************************************************
 //Create GUI
@@ -366,19 +362,17 @@ public class DataServices extends JFrame implements ActionListener
       try
       {
          Document doc = UploadFile.getDoc();
-         lstOfService = UploadFile.getElements();
+         listOfService = UploadFile.getElements();
          // convert the json string back to a list<Service>
          // TypeToken works as a container to run get type on to return a type
          // value on a generic type
-         listOfService = gson.fromJson(new BufferedReader(new FileReader(file)),
-                                       new TypeToken<List<Service>>()
-                                       {
-                                       }.getType());
+         listOfService = new ArrayList();
+         listOfService.add(new Service());
          // System.out.println(obj);
 
       }
 
-      catch (IOException e)
+      catch (Exception e)
       {
          System.out
                .println("error occured during conversion of gson to service list");
@@ -407,7 +401,7 @@ public class DataServices extends JFrame implements ActionListener
          ArrayList<String> Name = new ArrayList<String>();
          ArrayList<List<String>> Inputs = new ArrayList<List<String>>();
          ArrayList<List<String>> Outputs = new ArrayList<List<String>>();
-         UploadFile.doStuff();
+         UploadFile.doStuff(inputFile);
 
          for (int i = 0; i < UploadFile.getElements().size(); i++)
          {
