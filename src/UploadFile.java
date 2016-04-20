@@ -27,7 +27,7 @@ public class UploadFile
       return elements;
    }
 
-   public static void doStuff(File file)
+   public static void uploadL0(File file)
    {
       try
       {

@@ -45,9 +45,6 @@ import javax.swing.JTable;
 
 import org.w3c.dom.Document;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-
 //*******************************************************************************************************
 //Create GUI
 
@@ -81,7 +78,7 @@ public class DataServices extends JFrame implements ActionListener
 
    // Create GUI buttons
    private JButton btnUpload;
-   private JButton btnGenerateLO;
+   private JButton btnGenerateL0;
    private JButton btnCheckElementaryService;
    private JButton btnGenerateL1;
    private JButton btnFindSCS;
@@ -112,7 +109,7 @@ public class DataServices extends JFrame implements ActionListener
    public DataServices()
    {
       btnUpload = new JButton(BUTTON_LABEL_UPLOAD);
-      btnGenerateLO = new JButton(BUTTON_LABEL_GENERATE_LO);
+      btnGenerateL0 = new JButton(BUTTON_LABEL_GENERATE_LO);
       btnCheckElementaryService = new JButton(BUTTON_LABEL_CHECK_ELE_SERVICE);
       btnGenerateL1 = new JButton(BUTTON_LABEL_GENERATE_L1);
       btnFindSCS = new JButton(BUTTON_LABEL_FIND_SCS);
@@ -128,7 +125,7 @@ public class DataServices extends JFrame implements ActionListener
       new JButton("RemoteCom HighPerf");
 
       programButtons =
-            new JButton[] { btnUpload, btnGenerateLO, btnCheckElementaryService,
+            new JButton[] { btnUpload, btnGenerateL0, btnCheckElementaryService,
                   btnGenerateL1, btnFindSCS, btnGenerateL2 };
       programPanel = new JPanel();
       programPanel.setLayout(new FlowLayout());
@@ -300,10 +297,10 @@ public class DataServices extends JFrame implements ActionListener
             try
             {
                inputFile = fileChooser.getSelectedFile();
-               lstData = readFromJson(inputFile);
+               lstData = readFromXML(inputFile);
             }
 
-            catch (JsonIOException e1)
+            catch (Exception e1)//TODO: use correct exception type
             {
                System.out
                      .println("error occured during reading of input file.");
@@ -323,7 +320,7 @@ public class DataServices extends JFrame implements ActionListener
             if (clickBtnText.equals(BUTTON_LABEL_GENERATE_LO))
             {
                // generateLevel0();
-               GenerateLO();
+               GenerateL0();
             }
             else if (clickBtnText.equals(BUTTON_LABEL_CHECK_ELE_SERVICE))
             {
@@ -355,20 +352,13 @@ public class DataServices extends JFrame implements ActionListener
 
    // ******************************************************************************************************
    // read json file
-   private List<Service> readFromJson(File file)
+   private List<Service> readFromXML(File file)
    {
-      Gson gson = new Gson();
       List<Service> listOfService = null;
       try
       {
          Document doc = UploadFile.getDoc();
          listOfService = UploadFile.getElements();
-         // convert the json string back to a list<Service>
-         // TypeToken works as a container to run get type on to return a type
-         // value on a generic type
-         listOfService = new ArrayList();
-         listOfService.add(new Service());
-         // System.out.println(obj);
 
       }
 
@@ -385,7 +375,7 @@ public class DataServices extends JFrame implements ActionListener
 
    // Display existing contents of the json file as Level 0 in the GUI
    // Create L0 method
-   private void GenerateLO()
+   private void GenerateL0()
    {
       // Create array for the table with column names
       columnNames = new Object[] { "name of service ", "input service",
@@ -401,7 +391,6 @@ public class DataServices extends JFrame implements ActionListener
          ArrayList<String> Name = new ArrayList<String>();
          ArrayList<List<String>> Inputs = new ArrayList<List<String>>();
          ArrayList<List<String>> Outputs = new ArrayList<List<String>>();
-         UploadFile.doStuff(inputFile);
 
          for (int i = 0; i < UploadFile.getElements().size(); i++)
          {
