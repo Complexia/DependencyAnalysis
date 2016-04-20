@@ -351,12 +351,13 @@ public class DataServices extends JFrame implements ActionListener
    }
 
    // ******************************************************************************************************
-   // read json file
+   // read xml file
    private List<Service> readFromXML(File file)
    {
       List<Service> listOfService = null;
       try
       {
+    	 UploadFile.uploadL0(file);
          Document doc = UploadFile.getDoc();
          listOfService = UploadFile.getElements();
 
