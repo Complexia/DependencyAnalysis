@@ -62,6 +62,9 @@ public class DataServices extends JFrame implements ActionListener
    private final String BUTTON_LABEL_Remote_Computation = "Remote_Computation";
    // used to hold the output from readFromGson
    private List<Service> lstData = null;
+   
+   private List<SimpleService> lstData1 = null;
+   
    private File inputFile;
    private List<Service> elementaryServices = null;
    private ArrayList<ServiceNode> nodes = new ArrayList<ServiceNode>();
@@ -267,6 +270,7 @@ public class DataServices extends JFrame implements ActionListener
          programPanel.add(dataPanel);
          programPanel.updateUI();
          programPanel.revalidate();
+         programPanel.repaint();
       }
    }
 
@@ -378,55 +382,56 @@ public class DataServices extends JFrame implements ActionListener
    // Create L0 method
    private void GenerateL0()
    {
-      // Create array for the table with column names
-      columnNames = new Object[] { "name of service ", "input service",
-            "output service", "name of variable", "input variable",
-            "output variable" };
-      tableData = new Object[lstData.size()][columnNames.length];
-      int rowIndex = 0;
-      for (Service eachService : lstData)
-      {
-         tableData[rowIndex][0] = eachService.getname();
-         tableData[rowIndex][1] = eachService.getInputs();
-         tableData[rowIndex][2] = eachService.getOutputs();
-         ArrayList<String> Name = new ArrayList<String>();
-         ArrayList<List<String>> Inputs = new ArrayList<List<String>>();
-         ArrayList<List<String>> Outputs = new ArrayList<List<String>>();
+	   elementaryServices = new ArrayList<Service>();
+	      columnNames =
+	            new Object[] { "Name of Service", "Input Data", "Output Data", "Name of Variable",
+	                  "Input Variable", "Output Variable" };
 
-         for (int i = 0; i < UploadFile.getElements().size(); i++)
-         {
-            Name.add(UploadFile.getElements().get(i).getElements().get(i));
-            System.out.println(UploadFile.getElements().get(i).getElements()
-                  .get(i));
-            Inputs.add(UploadFile.getElements().get(i).getElements());
-            Outputs.add(UploadFile.getElements().get(i).getElements());
-         }
-         tableData[rowIndex][3] = Name;
-         tableData[rowIndex][4] = Inputs;
-         tableData[rowIndex][5] = Outputs;
+	      tableData = new Object[20][columnNames.length];
+	      int rowIndex = 0;
+	      int index = 0;
+	      
+	      
+	      lstData.add(new Service());
+	      lstData1 = new ArrayList<SimpleService>();
+		   String nameOfService = (String) UploadFile.getVariablesMap().get("nameOfService");
+		   String inputData = (String) UploadFile.getVariablesMap().get("inputService");
+		   String outputData = (String) UploadFile.getVariablesMap().get("outputService");
+		   String nameOfVariable = (String) UploadFile.getVariablesMap().get("nameOfVariable");
+		   
+		   SimpleService service1 = new SimpleService(nameOfService,inputData,outputData,nameOfVariable);
+		   lstData1.add(service1);
+	      for (SimpleService eachService : lstData1)
+	    	  
+	    	  
+	      {
+	    	  
+	        
+	            for (SimpleService service : lstData1)
+	            {
+	               index = 0;
+	               
+	               tableData[rowIndex][index++] = eachService.getName();
+	               System.out.println("HERE" + eachService.getInputService());
+	               tableData[rowIndex][index++] = eachService.getInputService();
+	               tableData[rowIndex][index++] = eachService.getOutputService();
+	               tableData[rowIndex][index++] = eachService.getNameOfVariable();
+	               
+	               
 
-         rowIndex++;
-         for (String k : UploadFile.getElements().get(0).getElements())
-         {
-            if (k != null)
-            {
-               AllData.add(k);
-            }
-         }
-         AllData.addAll(UploadFile.getElements().get(0).getElements());
-         for (String m : UploadFile.getElements().get(0).getElements())
-         {
-            if (m != null)
-            {
-               AllData.add(m);
-            }
-         }
+	               
+	               rowIndex++;
+	            }
+	            
+	         
+	         
 
-         AllData.addAll(UploadFile.getElements().get(0).getElements());
-         removeDuplicateWithOrder(AllData);
-         AllData.sort(null);
-      }
-      displayResult(tableData, columnNames);
+	            
+	            
+	         
+	         
+	      }
+	      displayResult(tableData, columnNames);
    }
 
    // **************************************************************************************************************
@@ -745,56 +750,84 @@ public class DataServices extends JFrame implements ActionListener
       int rowIndex = 0;
       int index = 0;
       // loop through each service
-      for (Service eachService : lstData)
+      
+      lstData.add(new Service());
+      lstData1 = new ArrayList<SimpleService>();
+	   String nameOfService = (String) UploadFile.getVariablesMap().get("nameOfService");
+	   String inputData = (String) UploadFile.getVariablesMap().get("inputService");
+	   String outputData = (String) UploadFile.getVariablesMap().get("outputService");
+	   String nameOfVariable = (String) UploadFile.getVariablesMap().get("nameOfVariable");
+	   
+	   SimpleService service1 = new SimpleService(nameOfService,inputData,outputData,nameOfVariable);
+	   lstData1.add(service1);
+      for (SimpleService eachService : lstData1)
+    	  
+    	  
       {
+    	  
          // check if service has elementary services
-         if (eachService.getelementaryServices().size() > 0)
-         {
+        
             // loop through elementary services/ sub service
-            for (Service subService : eachService.getelementaryServices())
+            for (SimpleService service : lstData1)
             {
                index = 0;
                // System.out.println("index: " + index + " rowindex " +
                // rowIndex + " each service: " + eachService.GetName());
                // System.out.println(" sub service: " +
                // subService.GetName());
-               tableData[rowIndex][index++] = eachService.getname();
-               tableData[rowIndex][index++] = subService.getname();
-               tableData[rowIndex][index++] = subService.getInputs();
-               tableData[rowIndex][index++] = subService.getOutputs();
+               tableData[rowIndex][index++] = eachService.getName();
+               System.out.println("HERE" + eachService.getInputService());
+               tableData[rowIndex][index++] = eachService.getInputService();
+               tableData[rowIndex][index++] = eachService.getOutputService();
+               tableData[rowIndex][index++] = eachService.getNameOfVariable();
                ArrayList<String> Name = new ArrayList<String>();
                ArrayList<String> Inputs = new ArrayList<String>();
                ArrayList<String> Outputs = new ArrayList<String>();
-               if (subService.getVariable().size() > 0)
-               {
-                  for (IOVariable IOV : subService.getVariable())
-                  {
-                     Name.add(IOV.GetName());
-                  }
-                  Inputs = (ArrayList<String>) subService.getInputs();
-                  Outputs = (ArrayList<String>) subService.getOutputs();
-               }
+               //if (subService.getVariable().size() > 0)
+               //{
+//                  for (IOVariable IOV : subService.getVariable())
+//                  {
+//                     Name.add(IOV.GetName());
+//                  }
+                  //Inputs = (ArrayList<String>) subService.getInputs();
+                  Name.add("SDDD");
+                  Name.add("SDDD");
+                  Name.add("SDDD");
+                  Name.add("SDDD");
+                  Inputs.add("asd");
+                  Inputs.add("asd");
+                  Inputs.add("asd");
+                  Inputs.add("asd");
+                  Outputs.add("asd");
+                  Outputs.add("asd");
+                  Outputs.add("asd");
+                  Outputs.add("asd");
+                  //Outputs = (ArrayList<String>) subService.getOutputs();
+               //}
                tableData[rowIndex][index++] = Name;
                tableData[rowIndex][index++] = Inputs;
                tableData[rowIndex][index++] = Outputs;
-               elementaryServices.add(subService);
+               
                rowIndex++;
             }
-         }
-         else // has no elementary service
-         {
+            
+         
+         
             index = 0;
             // System.out.println("index: " + index + " rowindex " +
             // rowIndex + " each service: " + eachService.GetName());
-            tableData[rowIndex][index++] = eachService.getname();
+            tableData[rowIndex][index++] = "SDD";
             tableData[rowIndex][index++] = "No Sub Service";
-            tableData[rowIndex][index++] = eachService.getInputs();
-            tableData[rowIndex][index++] = eachService.getOutputs();
+            tableData[rowIndex][index++] = "Data1";
+            tableData[rowIndex][index++] = "SSDD";
             tableData[rowIndex][index++] = "-";
             tableData[rowIndex][index++] = "-";
             tableData[rowIndex][index++] = "-";
             rowIndex++;
-         }
+            System.out.println("HOLA");
+            
+         
+         
       }
       displayResult(tableData, columnNames);
    }

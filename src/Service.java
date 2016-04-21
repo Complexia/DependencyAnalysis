@@ -16,12 +16,13 @@ public class Service implements Serializable {
 	public HashMap<String, List<String>> DualIOstreams = null;
 	public ArrayList<Service> ElementaryServices = new ArrayList<Service>();
 	public List<Service> connectedServices = null;
+	private ArrayList<String> elements;
 
 	public Service(){
 		
 	}
 	public String name;
-	private ArrayList<String> elements;
+	
 	
 	public ArrayList<String> getElements(){
 		return elements;

@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,6 +17,7 @@ public class UploadFile
    private static Document doc1;
    private static ArrayList<Service> elements = new ArrayList();
    private static ArrayList<String> variables = new ArrayList();
+   private static HashMap<String,String> variablesMap = new HashMap<>();
 
    public static Document getDoc()
    {
@@ -25,6 +27,10 @@ public class UploadFile
    public static ArrayList<Service> getElements()
    {
       return elements;
+   }
+   
+   public  static HashMap getVariablesMap(){
+	   return variablesMap;
    }
 
    public static void uploadL0(File file)
@@ -42,6 +48,59 @@ public class UploadFile
          // read this -
          // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
          doc.getDocumentElement().normalize();
+         System.out.println("Root element :" 
+                 + doc.getDocumentElement().getNodeName());
+         NodeList nList = doc.getElementsByTagName("service");
+         for (int temp = 0; temp < nList.getLength(); temp++) {
+             Node nNode = nList.item(temp);
+             System.out.println("\nCurrent Element :" 
+                + nNode.getNodeName());
+             
+             
+             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                 Element eElement = (Element) nNode;
+                 
+                 System.out.println("Name of Service : "
+                   + eElement.getAttribute("serviceName"));
+                 
+                 variablesMap.put("nameOfService", eElement.getAttribute("serviceName"));
+                
+                 
+                 System.out.println("Input Service : " 
+                         + eElement
+                         .getElementsByTagName("input_service")
+                         .item(0)
+                         .getTextContent());
+                 
+                 variablesMap.put("inputService", eElement
+                         .getElementsByTagName("input_service")
+                         .item(0)
+                         .getTextContent());
+                 
+                 System.out.println("Output Service : " 
+                         + eElement
+                         .getElementsByTagName("output_service")
+                         .item(0)
+                         .getTextContent());
+                 
+                 variablesMap.put("outputService", eElement
+                         .getElementsByTagName("output_service")
+                         .item(0)
+                         .getTextContent());
+                 
+                 System.out.println("Name of Variable : " 
+                         + eElement
+                         .getElementsByTagName("nameofvariable")
+                         .item(0)
+                         .getTextContent());
+                 
+                 variablesMap.put("nameOfVariable", eElement
+                         .getElementsByTagName("nameofvariable")
+                         .item(0)
+                         .getTextContent());
+             }
+             
+         }
 
          doc1 = doc;
       }
@@ -52,10 +111,5 @@ public class UploadFile
 
    }
 
-   public static void main(String argv[])
-   {
-
-      // doStuff();
-
-   }
+   
 }
