@@ -300,7 +300,7 @@ public class DataServices extends JFrame implements ActionListener
                lstData = readFromXML(inputFile);
             }
 
-            catch (Exception e1)//TODO: use correct exception type
+            catch (Exception e1)// TODO: use correct exception type
             {
                System.out
                      .println("error occured during reading of input file.");
@@ -357,7 +357,7 @@ public class DataServices extends JFrame implements ActionListener
       List<Service> listOfService = null;
       try
       {
-    	 UploadFile.uploadL0(file);
+         UploadFile.uploadL0(file);
          Document doc = UploadFile.getDoc();
          listOfService = UploadFile.getElements();
 
