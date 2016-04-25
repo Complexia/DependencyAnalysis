@@ -333,25 +333,37 @@ public class DataServices extends JFrame implements ActionListener {
 
 		tableData = new Object[20][columnNames.length];
 		int rowIndex = 0;
+		
+		
 		int index = 0;
-
-		lstData.add(new Service());
 		lstData1 = new ArrayList<SimpleService>();
-		String nameOfService = (String) UploadFile.getVariablesMap().get("nameOfService");
-		String inputData = (String) UploadFile.getVariablesMap().get("inputService");
-		String outputData = (String) UploadFile.getVariablesMap().get("outputService");
-		String nameOfVariable = (String) UploadFile.getVariablesMap().get("nameOfVariable");
-		String inputVariable = (String) UploadFile.getVariablesMap().get("inputVariable");
-		String outputVariable = (String) UploadFile.getVariablesMap().get("outputVariable");
+		for(int i=0;i<UploadFile.getHashMaps().size();i++){
+			
+			
+			String nameOfService = (String) UploadFile.getHashMaps().get(i).get("service_name");
+			String inputData = (String) UploadFile.getHashMaps().get(i).get("input_service");
+			String outputData = (String) UploadFile.getHashMaps().get(i).get("outputService");
+			String nameOfVariable = (String)UploadFile.getHashMaps().get(i).get("nameOfVariable");
+			String inputVariable = (String) UploadFile.getHashMaps().get(i).get("inputVariable");
+			String outputVariable = (String) UploadFile.getHashMaps().get(i).get("outputVariable");
 
-		SimpleService service1 = new SimpleService(nameOfService, inputData, outputData, nameOfVariable, inputVariable,
-				outputVariable);
-		lstData1.add(service1);
+			SimpleService service1 = new SimpleService(nameOfService, inputData, outputData, nameOfVariable, inputVariable,
+					outputVariable);
+			lstData1.add(service1);
+			//HERE
+			System.out.println("KJJSNNNJSJJ" + UploadFile.getHashMaps().get(i).get("service_name"));
+			
+			
+			
+		}
+
+		//lstData.add(new Service());
+		
 		for (SimpleService eachService : lstData1)
 
 		{
 
-			for (SimpleService service : lstData1) {
+			
 				index = 0;
 
 				tableData[rowIndex][index++] = eachService.getName();
@@ -363,7 +375,8 @@ public class DataServices extends JFrame implements ActionListener {
 				tableData[rowIndex][index++] = eachService.getOutputVariable();
 
 				rowIndex++;
-			}
+				System.out.println("rowIndex " + rowIndex);
+			
 
 		}
 		displayResult(tableData, columnNames);
