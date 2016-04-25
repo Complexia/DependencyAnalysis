@@ -17,6 +17,7 @@ public class UploadFile {
 	private static ArrayList<Service> elements = new ArrayList();
 	private static ArrayList<String> variables = new ArrayList();
 	private static HashMap<String, String> variablesMap = new HashMap<>();
+	private static ArrayList<HashMap> hashMaps = new ArrayList<>();
 
 	public static Document getDoc() {
 		return doc1;
@@ -28,6 +29,10 @@ public class UploadFile {
 
 	public static HashMap getVariablesMap() {
 		return variablesMap;
+	}
+	
+	public static ArrayList<HashMap> getHashMaps(){
+		return hashMaps;
 	}
 
 	public static void uploadL0(File file) {
@@ -54,13 +59,13 @@ public class UploadFile {
 					System.out.println("Name of Service : "
 							+ eElement.getElementsByTagName("service_name").item(0).getTextContent());
 
-					variablesMap.put("nameOfService",
+					variablesMap.put("service_name",
 							eElement.getElementsByTagName("service_name").item(0).getTextContent());
 
 					System.out.println("Input Service : "
 							+ eElement.getElementsByTagName("input_service").item(0).getTextContent());
 
-					variablesMap.put("inputService",
+					variablesMap.put("input_service",
 							eElement.getElementsByTagName("input_service").item(0).getTextContent());
 
 					System.out.println("Output Service : "
@@ -86,10 +91,17 @@ public class UploadFile {
 
 					variablesMap.put("outputVariable",
 							eElement.getElementsByTagName("output_variable").item(0).getTextContent());
+					
+					hashMaps.add(variablesMap);
+					
+					System.out.println("KJJSNNNJSJJ" + UploadFile.getHashMaps().get(0).get("service_name"));
+					
 
 				}
 
 			}
+			
+			System.out.println(hashMaps.size());
 
 			doc1 = doc;
 		} catch (Exception e) {
