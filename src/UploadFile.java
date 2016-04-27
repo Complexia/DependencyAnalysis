@@ -16,7 +16,7 @@ public class UploadFile {
 	private static Document doc1;
 	private static ArrayList<Service> elements = new ArrayList();
 	private static ArrayList<String> variables = new ArrayList();
-	private static HashMap<String, String> variablesMap = new HashMap<>();
+	private static HashMap<String, SimpleService> variablesMap = new HashMap<>();
 	private static ArrayList<HashMap> hashMaps = new ArrayList<>();
 
 	public static Document getDoc() {
@@ -53,10 +53,47 @@ public class UploadFile {
 				Node nNode = nList.item(temp);
 				System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+				{
 					Element eElement = (Element) nNode;
-
+					//experimental build starts here---------------------------------------------------------------------------------------
+					SimpleService tmpSrvce = new SimpleService();
+					
 					System.out.println("Name of Service : "
+							+ eElement.getElementsByTagName("service_name").item(0).getTextContent());
+
+					tmpSrvce.setName(eElement.getElementsByTagName("service_name").item(0).getTextContent());
+
+					System.out.println("Input Service : "
+							+ eElement.getElementsByTagName("input_service").item(0).getTextContent());
+
+					tmpSrvce.setInputService(eElement.getElementsByTagName("input_service").item(0).getTextContent());
+
+					System.out.println("Output Service : "
+							+ eElement.getElementsByTagName("output_service").item(0).getTextContent());
+
+					tmpSrvce.setOutputService(eElement.getElementsByTagName("output_service").item(0).getTextContent());
+
+					System.out.println("Name of Variable : "
+							+ eElement.getElementsByTagName("nameofvariable").item(0).getTextContent());
+
+					tmpSrvce.setNameOfVariable(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent());
+
+					System.out.println("Input Variable : "
+							+ eElement.getElementsByTagName("input_variable").item(0).getTextContent());
+
+					tmpSrvce.setInputVariable(eElement.getElementsByTagName("input_variable").item(0).getTextContent());
+
+					System.out.println("Output Variable : "
+							+ eElement.getElementsByTagName("output_variable").item(0).getTextContent());
+
+					tmpSrvce.setOutputVariable(eElement.getElementsByTagName("output_variable").item(0).getTextContent());
+					
+					variablesMap.put(tmpSrvce.getName(), tmpSrvce);
+					
+					//experimental build ends here-----------------------------------------------------------------------------------
+
+					/*System.out.println("Name of Service : "
 							+ eElement.getElementsByTagName("service_name").item(0).getTextContent());
 
 					variablesMap.put("service_name",
@@ -90,7 +127,7 @@ public class UploadFile {
 							+ eElement.getElementsByTagName("output_variable").item(0).getTextContent());
 
 					variablesMap.put("outputVariable",
-							eElement.getElementsByTagName("output_variable").item(0).getTextContent());
+							eElement.getElementsByTagName("output_variable").item(0).getTextContent());*/
 					
 					hashMaps.add(variablesMap);
 					

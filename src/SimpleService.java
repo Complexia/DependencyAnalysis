@@ -11,6 +11,7 @@ public class SimpleService {
 
 	private ArrayList<String> elements;
 
+	public SimpleService(){} // default empty constructor
 	public SimpleService(String name, String inputService, String outputService, String nameOfVariable,
 			String outputVariable, String inputVariable) {
 

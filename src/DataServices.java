@@ -340,8 +340,9 @@ public class DataServices extends JFrame implements ActionListener {
 		
 		int index = 0;
 		lstData1 = new ArrayList<SimpleService>();
-		ArrayList<HashMap> hashes = UploadFile.getHashMaps();
-		for(int i=0;i<UploadFile.getHashMaps().size();i++)
+		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
+		/* commented out for experimental testing
+		for(int i=0; i<UploadFile.getHashMaps().size(); i++)
 		{
 			
 			
@@ -360,8 +361,8 @@ public class DataServices extends JFrame implements ActionListener {
 			
 			
 		}
-		
-		for (SimpleService eachService : lstData1)
+		*/
+		for (SimpleService eachService : hashes.values())
 		{
 
 			
@@ -375,7 +376,7 @@ public class DataServices extends JFrame implements ActionListener {
 				tableData[rowIndex][index++] = eachService.getOutputVariable();
 
 				rowIndex++;
-				System.out.println("rowIndex " + rowIndex);
+				System.out.println("rowIndex " + rowIndex + eachService.getName());
 			
 
 		}
