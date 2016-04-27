@@ -58,34 +58,16 @@ public class UploadFile {
 					Element eElement = (Element) nNode;
 					//experimental build starts here---------------------------------------------------------------------------------------
 					SimpleService tmpSrvce = new SimpleService();
-					
-					System.out.println("Name of Service : "
-							+ eElement.getElementsByTagName("service_name").item(0).getTextContent());
 
 					tmpSrvce.setName(eElement.getElementsByTagName("service_name").item(0).getTextContent());
 
-					System.out.println("Input Service : "
-							+ eElement.getElementsByTagName("input_service").item(0).getTextContent());
-
 					tmpSrvce.setInputService(eElement.getElementsByTagName("input_service").item(0).getTextContent());
-
-					System.out.println("Output Service : "
-							+ eElement.getElementsByTagName("output_service").item(0).getTextContent());
 
 					tmpSrvce.setOutputService(eElement.getElementsByTagName("output_service").item(0).getTextContent());
 
-					System.out.println("Name of Variable : "
-							+ eElement.getElementsByTagName("nameofvariable").item(0).getTextContent());
-
 					tmpSrvce.setNameOfVariable(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent());
 
-					System.out.println("Input Variable : "
-							+ eElement.getElementsByTagName("input_variable").item(0).getTextContent());
-
 					tmpSrvce.setInputVariable(eElement.getElementsByTagName("input_variable").item(0).getTextContent());
-
-					System.out.println("Output Variable : "
-							+ eElement.getElementsByTagName("output_variable").item(0).getTextContent());
 
 					tmpSrvce.setOutputVariable(eElement.getElementsByTagName("output_variable").item(0).getTextContent());
 					
@@ -93,7 +75,9 @@ public class UploadFile {
 					
 					//experimental build ends here-----------------------------------------------------------------------------------
 
-					/*System.out.println("Name of Service : "
+					/*
+					 { 
+					  System.out.println("Name of Service : "
 							+ eElement.getElementsByTagName("service_name").item(0).getTextContent());
 
 					variablesMap.put("service_name",
@@ -127,7 +111,8 @@ public class UploadFile {
 							+ eElement.getElementsByTagName("output_variable").item(0).getTextContent());
 
 					variablesMap.put("outputVariable",
-							eElement.getElementsByTagName("output_variable").item(0).getTextContent());*/
+							eElement.getElementsByTagName("output_variable").item(0).getTextContent());
+							}*/
 					
 					hashMaps.add(variablesMap);
 					
@@ -137,11 +122,12 @@ public class UploadFile {
 				}
 
 			}
-			
-			System.out.println(hashMaps.size());
 
 			doc1 = doc;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("an unexpected erroroccured during operation");
 			e.printStackTrace();
 		}
 

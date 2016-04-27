@@ -376,7 +376,6 @@ public class DataServices extends JFrame implements ActionListener {
 				tableData[rowIndex][index++] = eachService.getOutputVariable();
 
 				rowIndex++;
-				System.out.println("rowIndex " + rowIndex + eachService.getName());
 			
 
 		}
