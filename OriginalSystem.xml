@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<service serviceName="A1">
+		<input_service>[data1]</input_service> 		  
+		<output_service>[data2],[data10]</output_service>
+		<nameofvariable>st1</nameofvariable>
+		<inputVariable>[data1]</inputVariable>
+		<outputVariable>[data10]</outputVariable>
+	</service>
+	<service serviceName="A2">
+		<input_service>[data2][data3]</input_service>
+		<output_service>[data4],[data5],[data11],[data12]</output_service>
+		<nameofvariable>st2</nameofvariable>
+		<inputVariable>[data3]</inputVariable>
+		<outputVariable>[data4],[data12]</outputVariable>
+	</service>
+	<service serviceName="A3”>
+		<input_service>[data4],[data5]</input_service>
+		<output_service>[data6][data7]</output_service>
+		<nameofvariable></nameofvariable>
+		<inputVariable></inputVariable>
+		<outputVariable></outputVariable>
+	</service>
+	<service serviceName="A4”>
+		<input_service>[data6],[data7]</input_service>
+		<output_service>[data3],[data8]</output_service>
+		<nameofvariable>st4</nameofvariable>
+		<inputVariable>[data6],[data7]</inputVariable>
+		<outputVariable>[data3]</outputVariable>
+	</service>
+	<service serviceName="A5”>
+		<input_service>[data8]</input_service>
+		<output_service>[data9]</output_service>
+		<nameofvariable></nameofvariable>
+		<inputVariable></inputVariable>
+		<outputVariable></outputVariable>
+	</service>
+
