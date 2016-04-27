@@ -106,7 +106,9 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// Create the button menu
-	public DataServices() {
+	public DataServices() 
+	{
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		btnUpload = new JButton(BUTTON_LABEL_UPLOAD);
 		btnGenerateL0 = new JButton(BUTTON_LABEL_GENERATE_LO);
 		btnCheckElementaryService = new JButton(BUTTON_LABEL_CHECK_ELE_SERVICE);
