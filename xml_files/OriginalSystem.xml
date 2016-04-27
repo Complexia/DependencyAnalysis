@@ -18,7 +18,7 @@
 		<output_variable>data 4, data 12</output_variable>
 	</service>
 
-	<service serviceName="A3”>
+	<service serviceName="A3">
 		<service_name>A3</service_name>
 		<input_service>data 4, data 5</input_service>
 		<output_service>data 6, data 7</output_service>
@@ -27,7 +27,7 @@
 		<output_variable></output_variable>
 	</service>
 
-	<service serviceName="A4”>
+	<service serviceName="A4">
 		<service_name>A4</service_name>
 		<input_service>data 6, data 7</input_service>
 		<output_service>data 3, data 8</output_service>
@@ -36,7 +36,7 @@
 		<output_variable>data 3</output_variable>
 	</service>
 
-	<service serviceName="A5”>
+	<service serviceName="A5">
 		<service_name>A5</service_name>
 		<input_service>data 8</input_service>
 		<output_service>data 9</output_service>
