@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -337,37 +338,34 @@ public class DataServices extends JFrame implements ActionListener {
 		
 		int index = 0;
 		lstData1 = new ArrayList<SimpleService>();
-		for(int i=0;i<UploadFile.getHashMaps().size();i++){
+		ArrayList<HashMap> hashes = UploadFile.getHashMaps();
+		for(int i=0;i<UploadFile.getHashMaps().size();i++)
+		{
 			
 			
-			String nameOfService = (String) UploadFile.getHashMaps().get(i).get("service_name");
-			String inputData = (String) UploadFile.getHashMaps().get(i).get("input_service");
-			String outputData = (String) UploadFile.getHashMaps().get(i).get("outputService");
-			String nameOfVariable = (String)UploadFile.getHashMaps().get(i).get("nameOfVariable");
-			String inputVariable = (String) UploadFile.getHashMaps().get(i).get("inputVariable");
-			String outputVariable = (String) UploadFile.getHashMaps().get(i).get("outputVariable");
+			String nameOfService = (String) hashes.get(i).get("service_name");
+			String inputData = (String) hashes.get(i).get("input_service");
+			String outputData = (String) hashes.get(i).get("outputService");
+			String nameOfVariable = (String) hashes.get(i).get("nameOfVariable");
+			String inputVariable = (String) hashes.get(i).get("inputVariable");
+			String outputVariable = (String) hashes.get(i).get("outputVariable");
 
 			SimpleService service1 = new SimpleService(nameOfService, inputData, outputData, nameOfVariable, inputVariable,
 					outputVariable);
-			lstData1.add(service1);
 			//HERE
-			System.out.println("KJJSNNNJSJJ" + UploadFile.getHashMaps().get(i).get("service_name"));
+			System.out.println(UploadFile.getHashMaps().get(i).get("service_name"));
 			
 			
 			
 		}
-
-		//lstData.add(new Service());
 		
 		for (SimpleService eachService : lstData1)
-
 		{
 
 			
 				index = 0;
 
 				tableData[rowIndex][index++] = eachService.getName();
-				// System.out.println("HERE" + eachService.getInputService());
 				tableData[rowIndex][index++] = eachService.getInputService();
 				tableData[rowIndex][index++] = eachService.getOutputService();
 				tableData[rowIndex][index++] = eachService.getNameOfVariable();

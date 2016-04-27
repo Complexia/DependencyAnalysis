@@ -94,7 +94,7 @@ public class UploadFile {
 					
 					hashMaps.add(variablesMap);
 					
-					System.out.println("KJJSNNNJSJJ" + UploadFile.getHashMaps().get(0).get("service_name"));
+					//System.out.println("KJJSNNNJSJJ" + UploadFile.getHashMaps().get(0).get("service_name"));
 					
 
 				}
