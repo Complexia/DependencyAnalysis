@@ -3,25 +3,41 @@ import java.util.ArrayList;
 public class SimpleService {
 
 	private String name;
-	private String inputService;
-	private String outputService;
-	private String nameOfVariable;
-	private String inputVariable;
-	private String outputVariable;
+	private ArrayList<String> inputService;//there can be multiple of these so we need to use lists
+	private ArrayList<String> outputService;//
+	private ArrayList<String> nameOfVariable;//
+	private ArrayList<String> inputVariable;//
+	private ArrayList<String> outputVariable;//
+	private SimpleService parent;//if service is a subservice
+	private ArrayList<SimpleService> children;//if service has been decomposed, store subservices
 
 	private ArrayList<String> elements;
 
 	public SimpleService(){} // default empty constructor
-	public SimpleService(String name, String inputService, String outputService, String nameOfVariable,
-			String outputVariable, String inputVariable) {
 
+	public SimpleService(String name, ArrayList<String> inputService, ArrayList<String> outputService,
+			ArrayList<String> nameOfVariable, ArrayList<String> inputVariable, ArrayList<String> outputVariable) {
+		super();
 		this.name = name;
 		this.inputService = inputService;
 		this.outputService = outputService;
 		this.nameOfVariable = nameOfVariable;
 		this.inputVariable = inputVariable;
 		this.outputVariable = outputVariable;
+	}
 
+
+	public SimpleService getParent() {
+		return parent;
+	}
+	public void setParent(SimpleService parent) {
+		this.parent = parent;
+	}
+	public ArrayList<SimpleService> getChildren() {
+		return children;
+	}
+	public void setChildren(ArrayList<SimpleService> children) {
+		this.children = children;
 	}
 
 	/**
@@ -32,8 +48,7 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -42,75 +57,70 @@ public class SimpleService {
 	/**
 	 * @return the inputService
 	 */
-	public String getInputService() {
+	public ArrayList<String> getInputService() {
 		return inputService;
 	}
 
 	/**
-	 * @param inputService
-	 *            the inputService to set
+	 * @param inputService the inputService to set
 	 */
-	public void setInputService(String inputService) {
+	public void setInputService(ArrayList<String> inputService) {
 		this.inputService = inputService;
 	}
 
 	/**
 	 * @return the outputService
 	 */
-	public String getOutputService() {
+	public ArrayList<String> getOutputService() {
 		return outputService;
 	}
 
 	/**
-	 * @param outputService
-	 *            the outputService to set
+	 * @param outputService the outputService to set
 	 */
-	public void setOutputService(String outputService) {
+	public void setOutputService(ArrayList<String> outputService) {
 		this.outputService = outputService;
 	}
 
 	/**
 	 * @return the nameOfVariable
 	 */
-	public String getNameOfVariable() {
+	public ArrayList<String> getNameOfVariable() {
 		return nameOfVariable;
 	}
 
 	/**
-	 * @param nameOfVariable
-	 *            the nameOfVariable to set
+	 * @param nameOfVariable the nameOfVariable to set
 	 */
-	public void setNameOfVariable(String nameOfVariable) {
+	public void setNameOfVariable(ArrayList<String> nameOfVariable) {
 		this.nameOfVariable = nameOfVariable;
 	}
 
 	/**
 	 * @return the inputVariable
 	 */
-	public String getInputVariable() {
+	public ArrayList<String> getInputVariable() {
 		return inputVariable;
 	}
 
 	/**
-	 * @param inputVariable
-	 *            the inputVariable to set
+	 * @param inputVariable the inputVariable to set
 	 */
-	public void setInputVariable(String inputVariable) {
+	public void setInputVariable(ArrayList<String> inputVariable) {
 		this.inputVariable = inputVariable;
 	}
 
 	/**
 	 * @return the outputVariable
 	 */
-	public String getOutputVariable() {
+	public ArrayList<String> getOutputVariable() {
 		return outputVariable;
 	}
 
 	/**
-	 * @param outputVariable
-	 *            the outputVariable to set
+	 * @param outputVariable the outputVariable to set
 	 */
-	public void setOutputVariable(String outputVariable) {
+	public void setOutputVariable(ArrayList<String> outputVariable) {
 		this.outputVariable = outputVariable;
 	}
 
@@ -122,11 +132,11 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param elements
-	 *            the elements to set
+	 * @param elements the elements to set
 	 */
 	public void setElements(ArrayList<String> elements) {
 		this.elements = elements;
 	}
+	
 
 }

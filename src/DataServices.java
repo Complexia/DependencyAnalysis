@@ -367,13 +367,24 @@ public class DataServices extends JFrame implements ActionListener {
 
 			
 				index = 0;
-
+				String string = "";
+				
 				tableData[rowIndex][index++] = eachService.getName();
-				tableData[rowIndex][index++] = eachService.getInputService();
-				tableData[rowIndex][index++] = eachService.getOutputService();
-				tableData[rowIndex][index++] = eachService.getNameOfVariable();
-				tableData[rowIndex][index++] = eachService.getInputVariable();
-				tableData[rowIndex][index++] = eachService.getOutputVariable();
+				for(String str : eachService.getInputService()){string += str + " ";}
+				tableData[rowIndex][index++] = string;
+				string = "";
+				for(String str : eachService.getOutputService()){string += str + " ";}
+				tableData[rowIndex][index++] = string;
+				string = "";
+				for(String str : eachService.getNameOfVariable()){string += str + " ";}
+				tableData[rowIndex][index++] = string;
+				string = "";
+				for(String str : eachService.getInputVariable()){string += str + " ";}
+				tableData[rowIndex][index++] = string;
+				string = "";
+				for(String str : eachService.getOutputVariable()){string += str + " ";}
+				tableData[rowIndex][index++] = string;
+				string = "";
 
 				rowIndex++;
 			
@@ -410,7 +421,13 @@ public class DataServices extends JFrame implements ActionListener {
 		
 		tableData = new Object[hashes.size()][columnNames.length];//configure table to be large enough to fit all the data based on input list sizes
 		
-		
+		for(SimpleService service : hashes.values())
+		{
+			if(service.getOutputService().size() == 1 && service.getNameOfVariable().size() == 0)
+			{
+				
+			}
+		}
 		/* commented so i can test new experimental build
 		for (Service serviceObj : lstData) {
 			if (serviceObj.getOutputs().size() == 1) {
@@ -579,35 +596,35 @@ public class DataServices extends JFrame implements ActionListener {
 		return Flag;
 	}
 
-	public List<String> CheckType112(Service One, String Output1, List<String> CheckedOut) {
-		List<String> CheckedOutNew = new ArrayList<String>();
-		CheckedOutNew.addAll(CheckedOut);
-		CheckedOutNew.add(Output1);
-
-		List<IOVariable> VariableMerges = new ArrayList<IOVariable>();
-		VariableMerges = FindVariablesfromOut(One, Output1);
-		List<String> OutputMerge = new ArrayList<String>();
-		for (int k = 0; k < VariableMerges.size(); k++) {
-			OutputMerge.addAll(VariableMerges.get(k).getOutputs());
-		}
-		removeDuplicate(OutputMerge);
-
-		boolean check = CheckContain(OutputMerge, CheckedOutNew);
-		if (!check) {
-			List<String> Diff = new ArrayList<String>();
-			for (int i = 0; i < OutputMerge.size(); i++) {
-				if (!CheckedOutNew.contains(OutputMerge.get(i))) {
-					Diff.add(OutputMerge.get(i));
-				}
-			}
-			for (int k = 0; k < Diff.size(); k++) {
-				CheckedOutNew = CheckType112(One, Diff.get(k), CheckedOutNew);
-			}
-			return CheckedOutNew;
-		} else {
-			return CheckedOutNew;
-		}
-	}
+//	public List<String> CheckType112(Service One, String Output1, List<String> CheckedOut) {
+//		List<String> CheckedOutNew = new ArrayList<String>();
+//		CheckedOutNew.addAll(CheckedOut);
+//		CheckedOutNew.add(Output1);
+//
+//		List<IOVariable> VariableMerges = new ArrayList<IOVariable>();
+//		VariableMerges = FindVariablesfromOut(One, Output1);
+//		List<String> OutputMerge = new ArrayList<String>();
+//		for (int k = 0; k < VariableMerges.size(); k++) {
+//			OutputMerge.addAll(VariableMerges.get(k).getOutputs());
+//		}
+//		removeDuplicate(OutputMerge);
+//
+//		boolean check = CheckContain(OutputMerge, CheckedOutNew);
+//		if (!check) {
+//			List<String> Diff = new ArrayList<String>();
+//			for (int i = 0; i < OutputMerge.size(); i++) {
+//				if (!CheckedOutNew.contains(OutputMerge.get(i))) {
+//					Diff.add(OutputMerge.get(i));
+//				}
+//			}
+//			for (int k = 0; k < Diff.size(); k++) {
+//				CheckedOutNew = CheckType112(One, Diff.get(k), CheckedOutNew);
+//			}
+//			return CheckedOutNew;
+//		} else {
+//			return CheckedOutNew;
+//		}
+//	}
 
 	public Service CreateSubService(Service serviceObj, Object intCounter, List<String> inputs, List<String> outputs,
 			List<IOVariable> Variable) {

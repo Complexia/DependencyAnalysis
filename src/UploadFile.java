@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -62,15 +63,15 @@ public class UploadFile {
 
 					tmpSrvce.setName(eElement.getElementsByTagName("service_name").item(0).getTextContent());
 
-					tmpSrvce.setInputService(eElement.getElementsByTagName("input_service").item(0).getTextContent());
-
-					tmpSrvce.setOutputService(eElement.getElementsByTagName("output_service").item(0).getTextContent());
-
-					tmpSrvce.setNameOfVariable(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent());
-
-					tmpSrvce.setInputVariable(eElement.getElementsByTagName("input_variable").item(0).getTextContent());
-
-					tmpSrvce.setOutputVariable(eElement.getElementsByTagName("output_variable").item(0).getTextContent());
+					tmpSrvce.setInputService(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_service").item(0).getTextContent().split(",")))); //okay lots of explaining here,
+																																										//lets go inside to out
+					tmpSrvce.setOutputService(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_service").item(0).getTextContent().split(","))));//first the eElement gets the data from
+																																										//the area in the xml denoted by the tag name
+					tmpSrvce.setNameOfVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent().split(","))));//then the test is extracted
+																																										//and split by commas into an array of strings
+					tmpSrvce.setInputVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_variable").item(0).getTextContent().split(","))));//the array is then turned into an arrayList
+																																										//and the list is put into the service variable
+					tmpSrvce.setOutputVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_variable").item(0).getTextContent().split(","))));
 					
 					variablesMap.put(tmpSrvce.getName(), tmpSrvce);
 					
