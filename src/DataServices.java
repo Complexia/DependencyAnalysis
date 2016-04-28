@@ -404,9 +404,14 @@ public class DataServices extends JFrame implements ActionListener {
 		columnNames = new Object[] { "ServiceID ", "Generated elementary services" };
 		int rowIndex = 0;
 		// create a two dimensional array to store display data
-		tableData = new Object[20][lstData.size()];
-		// ArrayList<ArrayList<String>> listOfLists = new
-		// ArrayList<ArrayList<String>>();
+		
+		
+		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
+		
+		tableData = new Object[hashes.size()][columnNames.length];//configure table to be large enough to fit all the data based on input list sizes
+		
+		
+		/* commented so i can test new experimental build
 		for (Service serviceObj : lstData) {
 			if (serviceObj.getOutputs().size() == 1) {
 				tableData[rowIndex][0] = serviceObj.name;
@@ -491,6 +496,7 @@ public class DataServices extends JFrame implements ActionListener {
 			}
 			rowIndex++;
 		}
+		end of old code block */
 		displayResult(tableData, columnNames);
 
 	}
@@ -623,8 +629,9 @@ public class DataServices extends JFrame implements ActionListener {
 		tableData = new Object[20][columnNames.length];
 		int rowIndex = 0;
 		int index = 0;
+		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 		// loop through each service
-
+/*
 		lstData.add(new Service());
 		lstData1 = new ArrayList<SimpleService>();
 		String nameOfService = (String) UploadFile.getVariablesMap().get("nameOfService");
@@ -637,14 +644,17 @@ public class DataServices extends JFrame implements ActionListener {
 		SimpleService service1 = new SimpleService(nameOfService, inputData, outputData, nameOfVariable, inputVariable,
 				outputVariable);
 		lstData1.add(service1);
-		for (SimpleService eachService : lstData1)
-
+*/
+		HashMap<String,L1Tuple> serviceData;
+		for (SimpleService eachService : hashes.values())
 		{
+			
 
 			// check if service has elementary services
 
-			// loop through elementary services/ sub service
-			for (SimpleService service : lstData1) {
+			/* loop through elementary services/ sub service
+			for (SimpleService service : lstData1) 
+			{
 				index = 0;
 				// System.out.println("index: " + index + " rowindex " +
 				// rowIndex + " each service: " + eachService.GetName());
@@ -666,18 +676,6 @@ public class DataServices extends JFrame implements ActionListener {
 				// }
 				// Inputs = (ArrayList<String>) subService.getInputs();
 				// Hard-coded data for displaying in L1
-				Name.add("SDDD");
-				Name.add("SDDD");
-				Name.add("SDDD");
-				Name.add("SDDD");
-				Inputs.add("asd");
-				Inputs.add("asd");
-				Inputs.add("asd");
-				Inputs.add("asd");
-				Outputs.add("asd");
-				Outputs.add("asd");
-				Outputs.add("asd");
-				Outputs.add("asd");
 				// Outputs = (ArrayList<String>) subService.getOutputs();
 				// }
 				tableData[rowIndex][index++] = Name;
@@ -686,19 +684,12 @@ public class DataServices extends JFrame implements ActionListener {
 
 				rowIndex++;
 			}
+			uncomment for original non working code */
 
-			index = 0;
+			// index = 0;
 			// System.out.println("index: " + index + " rowindex " +
 			// rowIndex + " each service: " + eachService.GetName());
-			tableData[rowIndex][index++] = "SDD";
-			tableData[rowIndex][index++] = "No Sub Service";
-			tableData[rowIndex][index++] = "Data1";
-			tableData[rowIndex][index++] = "SSDD";
-			tableData[rowIndex][index++] = "-";
-			tableData[rowIndex][index++] = "-";
-			tableData[rowIndex][index++] = "-";
-			rowIndex++;
-			System.out.println("HOLA");
+			// rowIndex++;
 
 		}
 		displayResult(tableData, columnNames);

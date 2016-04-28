@@ -55,7 +55,8 @@ public class UploadFile {
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
 				{
-					Element eElement = (Element) nNode;
+					Element eElement = (Element) nNode;//TODO: refactor code to hold services and variables in arrays as there are multiple of them, do after friday meeting as this will
+					// affect many parts of the codebase and cause them not to work until changes are complete
 					//experimental build starts here---------------------------------------------------------------------------------------
 					SimpleService tmpSrvce = new SimpleService();
 
