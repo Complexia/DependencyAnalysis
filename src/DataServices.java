@@ -372,7 +372,7 @@ public class DataServices extends JFrame implements ActionListener {
 				tableData[rowIndex][index++] = eachService.getName();
 				for(String str : eachService.getInputService()){string += str + " ";}
 				tableData[rowIndex][index++] = string;
-				string = "";
+				string = "";//gotta clean the variable out between uses or you get the previous data as well
 				for(String str : eachService.getOutputService()){string += str + " ";}
 				tableData[rowIndex][index++] = string;
 				string = "";

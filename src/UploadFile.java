@@ -67,7 +67,7 @@ public class UploadFile {
 																																										//lets go inside to out
 					tmpSrvce.setOutputService(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_service").item(0).getTextContent().split(","))));//first the eElement gets the data from
 																																										//the area in the xml denoted by the tag name
-					tmpSrvce.setNameOfVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent().split(","))));//then the test is extracted
+					tmpSrvce.setNameOfVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent().split(","))));//then the text is extracted
 																																										//and split by commas into an array of strings
 					tmpSrvce.setInputVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_variable").item(0).getTextContent().split(","))));//the array is then turned into an arrayList
 																																										//and the list is put into the service variable
