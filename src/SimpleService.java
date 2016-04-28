@@ -10,6 +10,7 @@ public class SimpleService {
 	private ArrayList<String> outputVariable;//
 	private SimpleService parent;//if service is a subservice
 	private ArrayList<SimpleService> children;//if service has been decomposed, store subservices
+	private Boolean isElementary;
 
 	private ArrayList<String> elements;
 
@@ -136,6 +137,20 @@ public class SimpleService {
 	 */
 	public void setElements(ArrayList<String> elements) {
 		this.elements = elements;
+	}
+
+	/**
+	 * @return the isElementary
+	 */
+	public Boolean IsElementary() {
+		return isElementary;
+	}
+
+	/**
+	 * @param isElementary the isElementary to set
+	 */
+	public void setIsElementary(Boolean isElementary) {
+		this.isElementary = isElementary;
 	}
 	
 

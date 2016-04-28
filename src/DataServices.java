@@ -425,6 +425,11 @@ public class DataServices extends JFrame implements ActionListener {
 		{
 			if(service.getOutputService().size() == 1 && service.getNameOfVariable().size() == 0)
 			{
+				service.setIsElementary(true);
+			}
+			
+			if(true)
+			{
 				
 			}
 		}
