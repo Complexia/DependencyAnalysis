@@ -1,21 +1,71 @@
 import java.util.ArrayList;
 
+/**
+ * Represents the services of the system
+ * @author Simon Miller s3353879
+ * @author Roman Lobanov s3399752
+ * @author Leslie Pang s3390257
+ * @author Jordan Mason s3423620
+ *
+ */
 public class SimpleService {
 
+	/**
+	 * stores the service name
+	 */
 	private String name;
-	private ArrayList<String> inputService;//there can be multiple of these so we need to use lists
-	private ArrayList<String> outputService;//
-	private ArrayList<String> nameOfVariable;//
-	private ArrayList<String> inputVariable;//
-	private ArrayList<String> outputVariable;//
-	private SimpleService parent;//if service is a subservice
-	private ArrayList<SimpleService> children;//if service has been decomposed, store subservices
+	/**
+	 * stores all input services
+	 */
+	private ArrayList<String> inputService;
+	/**
+	 * stores all output services
+	 */
+	private ArrayList<String> outputService;
+	/**
+	 * stores all local varaibles
+	 */
+	private ArrayList<String> nameOfVariable;
+	/**
+	 * stores all input variables
+	 */
+	private ArrayList<String> inputVariable;
+	/**
+	 * stores all output variables
+	 */
+	private ArrayList<String> outputVariable;
+	/**
+	 * stores the parent service this was decomposed from
+	 */
+	private SimpleService parent;
+	/**
+	 * stores all services decomposed from this service
+	 */
+	private ArrayList<SimpleService> children;
+	/**
+	 * value to store whether service is elementary or not
+	 */
 	private Boolean isElementary;
 
+	/**
+	 * stores all elements, currently unused
+	 */
 	private ArrayList<String> elements;
 
+	/**
+	 * default constructor used whenever a service is needed but the info to populate it is not readily available yet
+	 */
 	public SimpleService(){} // default empty constructor
 
+	/**
+	 * constructor used when all initial information is available from conception
+	 * @param name
+	 * @param inputService
+	 * @param outputService
+	 * @param nameOfVariable
+	 * @param inputVariable
+	 * @param outputVariable
+	 */
 	public SimpleService(String name, ArrayList<String> inputService, ArrayList<String> outputService,
 			ArrayList<String> nameOfVariable, ArrayList<String> inputVariable, ArrayList<String> outputVariable) {
 		super();
@@ -28,15 +78,32 @@ public class SimpleService {
 	}
 
 
+	
+
+	/**
+	 * @return the parent
+	 */
 	public SimpleService getParent() {
 		return parent;
 	}
+
+	/**
+	 * @param parent the parent that was decomposed
+	 */
 	public void setParent(SimpleService parent) {
 		this.parent = parent;
 	}
+
+	/**
+	 * @return the children
+	 */
 	public ArrayList<SimpleService> getChildren() {
 		return children;
 	}
+
+	/**
+	 * @param children the children that were decomposed from this service
+	 */
 	public void setChildren(ArrayList<SimpleService> children) {
 		this.children = children;
 	}
@@ -140,14 +207,14 @@ public class SimpleService {
 	}
 
 	/**
-	 * @return the isElementary
+	 * @return value whether service is Elementary or not
 	 */
 	public Boolean IsElementary() {
 		return isElementary;
 	}
 
 	/**
-	 * @param isElementary the isElementary to set
+	 * @param isElementary set result of analysis
 	 */
 	public void setIsElementary(Boolean isElementary) {
 		this.isElementary = isElementary;

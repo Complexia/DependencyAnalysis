@@ -49,6 +49,15 @@ import org.w3c.dom.Document;
 //*******************************************************************************************************
 //Create GUI
 
+/**
+ * The purpose of this application is to break down systems input from an .xml file using various analysis techniques
+ * and then provide easy to read results.
+ * @author Simon Miller s3353879
+ * @author Roman Lobanov s3399752
+ * @author Leslie Pang s3390257
+ * @author Jordan Mason s3423620
+ *
+ */
 public class DataServices extends JFrame implements ActionListener {
 	// Create button labels
 	private static final long serialVersionUID = 1L;

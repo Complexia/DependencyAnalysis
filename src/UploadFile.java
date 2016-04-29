@@ -12,6 +12,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Used to read through input files, extracting all relevant information into {@link SimpleService}.
+ * currently only works with xml files.
+ * @author Simon Miller s3353879
+ * @author Roman Lobanov s3399752
+ * @author Leslie Pang s3390257
+ * @author Jordan Mason s3423620
+ *
+ */
 public class UploadFile {
 
 	private static Document doc1;
@@ -20,21 +29,96 @@ public class UploadFile {
 	private static HashMap<String, SimpleService> variablesMap = new HashMap<>();
 	private static ArrayList<HashMap> hashMaps = new ArrayList<>();
 
+	/**
+	 * The default getter for doc1
+	 * @return the parsed xml document
+	 */
 	public static Document getDoc() {
 		return doc1;
 	}
 
+	
+
+	/**
+	 * @return the elements
+	 */
 	public static ArrayList<Service> getElements() {
 		return elements;
 	}
 
-	public static HashMap getVariablesMap() {
+
+
+	/**
+	 * @param elements the elements to set
+	 */
+	public static void setElements(ArrayList<Service> elements) {
+		UploadFile.elements = elements;
+	}
+
+
+
+	/**
+	 * @return the variables
+	 */
+	public static ArrayList<String> getVariables() {
+		return variables;
+	}
+
+
+
+	/**
+	 * @param variables the variables to set
+	 */
+	public static void setVariables(ArrayList<String> variables) {
+		UploadFile.variables = variables;
+	}
+
+
+
+	/**
+	 * @return the variablesMap
+	 */
+	public static HashMap<String, SimpleService> getVariablesMap() {
 		return variablesMap;
 	}
-	
-	public static ArrayList<HashMap> getHashMaps(){
+
+
+
+	/**
+	 * @param variablesMap the variablesMap to set
+	 */
+	public static void setVariablesMap(HashMap<String, SimpleService> variablesMap) {
+		UploadFile.variablesMap = variablesMap;
+	}
+
+
+
+	/**
+	 * @return the hashMaps
+	 */
+	public static ArrayList<HashMap> getHashMaps() {
 		return hashMaps;
 	}
+
+
+
+	/**
+	 * @param hashMaps the hashMaps to set
+	 */
+	public static void setHashMaps(ArrayList<HashMap> hashMaps) {
+		UploadFile.hashMaps = hashMaps;
+	}
+
+
+
+	/**
+	 * @param doc1 the document to set
+	 */
+	public static void setDoc1(Document doc1) {
+		UploadFile.doc1 = doc1;
+	}
+
+
 
 	public static void uploadL0(File file) {
 		try {
