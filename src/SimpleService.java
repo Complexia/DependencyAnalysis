@@ -23,7 +23,7 @@ public class SimpleService {
 	 */
 	private ArrayList<String> outputService;
 	/**
-	 * stores all local varaibles
+	 * stores all local variables
 	 */
 	private ArrayList<String> nameOfVariable;
 	/**

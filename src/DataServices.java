@@ -243,6 +243,11 @@ public class DataServices extends JFrame implements ActionListener {
 	// *****************************************************************************************************
 
 	// Display results in the GUI
+	/**
+	 * responsible for taking formatted data and putting into a table to be displayed
+	 * @param tableData The data to be entered into the table
+	 * @param columnNames the categories for the data
+	 */
 	private void displayResult(Object[][] tableData, Object[] columnNames) {
 		if (tableData != null && columnNames != null) {
 			programPanel.remove(dataPanel);
@@ -318,6 +323,11 @@ public class DataServices extends JFrame implements ActionListener {
 
 	// ******************************************************************************************************
 	// read xml file
+	/**
+	 * reads the xml input file.
+	 * @param file selected input file
+	 * @return A list of the created services
+	 */
 	private List<Service> readFromXML(File file) {
 		List<Service> listOfService = null;
 		try {
@@ -338,6 +348,10 @@ public class DataServices extends JFrame implements ActionListener {
 
 	// Display existing contents of the json file as Level 0 in the GUI
 	// Create L0 method
+	/**
+	 * generates the top level system view as described in the input file and formats
+	 * the data to be viewed in table form
+	 */
 	private void GenerateL0() {
 		elementaryServices = new ArrayList<Service>();
 		columnNames = new Object[] { "Name of Service", "Input Data", "Output Data", "Name of Variable",
@@ -379,19 +393,19 @@ public class DataServices extends JFrame implements ActionListener {
 				String string = "";
 				
 				tableData[rowIndex][index++] = eachService.getName();
-				for(String str : eachService.getInputService()){string += str + " ";}
+				for(String str : eachService.getInputService()){string += str + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";//gotta clean the variable out between uses or you get the previous data as well
-				for(String str : eachService.getOutputService()){string += str + " ";}
+				for(String str : eachService.getOutputService()){string += str + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getNameOfVariable()){string += str + " ";}
+				for(String str : eachService.getNameOfVariable()){string += str + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getInputVariable()){string += str + " ";}
+				for(String str : eachService.getInputVariable()){string += str + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getOutputVariable()){string += str + " ";}
+				for(String str : eachService.getOutputVariable()){string += str + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
 
@@ -419,6 +433,10 @@ public class DataServices extends JFrame implements ActionListener {
 	// ********************************************************************************************************
 	// Create Check Elementary Service method
 
+	/**
+	 * decomposes system and finds elementary services then displays results
+	 * in a table.
+	 */
 	private void checkElementaryService() {
 		// create column name for displaying in the grid
 		columnNames = new Object[] { "ServiceID ", "Generated elementary services" };
@@ -652,6 +670,11 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// generate level 1
+	/**
+	 * looks at decomposed view of system and outputs the state of it.
+	 * this works in conjunction with {@link CheckElementaryService} 
+	 * to form the next level in the system analysis.
+	 */
 	private void generateLevel1() {
 		elementaryServices = new ArrayList<Service>();
 		columnNames = new Object[] { "Main Service", "Sub Service", "inputs", "outputs", "name of variable",
@@ -727,6 +750,10 @@ public class DataServices extends JFrame implements ActionListener {
 	}
 
 	// identify the strong connected services
+	/**
+	 * Utilises Tarjan's algorithm to identify strongly connected services in the
+	 * system's directed graph of connections.
+	 */
 	private void identifyStronglyConnectedServices() {
 		columnNames = new Object[] { "Service", "Type of node", "Predecessors", "Successors", "Has System inputs",
 				"Has System outputs" };
@@ -791,6 +818,11 @@ public class DataServices extends JFrame implements ActionListener {
 	ArrayDeque<ServiceNode> tarjanStack;
 	ArrayList<StronglyConnectedService> scsList;
 
+	/**
+	 * displays system view after tarjan's algorithm has been fully applied by
+	 * {@link identifyStronglyConnectedServices} and {@link strongConnect}
+	 * showing a view with all extraneous services removed.
+	 */
 	private void generateLevel2() {
 		scsList = new ArrayList<StronglyConnectedService>();
 		tarjanIndex = 0;
@@ -841,6 +873,13 @@ public class DataServices extends JFrame implements ActionListener {
 	// S.push(v)
 	// v.onStack := true
 
+	/**
+	 * Primary implementation of tarjan's algorithm. is used by {@link GenerateL2}
+	 *  and {@link identifyStronglyConnectedServices}.
+	 * Searches through graph looking for circular dependancies, and creating new
+	 * strongly connected services.
+	 * @param v starting service to begin with
+	 */
 	void strongConnect(ServiceNode v) {
 		v.setTarjanIndex(tarjanIndex);
 		v.setTarjanLowLink(tarjanIndex);
