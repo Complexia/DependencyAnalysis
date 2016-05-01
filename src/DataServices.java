@@ -395,19 +395,19 @@ public class DataServices extends JFrame implements ActionListener {
 				String string = "";
 				
 				tableData[rowIndex][index++] = eachService.getName();
-				for(String str : eachService.getInputService()){string += str + ",";}
+				for(IOVariable str : eachService.getInputService()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";//gotta clean the variable out between uses or you get the previous data as well
-				for(String str : eachService.getOutputService()){string += str + ",";}
+				for(IOVariable str : eachService.getOutputService()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getNameOfVariable()){string += str + ",";}
+				for(IOVariable str : eachService.getNameOfVariable()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getInputVariable()){string += str + ",";}
+				for(IOVariable str : eachService.getInputVariable()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getOutputVariable()){string += str + ",";}
+				for(IOVariable str : eachService.getOutputVariable()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
 
@@ -471,15 +471,27 @@ public class DataServices extends JFrame implements ActionListener {
 					if(Collections.disjoint(out.inputs, meatTray.getNameOfVariable()))//check if output has multiple local dependencies
 					{
 						subs.get(subsIndex).add(out);
+						meatTray.removeOutputService(out);
 					}
 					else
 					{
 						rejects.add(out);//put it in the list of outputs to be made into their own elementary services
+						meatTray.removeOutputService(out);
 					}
 				}
 				subsIndex += 1;
 				
 			}
+			assert meatTray.getNameOfVariable().size() == 0;//sanity check to ensure all locals are handeled first
+			
+			for(IOVariable out : meatTray.getOutputService())
+			{
+				rejects.add(out);
+				meatTray.removeOutputService(out);
+			}
+			
+			assert meatTray.getOutputService().size() == 0;//have we got all the outputs sorted into elementaries
+			
 			//make the subservices now we have sorted out the outputs
 			for(Entry<IOVariable, ArrayList<IOVariable>> outList : subs.entrySet())
 			{
@@ -499,6 +511,18 @@ public class DataServices extends JFrame implements ActionListener {
 					ins.addAll((ArrayList<IOVariable>) outs.inputs);//put all the inputs from the outputs into the service, i'm not entirely sure we need this. tarjan's might require it
 				}
 				sub.setInputService(ins);
+				sub.setChildren(null);
+			}
+			//make the single output no local variable elementary services
+			for(IOVariable reject : rejects)
+			{
+				SimpleService sub = new SimpleService();
+				sub.setName(service.getName() + (service.getChildren().size()+1));
+				sub.setParent(service);
+				ArrayList<IOVariable> tmp = new ArrayList<IOVariable>();
+				tmp.add(reject);
+				sub.setOutputService(tmp);
+				sub.setInputService((ArrayList<IOVariable>)reject.inputs);
 				sub.setChildren(null);
 			}
 			

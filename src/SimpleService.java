@@ -229,5 +229,14 @@ public class SimpleService {
 	{
 		return nameOfVariable.remove(rm);
 	}
+	
+	public Boolean removeInputService(IOVariable rm)
+	{
+		return inputService.remove(rm);
+	}
+	public Boolean removeOutputService(IOVariable rm)
+	{
+		return outputService.remove(rm);
+	}
 
 }
