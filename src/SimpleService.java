@@ -200,14 +200,14 @@ public class SimpleService {
 	/**
 	 * @return the elements
 	 */
-	public ArrayList<IOVariable> getElements() {
+	public ArrayList<String> getElements() {
 		return elements;
 	}
 
 	/**
 	 * @param elements the elements to set
 	 */
-	public void setElements(ArrayList<IOVariable> elements) {
+	public void setElements(ArrayList<String> elements) {
 		this.elements = elements;
 	}
 

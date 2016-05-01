@@ -491,6 +491,15 @@ public class DataServices extends JFrame implements ActionListener {
 				lin.add(outList.getKey());
 				sub.setNameOfVariable(lin);
 				sub.setOutputService(outList.getValue());
+				ArrayList<IOVariable> ins = new ArrayList<IOVariable>();
+				ins.addAll(outList.getKey().inputs);
+				for(IOVariable outs : outList.getValue())
+				{
+					ins.removeAll((ArrayList<IOVariable>) outs.inputs);//remove all elements in theinput array to ensure no duplicates
+					ins.addAll((ArrayList<IOVariable>) outs.inputs);//put all the inputs from the outputs into the service, i'm not entirely sure we need this. tarjan's might require it
+				}
+				sub.setInputService(ins);
+				sub.setChildren(null);
 			}
 			
 //			if(service.getOutputService().size() == 1 && service.getNameOfVariable().size() == 0)
