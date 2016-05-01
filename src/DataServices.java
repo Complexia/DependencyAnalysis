@@ -448,6 +448,8 @@ public class DataServices extends JFrame implements ActionListener {
 		
 		tableData = new Object[hashes.size()][columnNames.length];//configure table to be large enough to fit all the data based on input list sizes
 		
+		//this is all somewhat speculative and done late at night, needs logic checking but it looks to be a step in the right direction
+		
 		for(SimpleService service : hashes.values())
 		{
 			if(service.getOutputService().size() == 1 && service.getNameOfVariable().size() == 0)
@@ -455,11 +457,32 @@ public class DataServices extends JFrame implements ActionListener {
 				service.setIsElementary(true);
 			}
 			
-			if(true)
+			if(service.getOutputService().size() > 1 && service.getNameOfVariable().size() == 1)
 			{
+				//check to see if all outputs have common local dependency
+				//currently working on a fictitious idea of the data structure, basically just getting an idea of the business logic here
+				if(service.getNameOfVariable()[0].outputs.size() == service.getOutputService().size())
+				{
+					service.setIsElementary(true);
+				}
 				
+				else//make a new elementary subservice from the single local variable and all outputs that it owns
+				{
+					String name = service.getName() + "1";
+					ArrayList<IOVariable> inputs = service.getNameOfVariable()[0].inputs;
+					ArrayList<IOVariable> outs = service.getNameOfVariable()[0].outputs;
+					SimpleService parent = service;
+					SimpleService subService = new SimpleService();
+					subService.setInputService(inputs);
+					subService.setOutputService(outs);
+					subService.setParent(parent);
+					subService.setIsElementary(true);
+					service.addChild(subService);
+				}
 			}
 		}
+		
+		
 		/* commented so i can test new experimental build
 		for (Service serviceObj : lstData) {
 			if (serviceObj.getOutputs().size() == 1) {

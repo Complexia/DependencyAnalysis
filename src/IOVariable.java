@@ -11,9 +11,10 @@ import java.util.List;
  */
 public class IOVariable
 {
-   String name;
-   List<IOVariable> inputs;
-   List<IOVariable> outputs;
+	//everything public because there isn't much need for encapsulation here
+   public String name;
+   public List<IOVariable> inputs;
+   public List<IOVariable> outputs;
    
 /**
  * Standard getter for the name variable

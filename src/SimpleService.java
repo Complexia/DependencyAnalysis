@@ -107,6 +107,11 @@ public class SimpleService {
 	public void setChildren(ArrayList<SimpleService> children) {
 		this.children = children;
 	}
+	
+	public void addChild(SimpleService child)
+	{
+		children.add(child);
+	}
 
 	/**
 	 * @return the name
