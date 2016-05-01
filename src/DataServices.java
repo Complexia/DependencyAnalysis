@@ -27,8 +27,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -446,22 +448,69 @@ public class DataServices extends JFrame implements ActionListener {
 		
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 		
-		tableData = new Object[hashes.size()][columnNames.length];//configure table to be large enough to fit all the data based on input list sizes
+		tableData = new Object[hashes.size()][columnNames.length];//configure table to be large enough to fit all the data based on input list sizes. TODO make thgis work better subservices will need to be taken into account
 		
 		//this is all somewhat speculative and done late at night, needs logic checking but it looks to be a step in the right direction
 		
 		for(SimpleService service : hashes.values())
 		{
-			if(service.getOutputService().size() == 1 && service.getNameOfVariable().size() == 0)
+			//performing a rough and dirty clone so we have something to break up into subservices without destroying the original
+			SimpleService meatTray = new SimpleService("meat",service.getInputService(), service.getOutputService(), service.getNameOfVariable(), service.getInputVariable(), service.getOutputVariable());
+			
+			int varIndex = 0;
+			int subsIndex = 0;
+			ArrayList<IOVariable> rejects = new ArrayList<IOVariable>();
+			HashMap<IOVariable, ArrayList<IOVariable>> subs = new HashMap<IOVariable, ArrayList<IOVariable>>();
+			for(IOVariable lVar : meatTray.getNameOfVariable())
 			{
-				service.setIsElementary(true);
+				subs.put(lVar, new ArrayList<IOVariable>());//create new anonymous array for the subservice to be made
+				meatTray.removeVariable(lVar);//take it out of the checked service so we don't get false positives from the disjoint
+				
+				for(IOVariable out : lVar.outputs)
+				{
+					if(Collections.disjoint(out.inputs, meatTray.getNameOfVariable()))//check if output has multiple local dependencies
+					{
+						subs.get(subsIndex).add(out);
+					}
+					else
+					{
+						rejects.add(out);//put it in the list of outputs to be made into their own elementary services
+					}
+				}
+				subsIndex += 1;
+				
+			}
+			//make the subservices now we have sorted out the outputs
+			for(Entry<IOVariable, ArrayList<IOVariable>> outList : subs.entrySet())
+			{
+				SimpleService sub = new SimpleService();
+				sub.setName(service.getName() + (service.getChildren().size()+1));
+				sub.setParent(service);
+				//convert single variable into a list
+				ArrayList<IOVariable> lin = new ArrayList<IOVariable>();
+				lin.add(outList.getKey());
+				sub.setNameOfVariable(lin);
+				sub.setOutputService(outList.getValue());
 			}
 			
+//			if(service.getOutputService().size() == 1 && service.getNameOfVariable().size() == 0)
+//			{
+//				service.setIsElementary(true);
+//			}
+//			
+//			else
+//			{
+//				for(IOVariable output : service.getOutputService())
+//				{
+//					if(!Collections.disjoint(output.inputs, service.getNameOfVariable()))
+//				}
+//			}
+			//probably needs refactoring
 			if(service.getOutputService().size() > 1 && service.getNameOfVariable().size() == 1)
 			{
 				//check to see if all outputs have common local dependency
 				//currently working on a fictitious idea of the data structure, basically just getting an idea of the business logic here
-				if(service.getNameOfVariable()[0].outputs.size() == service.getOutputService().size())
+				if(service.getNameOfVariable().get(0).outputs.size() == service.getOutputService().size())
 				{
 					service.setIsElementary(true);
 				}
@@ -469,10 +518,11 @@ public class DataServices extends JFrame implements ActionListener {
 				else//make a new elementary subservice from the single local variable and all outputs that it owns
 				{
 					String name = service.getName() + "1";
-					ArrayList<IOVariable> inputs = service.getNameOfVariable()[0].inputs;
-					ArrayList<IOVariable> outs = service.getNameOfVariable()[0].outputs;
+					ArrayList<IOVariable> inputs = (ArrayList<IOVariable>) service.getNameOfVariable().get(0).inputs;
+					ArrayList<IOVariable> outs = (ArrayList<IOVariable>) service.getNameOfVariable().get(0).outputs;
 					SimpleService parent = service;
 					SimpleService subService = new SimpleService();
+					subService.setName(name);
 					subService.setInputService(inputs);
 					subService.setOutputService(outs);
 					subService.setParent(parent);
