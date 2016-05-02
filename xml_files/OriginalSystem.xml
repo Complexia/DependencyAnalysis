@@ -2,26 +2,26 @@
 <company>
 	<service serviceName="A1">
 		<service_name>A1</service_name>
-		<input_service>data 1</input_service> 		  
-		<output_service>data 2, data 10</output_service>
+		<input_service>data1</input_service> 		  
+		<output_service>data2,data10</output_service>
 		<nameofvariable>st1</nameofvariable>
-		<input_variable>data 1</input_variable>
-		<output_variable>data 10</output_variable>
+		<input_variable>data1</input_variable>
+		<output_variable>data10</output_variable>
 	</service>
 
 	<service serviceName="A2">
 		<service_name>A2</service_name>
-		<input_service>data 2,data 3</input_service>
-		<output_service>data 4, data 5, data 11, data 12</output_service>
+		<input_service>data2,data3</input_service>
+		<output_service>data4,data5,data11,data12</output_service>
 		<nameofvariable>st2</nameofvariable>
-		<input_variable>data 3</input_variable>
-		<output_variable>data 4, data 12</output_variable>
+		<input_variable>data3</input_variable>
+		<output_variable>data4,data12</output_variable>
 	</service>
 
 	<service serviceName="A3">
 		<service_name>A3</service_name>
-		<input_service>data 4, data 5</input_service>
-		<output_service>data 6, data 7</output_service>
+		<input_service>data4,data5</input_service>
+		<output_service>data6,data7</output_service>
 		<nameofvariable></nameofvariable>
 		<input_variable></input_variable>
 		<output_variable></output_variable>
@@ -29,17 +29,17 @@
 
 	<service serviceName="A4">
 		<service_name>A4</service_name>
-		<input_service>data 6, data 7</input_service>
-		<output_service>data 3, data 8</output_service>
+		<input_service>data6,data7</input_service>
+		<output_service>data3,data8</output_service>
 		<nameofvariable>st4</nameofvariable>
-		<input_variable>data 6, data 7</input_variable>
-		<output_variable>data 3</output_variable>
+		<input_variable>data6,data7</input_variable>
+		<output_variable>data3</output_variable>
 	</service>
 
 	<service serviceName="A5">
 		<service_name>A5</service_name>
-		<input_service>data 8</input_service>
-		<output_service>data 9</output_service>
+		<input_service>data8</input_service>
+		<output_service>data9</output_service>
 		<nameofvariable></nameofvariable>
 		<input_variable></input_variable>
 		<output_variable></output_variable>
