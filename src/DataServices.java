@@ -27,8 +27,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -393,19 +395,19 @@ public class DataServices extends JFrame implements ActionListener {
 				String string = "";
 				
 				tableData[rowIndex][index++] = eachService.getName();
-				for(String str : eachService.getInputService()){string += str + ",";}
+				for(IOVariable str : eachService.getInputService()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";//gotta clean the variable out between uses or you get the previous data as well
-				for(String str : eachService.getOutputService()){string += str + ",";}
+				for(IOVariable str : eachService.getOutputService()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getNameOfVariable()){string += str + ",";}
+				for(IOVariable str : eachService.getNameOfVariable()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getInputVariable()){string += str + ",";}
+				for(IOVariable str : eachService.getInputVariable()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
-				for(String str : eachService.getOutputVariable()){string += str + ",";}
+				for(IOVariable str : eachService.getOutputVariable()){string += str.name + ",";}
 				tableData[rowIndex][index++] = string;
 				string = "";
 
@@ -438,48 +440,91 @@ public class DataServices extends JFrame implements ActionListener {
 	 * in a table.
 	 */
 	private void checkElementaryService() {
-		// create column name for displaying in the grid
-		columnNames = new Object[] { "ServiceID ", "Generated elementary services" };
-		int rowIndex = 0;
-		// create a two dimensional array to store display data
 		
 		
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 		
-		tableData = new Object[hashes.size()][columnNames.length];//configure table to be large enough to fit all the data based on input list sizes
-		
+		int subServiceCount = 0;
 		//this is all somewhat speculative and done late at night, needs logic checking but it looks to be a step in the right direction
 		
 		for(SimpleService service : hashes.values())
 		{
-			if(service.getOutputService().size() == 1 && service.getNameOfVariable().size() == 0)
+			//performing a rough and dirty clone so we have something to break up into subservices without destroying the original
+			SimpleService meatTray = new SimpleService("meat",service.getInputService(), service.getOutputService(), service.getNameOfVariable(), service.getInputVariable(), service.getOutputVariable());
+			
+			int subsIndex = 0;
+			ArrayList<IOVariable> rejects = new ArrayList<IOVariable>();
+			HashMap<IOVariable, ArrayList<IOVariable>> subs = new HashMap<IOVariable, ArrayList<IOVariable>>();
+			for(IOVariable lVar : meatTray.getNameOfVariable())
 			{
-				service.setIsElementary(true);
+				subs.put(lVar, new ArrayList<IOVariable>());//create new anonymous array for the subservice to be made
+				meatTray.removeVariable(lVar);//take it out of the checked service so we don't get false positives from the disjoint
+				
+				for(IOVariable out : lVar.outputs)
+				{
+					if(Collections.disjoint(out.inputs, meatTray.getNameOfVariable()))//check if output has multiple local dependencies
+					{
+						subs.get(subsIndex).add(out);
+						meatTray.removeOutputService(out);
+					}
+					else
+					{
+						rejects.add(out);//put it in the list of outputs to be made into their own elementary services
+						meatTray.removeOutputService(out);
+					}
+				}
+				subsIndex += 1;
+				
+			}
+			assert meatTray.getNameOfVariable().size() == 0;//sanity check to ensure all locals are handeled first
+			
+			for(IOVariable out : meatTray.getOutputService())
+			{
+				rejects.add(out);
+				meatTray.removeOutputService(out);
 			}
 			
-			if(service.getOutputService().size() > 1 && service.getNameOfVariable().size() == 1)
+			assert meatTray.getOutputService().size() == 0;//have we got all the outputs sorted into elementaries
+			
+			//make the subservices now we have sorted out the outputs
+			for(Entry<IOVariable, ArrayList<IOVariable>> outList : subs.entrySet())
 			{
-				//check to see if all outputs have common local dependency
-				//currently working on a fictitious idea of the data structure, basically just getting an idea of the business logic here
-				if(service.getNameOfVariable()[0].outputs.size() == service.getOutputService().size())
+				subServiceCount++;
+				SimpleService sub = new SimpleService();
+				sub.setName(service.getName() + (service.getChildren().size()+1));
+				sub.setParent(service);
+				//convert single variable into a list
+				ArrayList<IOVariable> lin = new ArrayList<IOVariable>();
+				lin.add(outList.getKey());
+				sub.setNameOfVariable(lin);
+				sub.setOutputService(outList.getValue());
+				ArrayList<IOVariable> ins = new ArrayList<IOVariable>();
+				ins.addAll(outList.getKey().inputs);
+				for(IOVariable outs : outList.getValue())
 				{
-					service.setIsElementary(true);
+					ins.removeAll((ArrayList<IOVariable>) outs.inputs);//remove all elements in the input array to ensure no duplicates
+					ins.addAll((ArrayList<IOVariable>) outs.inputs);//put all the inputs from the outputs into the service, i'm not entirely sure we need this. tarjan's might require it
 				}
-				
-				else//make a new elementary subservice from the single local variable and all outputs that it owns
-				{
-					String name = service.getName() + "1";
-					ArrayList<IOVariable> inputs = service.getNameOfVariable()[0].inputs;
-					ArrayList<IOVariable> outs = service.getNameOfVariable()[0].outputs;
-					SimpleService parent = service;
-					SimpleService subService = new SimpleService();
-					subService.setInputService(inputs);
-					subService.setOutputService(outs);
-					subService.setParent(parent);
-					subService.setIsElementary(true);
-					service.addChild(subService);
-				}
+				sub.setInputService(ins);
+				sub.setChildren(null);
+				sub.setIsElementary(true);
 			}
+			//make the single output no local variable elementary services
+			for(IOVariable reject : rejects)
+			{
+				subServiceCount++;
+				SimpleService sub = new SimpleService();
+				sub.setName(service.getName() + (service.getChildren().size()+1));
+				sub.setParent(service);
+				ArrayList<IOVariable> tmp = new ArrayList<IOVariable>();
+				tmp.add(reject);
+				sub.setOutputService(tmp);
+				sub.setInputService((ArrayList<IOVariable>)reject.inputs);
+				sub.setChildren(null);
+				sub.setIsElementary(true);
+			}
+			
+			
 		}
 		
 		
@@ -569,6 +614,22 @@ public class DataServices extends JFrame implements ActionListener {
 			rowIndex++;
 		}
 		end of old code block */
+		// create column name for displaying in the grid
+				columnNames = new Object[] { "ServiceID ", "Generated elementary services" };
+				int rowIndex = 0;
+				// create a two dimensional array to store display data
+				tableData = new Object[subServiceCount][columnNames.length];
+				for(SimpleService serv : hashes.values())
+				{
+					tableData[rowIndex][0] = serv.getName();
+					for(SimpleService servlet : serv.getChildren())
+					{
+						tableData[rowIndex][1] = servlet.getName();
+						rowIndex++;
+					}
+					rowIndex++;
+				}
+				
 		displayResult(tableData, columnNames);
 
 	}
@@ -681,16 +742,17 @@ public class DataServices extends JFrame implements ActionListener {
 //		}
 //	}
 
-	public Service CreateSubService(Service serviceObj, Object intCounter, List<String> inputs, List<String> outputs,
-			List<IOVariable> Variable) {
-		Service subService;
-		subService = new Service();
-		subService.setVariable(Variable);
-		subService.setname(serviceObj.getname() + intCounter);
-		subService.setInputs(inputs);
-		subService.setOutputs(outputs);
-		return subService;
-	}
+//  unneeded method, can be deleted
+//	public Service CreateSubService(Service serviceObj, Object intCounter, List<String> inputs, List<String> outputs,
+//			List<IOVariable> Variable) {
+//		Service subService;
+//		subService = new Service();
+//		subService.setVariable(Variable);
+//		subService.setname(serviceObj.getname() + intCounter);
+//		subService.setInputs(inputs);
+//		subService.setOutputs(outputs);
+//		return subService;
+//	}
 
 	// generate level 1
 	/**
@@ -722,46 +784,39 @@ public class DataServices extends JFrame implements ActionListener {
 				outputVariable);
 		lstData1.add(service1);
 */
-		HashMap<String,L1Tuple> serviceData;
 		for (SimpleService eachService : hashes.values())
 		{
 			
 
-			// check if service has elementary services
+			//essentially a copy paste of generateL0 but using the subservices as input
 
-			/* loop through elementary services/ sub service
-			for (SimpleService service : lstData1) 
+			// loop through elementary services/ sub service
+			for (SimpleService service : eachService.getChildren()) 
 			{
 				index = 0;
-				// System.out.println("index: " + index + " rowindex " +
-				// rowIndex + " each service: " + eachService.GetName());
-				// System.out.println(" sub service: " +
-				// subService.GetName());
+				String string = "";
+				
 				tableData[rowIndex][index++] = eachService.getName();
-				System.out.println("HERE" + eachService.getInputService());
-				tableData[rowIndex][index++] = eachService.getInputService();
-				tableData[rowIndex][index++] = eachService.getOutputService();
-				tableData[rowIndex][index++] = eachService.getNameOfVariable();
-				ArrayList<String> Name = new ArrayList<String>();
-				ArrayList<String> Inputs = new ArrayList<String>();
-				ArrayList<String> Outputs = new ArrayList<String>();
-				// if (subService.getVariable().size() > 0)
-				// {
-				// for (IOVariable IOV : subService.getVariable())
-				// {
-				// Name.add(IOV.GetName());
-				// }
-				// Inputs = (ArrayList<String>) subService.getInputs();
-				// Hard-coded data for displaying in L1
-				// Outputs = (ArrayList<String>) subService.getOutputs();
-				// }
-				tableData[rowIndex][index++] = Name;
-				tableData[rowIndex][index++] = Inputs;
-				tableData[rowIndex][index++] = Outputs;
+				tableData[rowIndex][index++] = service.getName();
+				for(IOVariable str : service.getInputService()){string += str.name + ",";}
+				tableData[rowIndex][index++] = string;
+				string = "";//gotta clean the variable out between uses or you get the previous data as well
+				for(IOVariable str : service.getOutputService()){string += str.name + ",";}
+				tableData[rowIndex][index++] = string;
+				string = "";
+				for(IOVariable str : service.getNameOfVariable()){string += str.name + ",";}
+				tableData[rowIndex][index++] = string;
+				string = "";
+				for(IOVariable str : service.getInputVariable()){string += str.name + ",";}
+				tableData[rowIndex][index++] = string;
+				string = "";
+				for(IOVariable str : service.getOutputVariable()){string += str.name + ",";}
+				tableData[rowIndex][index++] = string;
+				string = "";
 
 				rowIndex++;
 			}
-			uncomment for original non working code */
+
 
 			// index = 0;
 			// System.out.println("index: " + index + " rowindex " +

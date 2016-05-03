@@ -140,22 +140,62 @@ public class UploadFile {
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
 				{
-					Element eElement = (Element) nNode;//TODO: refactor code to hold services and variables in arrays as there are multiple of them, do after friday meeting as this will
-					// affect many parts of the codebase and cause them not to work until changes are complete
+					Element eElement = (Element) nNode;
 					//experimental build starts here---------------------------------------------------------------------------------------
 					SimpleService tmpSrvce = new SimpleService();
 
 					tmpSrvce.setName(eElement.getElementsByTagName("service_name").item(0).getTextContent());
+					//dirty workaround, needs to be changed once the xml files are changed
+					ArrayList<IOVariable> retypedData = new ArrayList<IOVariable>();
+					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_service").item(0).getTextContent().split(","))))
+					{
+						IOVariable newio = new IOVariable();
+						newio.name = io;
+						retypedData.add(newio);
+					}
 
-					tmpSrvce.setInputService(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_service").item(0).getTextContent().split(",")))); //okay lots of explaining here,
+					
+					tmpSrvce.setInputService(retypedData); //okay lots of explaining here,
+					
+					retypedData = new ArrayList<IOVariable>();
+					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_service").item(0).getTextContent().split(","))))
+					{
+						IOVariable newio = new IOVariable();
+						newio.name = io;
+						retypedData.add(newio);
+					}
 																																										//lets go inside to out
-					tmpSrvce.setOutputService(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_service").item(0).getTextContent().split(","))));//first the eElement gets the data from
+					tmpSrvce.setOutputService(retypedData);//first the eElement gets the data from
+					
+					retypedData = new ArrayList<IOVariable>();
+					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent().split(","))))
+					{
+						IOVariable newio = new IOVariable();
+						newio.name = io;
+						retypedData.add(newio);
+					}
 																																										//the area in the xml denoted by the tag name
-					tmpSrvce.setNameOfVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent().split(","))));//then the text is extracted
+					tmpSrvce.setNameOfVariable(retypedData);//then the text is extracted
+					
+					retypedData = new ArrayList<IOVariable>();
+					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_variable").item(0).getTextContent().split(","))))
+					{
+						IOVariable newio = new IOVariable();
+						newio.name = io;
+						retypedData.add(newio);
+					}
 																																										//and split by commas into an array of strings
-					tmpSrvce.setInputVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_variable").item(0).getTextContent().split(","))));//the array is then turned into an arrayList
+					tmpSrvce.setInputVariable(retypedData);//the array is then turned into an arrayList
+					
+					retypedData = new ArrayList<IOVariable>();
+					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_variable").item(0).getTextContent().split(","))))
+					{
+						IOVariable newio = new IOVariable();
+						newio.name = io;
+						retypedData.add(newio);
+					}
 																																										//and the list is put into the service variable
-					tmpSrvce.setOutputVariable(new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_variable").item(0).getTextContent().split(","))));
+					tmpSrvce.setOutputVariable(retypedData);
 					
 					variablesMap.put(tmpSrvce.getName(), tmpSrvce);
 					
