@@ -45,6 +45,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 
 import org.w3c.dom.Document;
 
@@ -144,6 +146,11 @@ public class DataServices extends JFrame implements ActionListener {
 		dataPanel = new JPanel();
 		buttonPanel.setBackground(Color.WHITE);
 		buttonPanel.setLayout(new GridLayout(11, 1));
+
+		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+		if (defaults.get("Table.alternateRowColor") == null)
+			defaults.put("Table.alternateRowColor", new Color(240, 240, 240));
+
 		// buttonPanel.setLocation(150, 150);
 		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
 		buttonPanel.setPreferredSize(new Dimension(150, 250));
