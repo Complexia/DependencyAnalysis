@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 /**
  * Represents the services of the system
+ * 
  * @author Simon Miller s3353879
  * @author Roman Lobanov s3399752
  * @author Leslie Pang s3390257
@@ -53,12 +54,24 @@ public class SimpleService {
 	private ArrayList<String> elements;
 
 	/**
-	 * default constructor used whenever a service is needed but the info to populate it is not readily available yet
+	 * default constructor used whenever a service is needed but the info to
+	 * populate it is not readily available yet
 	 */
-	public SimpleService(){} // default empty constructor
+	public SimpleService() {
+		name = "";
+		inputService = new ArrayList<IOVariable>();
+		outputService = new ArrayList<IOVariable>();
+		nameOfVariable = new ArrayList<IOVariable>();
+		inputVariable = new ArrayList<IOVariable>();
+		outputVariable = new ArrayList<IOVariable>();
+		parent = null;
+		children = new ArrayList<SimpleService>();
+	} // default empty constructor
 
 	/**
-	 * constructor used when all initial information is available from conception
+	 * constructor used when all initial information is available from
+	 * conception
+	 * 
 	 * @param name
 	 * @param inputService
 	 * @param outputService
@@ -67,7 +80,8 @@ public class SimpleService {
 	 * @param outputVariable
 	 */
 	public SimpleService(String name, ArrayList<IOVariable> inputService, ArrayList<IOVariable> outputService,
-			ArrayList<IOVariable> nameOfVariable, ArrayList<IOVariable> inputVariable, ArrayList<IOVariable> outputVariable) {
+			ArrayList<IOVariable> nameOfVariable, ArrayList<IOVariable> inputVariable,
+			ArrayList<IOVariable> outputVariable) {
 		super();
 		this.name = name;
 		this.inputService = inputService;
@@ -77,9 +91,6 @@ public class SimpleService {
 		this.outputVariable = outputVariable;
 	}
 
-
-	
-
 	/**
 	 * @return the parent
 	 */
@@ -88,7 +99,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param parent the parent that was decomposed
+	 * @param parent
+	 *            the parent that was decomposed
 	 */
 	public void setParent(SimpleService parent) {
 		this.parent = parent;
@@ -102,14 +114,14 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param children the children that were decomposed from this service
+	 * @param children
+	 *            the children that were decomposed from this service
 	 */
 	public void setChildren(ArrayList<SimpleService> children) {
 		this.children = children;
 	}
-	
-	public void addChild(SimpleService child)
-	{
+
+	public void addChild(SimpleService child) {
 		children.add(child);
 	}
 
@@ -121,7 +133,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -135,7 +148,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param inputService the inputService to set
+	 * @param inputService
+	 *            the inputService to set
 	 */
 	public void setInputService(ArrayList<IOVariable> inputService) {
 		this.inputService = inputService;
@@ -149,7 +163,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param outputService the outputService to set
+	 * @param outputService
+	 *            the outputService to set
 	 */
 	public void setOutputService(ArrayList<IOVariable> outputService) {
 		this.outputService = outputService;
@@ -163,7 +178,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param nameOfVariable the nameOfVariable to set
+	 * @param nameOfVariable
+	 *            the nameOfVariable to set
 	 */
 	public void setNameOfVariable(ArrayList<IOVariable> nameOfVariable) {
 		this.nameOfVariable = nameOfVariable;
@@ -177,7 +193,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param inputVariable the inputVariable to set
+	 * @param inputVariable
+	 *            the inputVariable to set
 	 */
 	public void setInputVariable(ArrayList<IOVariable> inputVariable) {
 		this.inputVariable = inputVariable;
@@ -191,7 +208,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param outputVariable the outputVariable to set
+	 * @param outputVariable
+	 *            the outputVariable to set
 	 */
 	public void setOutputVariable(ArrayList<IOVariable> outputVariable) {
 		this.outputVariable = outputVariable;
@@ -205,7 +223,8 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param elements the elements to set
+	 * @param elements
+	 *            the elements to set
 	 */
 	public void setElements(ArrayList<String> elements) {
 		this.elements = elements;
@@ -219,23 +238,22 @@ public class SimpleService {
 	}
 
 	/**
-	 * @param isElementary set result of analysis
+	 * @param isElementary
+	 *            set result of analysis
 	 */
 	public void setIsElementary(Boolean isElementary) {
 		this.isElementary = isElementary;
 	}
-	
-	public Boolean removeVariable(IOVariable rm)
-	{
+
+	public Boolean removeVariable(IOVariable rm) {
 		return nameOfVariable.remove(rm);
 	}
-	
-	public Boolean removeInputService(IOVariable rm)
-	{
+
+	public Boolean removeInputService(IOVariable rm) {
 		return inputService.remove(rm);
 	}
-	public Boolean removeOutputService(IOVariable rm)
-	{
+
+	public Boolean removeOutputService(IOVariable rm) {
 		return outputService.remove(rm);
 	}
 
