@@ -1,8 +1,11 @@
+package model;
+
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,10 +27,11 @@ import org.w3c.dom.NodeList;
 public class UploadFile {
 
 	private static Document doc1;
-	private static ArrayList<Service> elements = new ArrayList();
+	
 	private static ArrayList<String> variables = new ArrayList();
 	private static HashMap<String, SimpleService> variablesMap = new HashMap<>();
 	private static ArrayList<HashMap> hashMaps = new ArrayList<>();
+	private static ArrayList<Service> elements = new ArrayList();
 
 	/**
 	 * The default getter for doc1
@@ -36,9 +40,7 @@ public class UploadFile {
 	public static Document getDoc() {
 		return doc1;
 	}
-
 	
-
 	/**
 	 * @return the elements
 	 */
@@ -55,7 +57,7 @@ public class UploadFile {
 		UploadFile.elements = elements;
 	}
 
-
+	
 
 	/**
 	 * @return the variables
@@ -116,6 +118,23 @@ public class UploadFile {
 	 */
 	public static void setDoc1(Document doc1) {
 		UploadFile.doc1 = doc1;
+	}
+	
+	public static List<Service> readFromXML(File file) {
+		List<Service> listOfService = null;
+		try {
+			UploadFile.uploadL0(file);
+			Document doc = UploadFile.getDoc();
+			listOfService = UploadFile.getElements();
+
+		}
+
+		catch (Exception e) {
+			System.out.println("error occured during conversion of xml to service list");
+			e.printStackTrace();
+		}
+
+		return listOfService;
 	}
 
 

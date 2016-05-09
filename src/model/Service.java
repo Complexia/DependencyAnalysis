@@ -1,3 +1,5 @@
+package model;
+
 
 //import relevant packages
 import java.io.Serializable;
@@ -97,3 +99,4 @@ public class Service implements Serializable {
 		this.ElementaryServices.add(ServicesOne);
 	}
 }
+
