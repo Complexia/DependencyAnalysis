@@ -1,1 +1,36 @@
 service has no local variables
+<?xml version="1.0"?>
+<company>
+	<service serviceName="A1">
+		<service_name>A1</service_name>
+		<input_service>data4,data5</input_service>
+		<output_service>data6,data7</output_service>
+		<nameofvariable></nameofvariable>
+		<input_variable></input_variable>
+		<output_variable></output_variable>
+	</service>
+
+	<IOVariables>
+		<IOVariable>
+			<IOName>data4</IOName>
+			<ipnputs></inputs>
+			<outputs>data6</outputs>
+		</IOvariable>
+		<IOVariable>
+			<IOName>data5</IOName>
+			<ipnputs></inputs>
+			<outputs>data7</outputs>
+		</IOvariable>
+		<IOVariable>
+			<IOName>data6</IOName>
+			<ipnputs>data4</inputs>
+			<outputs></outputs>
+		</IOvariable>
+		<IOVariable>
+			<IOName>data7</IOName>
+			<ipnputs>data5</inputs>
+			<outputs></outputs>
+		</IOvariable>
+	</IOVariables>
+
+</company>

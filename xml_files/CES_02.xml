@@ -1,1 +1,42 @@
-all elementary services
+<?xml version="1.0"?>
+<company>
+	<service serviceName="A1">
+		<serviceName>A1</serviceName>
+		<inputService></inputService>
+		<outputService>data1, data2</outputService>
+		<nameOfVariable>st1</nameOfVariable>
+		<inputVariable></inputVariable>
+		<outputVariable></outputVariable>
+	</service>
+	<service serviceName="A2">
+		<serviceName>A2</serviceName>
+		<inputService>data2</inputService>
+		<outputService>data3</outputService>
+		<nameOfVariable></nameOfVariable>
+		<inputVariable></inputVariable>
+		<outputVariable></outputVariable>
+	</service>
+
+	<IOVariables>
+		<IOVariable>
+			<IOName>st1</IOName>
+			<ipnputs></inputs>
+			<outputs>data1, data2</outputs>
+		</IOvariable>
+		<IOVariable>
+			<IOName>data1</IOName>
+			<ipnputs>st1</inputs>
+			<outputs></outputs>
+		</IOvariable>
+		<IOVariable>
+			<IOName>data2</IOName>
+			<ipnputs>st1</inputs>
+			<outputs>data3</outputs>
+		</IOvariable>
+		<IOVariable>
+			<IOName>data3</IOName>
+			<ipnputs>data2</inputs>
+			<outputs></outputs>
+		</IOvariable>
+	</IOVariables>		
+</company>

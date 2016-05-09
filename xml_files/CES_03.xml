@@ -1,1 +1,51 @@
-output dependant on two local variables
+<?xml version="1.0"?>
+<company>
+	<service serviceName="A1">
+		<serviceName>A1</serviceName>
+		<inputService></inputService>
+		<outputService>data1, data2</outputService>
+		<nameOfVariable>st1</nameOfVariable>
+		<inputVariable></inputVariable>
+		<outputVariable></outputVariable>
+	</service>
+	<service serviceName="A2">
+		<serviceName>A2</serviceName>
+		<inputService>data1</inputService>
+		<outputService>data3, data4</outputService>
+		<nameOfVariable></nameOfVariable>
+		<inputVariable></inputVariable>
+		<outputVariable></outputVariable>
+	</service>
+	<IOVariables>
+		<IOVariable>
+			<IOName>data1</IOName>
+			<ipnputs></inputs>
+			<outputs>data3</outputs>
+		<IOVariable>
+
+		<IOVariable>
+			<IOName>data2</IOName>
+			<inputs>st1</inputs>
+			<outputs></outputs>
+		<IOVariable>
+
+		<IOVariable>
+			<IOName>data3</IOName>
+			<inputs>data1</inputs>
+			<outputs></outputs>
+		<IOVariable>
+
+		<IOVariable>
+			<IOName>data4</IOName>
+			<inputs>data2</inputs>
+			<outputs></outputs>
+		<IOVariable>
+
+		<IOVariable>
+			<IOName>st1</IOName>
+			<inputs></inputs>
+			<outputs>data2</outputs>
+		<IOVariable>
+
+	</IOVariables>
+</company>
