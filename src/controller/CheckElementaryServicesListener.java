@@ -72,6 +72,7 @@ public class CheckElementaryServicesListener implements ActionListener {
 					subService.setParent(service);
 					subService.setIsElementary(true);
 					service.addChild(subService);
+					subServiceCount++;
 				}
 				else
 				{
@@ -104,6 +105,7 @@ public class CheckElementaryServicesListener implements ActionListener {
 					subService.setParent(service);
 					subService.setIsElementary(true);
 					service.addChild(subService);
+					subServiceCount++;
 					
 				}
 			}
