@@ -187,7 +187,7 @@ public class CheckElementaryServicesListener implements ActionListener {
 				tableData[rowIndex][1] = servlet.getName();
 				rowIndex++;
 			}
-			rowIndex++;
+			//rowIndex++;
 		}
 
 		Factory.displayResult(tableData, columnNames);
