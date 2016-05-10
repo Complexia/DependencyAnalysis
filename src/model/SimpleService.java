@@ -258,6 +258,23 @@ public class SimpleService {
 	public Boolean removeOutputService(IOVariable rm) {
 		return outputService.remove(rm);
 	}
+	
+	public void addInputService(IOVariable in)
+	{
+		inputService.add(in);
+	}
+	
+	public void addVariable(IOVariable in)
+	{
+		nameOfVariable.add(in);
+	}
+
+	
+	public void addoutputService(IOVariable in)
+	{
+		outputService.add(in);
+	}
+
 
 }
 

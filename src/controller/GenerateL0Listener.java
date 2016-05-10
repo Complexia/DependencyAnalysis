@@ -55,35 +55,56 @@ public class GenerateL0Listener implements ActionListener {
 		 * 
 		 * }
 		 */
+		int size, count;
 		for (SimpleService eachService : hashes.values()) {
 
 			index = 0;
 			String string = "";
 
 			tableData[rowIndex][index++] = eachService.getName();
-			for (model.IOVariable str : eachService.getInputService()) {
-				string += str.name + ",";
+			size = eachService.getInputService().size()-1;
+			count = 0;
+			for (model.IOVariable str : eachService.getInputService()) 
+			{
+				string += count < size? str.name + ",": str.name;
+				count++;
 			}
 			tableData[rowIndex][index++] = string;
 			string = "";// gotta clean the variable out between uses or you get
 						// the previous data as well
-			for (model.IOVariable str : eachService.getOutputService()) {
-				string += str.name + ",";
+			size = eachService.getOutputService().size()-1;
+			count = 0;
+			for (model.IOVariable str : eachService.getOutputService()) 
+			{
+				string += count < size? str.name + ",": str.name;
+				count++;
 			}
 			tableData[rowIndex][index++] = string;
 			string = "";
-			for (model.IOVariable str : eachService.getNameOfVariable()) {
-				string += str.name + ",";
+			size = eachService.getNameOfVariable().size()-1;
+			count = 0;
+			for (model.IOVariable str : eachService.getNameOfVariable()) 
+			{
+				string += count < size? str.name + ",": str.name;
+				count++;
 			}
 			tableData[rowIndex][index++] = string;
 			string = "";
-			for (model.IOVariable str : eachService.getInputVariable()) {
-				string += str.name + ",";
+			size = eachService.getInputVariable().size()-1;
+			count = 0;
+			for (model.IOVariable str : eachService.getInputVariable()) 
+			{
+				string += count < size? str.name + ",": str.name;
+				count++;
 			}
 			tableData[rowIndex][index++] = string;
 			string = "";
-			for (model.IOVariable str : eachService.getOutputVariable()) {
-				string += str.name + ",";
+			size = eachService.getOutputVariable().size()-1;
+			count = 0;
+			for (model.IOVariable str : eachService.getOutputVariable()) 
+			{
+				string += count < size? str.name + ",": str.name;
+				count++;
 			}
 			tableData[rowIndex][index++] = string;
 			string = "";

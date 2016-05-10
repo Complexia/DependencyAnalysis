@@ -49,41 +49,68 @@ public class GenerateL1Listener implements ActionListener {
 		 * outputData, nameOfVariable, inputVariable, outputVariable);
 		 * lstData1.add(service1);
 		 */
+		int size, count;
 		for (SimpleService eachService : hashes.values()) {
 
 			// essentially a copy paste of generateL0 but using the subservices
 			// as input
 
 			// loop through elementary services/ sub service
+			 
 			for (SimpleService service : eachService.getChildren()) {
 				index = 0;
 				String string = "";
 
 				tableData[rowIndex][index++] = eachService.getName();
 				tableData[rowIndex][index++] = service.getName();
-				for (IOVariable str : service.getInputService()) {
-					string += str.name + ",";
+				
+				size = service.getInputService().size()-1;//make it the value of the last index
+				count = 0;
+				for (IOVariable str : service.getInputService()) 
+				{
+					string += count < size? str.name + ",": str.name;
+					count++;
 				}
 				tableData[rowIndex][index++] = string;
+				
 				string = "";// gotta clean the variable out between uses or you
-							// get the previous data as well
-				for (IOVariable str : service.getOutputService()) {
-					string += str.name + ",";
+							// get the previous data as well				
+				size = service.getOutputService().size()-1;
+				count = 0;
+				for (IOVariable str : service.getOutputService()) 
+				{
+					string += count < size? str.name + ",": str.name;
+					count++;
 				}
 				tableData[rowIndex][index++] = string;
-				string = "";
-				for (IOVariable str : service.getNameOfVariable()) {
-					string += str.name + ",";
+				
+				string = "";				
+				size = service.getNameOfVariable().size()-1;//make it the value of the last index
+				count = 0;
+				for (IOVariable str : service.getNameOfVariable()) 
+				{
+					string += count < size? str.name + ",": str.name;
+					count++;
 				}
 				tableData[rowIndex][index++] = string;
-				string = "";
-				for (IOVariable str : service.getInputVariable()) {
-					string += str.name + ",";
+				
+				string = "";				
+				size = service.getInputVariable().size()-1;//make it the value of the last index
+				count = 0;
+				for (IOVariable str : service.getInputVariable()) 
+				{
+					string += count < size? str.name + ",": str.name;
+					count++;
 				}
 				tableData[rowIndex][index++] = string;
-				string = "";
-				for (IOVariable str : service.getOutputVariable()) {
-					string += str.name + ",";
+				
+				string = "";				
+				size = service.getOutputVariable().size()-1;//make it the value of the last index
+				count = 0;
+				for (IOVariable str : service.getOutputVariable()) 
+				{
+					string += count < size? str.name + ",": str.name;
+					count++;
 				}
 				tableData[rowIndex][index++] = string;
 				string = "";

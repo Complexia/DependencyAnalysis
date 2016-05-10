@@ -18,6 +18,7 @@ public class IOVariable {
 	public String name;
 	public List<IOVariable> inputs;
 	public List<IOVariable> outputs;
+	public Boolean isLocal;
 
 	/**
 	 * default constructor, initialises all variables to empty arrays to avoid
@@ -78,6 +79,16 @@ public class IOVariable {
 	 */
 	public void setOutputs(List<IOVariable> outputs) {
 		this.outputs = outputs;
+	}
+	
+	public boolean isLocal()
+	{
+		return isLocal;
+	}
+	
+	public void setLocal(boolean loc)
+	{
+		isLocal = loc;
 	}
 
 }
