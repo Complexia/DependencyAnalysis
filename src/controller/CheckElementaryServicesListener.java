@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -24,124 +25,90 @@ public class CheckElementaryServicesListener implements ActionListener {
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 
 		int subServiceCount = 0;
-		// this is all somewhat speculative and done late at night, needs logic
-		// checking but it looks to be a step in the right direction
 
-		for (SimpleService service : hashes.values()) {
+		for (SimpleService service : hashes.values()) 
+		{
 			// performing a rough and dirty clone so we have something to break
 			// up into subservices without destroying the original
-			SimpleService meatTray = new SimpleService("meat", service.getInputService(), service.getOutputService(),
-					service.getNameOfVariable(), service.getInputVariable(), service.getOutputVariable());
+			//SimpleService meatTray = new SimpleService("meat", service.getInputService(), service.getOutputService(),
+			//		service.getNameOfVariable(), service.getInputVariable(), service.getOutputVariable());
 
 			int subsIndex = 0;
+			/* needs to be reconfigured
 			ArrayList<IOVariable> rejects = new ArrayList<IOVariable>();
 			HashMap<IOVariable, ArrayList<IOVariable>> subs = new HashMap<IOVariable, ArrayList<IOVariable>>();
 			ArrayList<IOVariable> meatlet = new ArrayList<IOVariable>(meatTray.getNameOfVariable());
-			for (IOVariable lVar : meatlet) {
-				subs.put(lVar, new ArrayList<IOVariable>());// create new
-															// anonymous array
-															// for the
-															// subservice to be
-															// made
-				meatTray.removeVariable(lVar);// take it out of the checked
-												// service so we don't get false
-												// positives from the disjoint
+			for (IOVariable lVar : meatlet) 
+			{
+				subs.put(lVar, new ArrayList<IOVariable>());
+				meatTray.removeVariable(lVar);
 
 				for (IOVariable out : lVar.outputs) {
-					if (Collections.disjoint(out.inputs, meatTray.getNameOfVariable()))// check
-																						// if
-																						// output
-																						// has
-																						// multiple
-																						// local
-																						// dependencies
+					if (Collections.disjoint(out.inputs, meatTray.getNameOfVariable()))
 					{
 						subs.get(subsIndex).add(out);
 						meatTray.removeOutputService(out);
 					} else {
-						rejects.add(out);// put it in the list of outputs to be
-											// made into their own elementary
-											// services
+						rejects.add(out);
 						meatTray.removeOutputService(out);
 					}
 				}
 				subsIndex += 1;
 
 			}
-			assert meatTray.getNameOfVariable().size() == 0;// sanity check to
-															// ensure all locals
-															// are handeled
-															// first
-			meatlet = new ArrayList<IOVariable>(meatTray.getOutputService());
-			for (IOVariable out : meatlet) {
-				rejects.add(out);
-				meatTray.removeOutputService(out);
-			}
-
-			assert meatTray.getOutputService().size() == 0;// have we got all
-															// the outputs
-															// sorted into
-															// elementaries
-
-			// make the subservices now we have sorted out the outputs
-			for (Entry<IOVariable, ArrayList<IOVariable>> outList : subs.entrySet()) {
-				subServiceCount++;
-				SimpleService sub = new SimpleService();
-				sub.setName(service.getName() + (service.getChildren().size() + 1));
-				sub.setParent(service);
-				// convert single variable into a list
-				ArrayList<IOVariable> lin = new ArrayList<IOVariable>();
-				lin.add(outList.getKey());
-				sub.setNameOfVariable(lin);
-				sub.setOutputService(outList.getValue());
-				ArrayList<IOVariable> ins = new ArrayList<IOVariable>();
-				ins.addAll(outList.getKey().inputs);
-				for (IOVariable outs : outList.getValue()) {
-					ins.removeAll((ArrayList<IOVariable>) outs.inputs);// remove
-																		// all
-																		// elements
-																		// in
-																		// the
-																		// input
-																		// array
-																		// to
-																		// ensure
-																		// no
-																		// duplicates
-					ins.addAll((ArrayList<IOVariable>) outs.inputs);// put all
-																	// the
-																	// inputs
-																	// from the
-																	// outputs
-																	// into the
-																	// service,
-																	// i'm not
-																	// entirely
-																	// sure we
-																	// need
-																	// this.
-																	// tarjan's
-																	// might
-																	// require
-																	// it
+			assert meatTray.getNameOfVariable().size() == 0;
+			*/
+			HashMap<IOVariable, ArrayList<IOVariable>> subs = new HashMap<IOVariable, ArrayList<IOVariable>>();//TODO: throw away, probs not needed
+			ArrayList<IOVariable>outs = new ArrayList<IOVariable>(service.getOutputService());
+			ArrayList<IOVariable>checkedLocals = new ArrayList<IOVariable>();//somewhere to keep track of what was evaluated
+			for (IOVariable out : outs) 
+			{
+				if(Collections.disjoint(service.getNameOfVariable(),out.inputs))
+				{
+					SimpleService subService = new SimpleService();
+					subService.setName(service.getName() + Integer.toString((service.getChildren().size())));
+					subService.setInputService((ArrayList<IOVariable>)out.inputs);
+					subService.setOutputService( new ArrayList<IOVariable>(Arrays.asList(out)));
+					subService.setParent(service);
+					subService.setIsElementary(true);
+					service.addChild(subService);
 				}
-				sub.setInputService(ins);
-				sub.setChildren(null);
-				sub.setIsElementary(true);
+				else
+				{
+					SimpleService subService = new SimpleService();
+					recursiveInputAdd(service, subService, out, checkedLocals);
+					ArrayList<IOVariable> subInputs = new ArrayList<IOVariable>();
+					//build list of service inputs
+					for (IOVariable outputs : subService.getOutputService()) 
+					{
+						subInputs.removeAll((ArrayList<IOVariable>) outputs.inputs);
+						subInputs.addAll((ArrayList<IOVariable>) outputs.inputs);
+					}
+					for (IOVariable outputs : subService.getNameOfVariable()) 
+					{
+						subInputs.removeAll((ArrayList<IOVariable>) outputs.inputs);
+						subInputs.addAll((ArrayList<IOVariable>) outputs.inputs);
+					}
+					//take out the local vars that were included
+					subInputs.removeAll(subService.getNameOfVariable());
+					
+					ArrayList<IOVariable> subOutputs = new ArrayList<IOVariable>();
+					for(IOVariable var : subService.getNameOfVariable())
+					{
+						subOutputs.removeAll((ArrayList<IOVariable>) var.outputs);
+						subOutputs.addAll((ArrayList<IOVariable>) var.outputs);
+					}
+					subService.setName(service.getName() + Integer.toString((service.getChildren().size())));
+					subService.setInputService(subInputs);
+					subService.setOutputService(subOutputs);
+					subService.setParent(service);
+					subService.setIsElementary(true);
+					service.addChild(subService);
+					
+				}
 			}
-			// make the single output no local variable elementary services
-			for (IOVariable reject : rejects) {
-				subServiceCount++;
-				SimpleService sub = new SimpleService();
-				sub.setName(service.getName() + (service.getChildren().size() + 1));
-				sub.setParent(service);
-				ArrayList<IOVariable> tmp = new ArrayList<IOVariable>();
-				tmp.add(reject);
-				sub.setOutputService(tmp);
-				sub.setInputService((ArrayList<IOVariable>) reject.inputs);
-				sub.setChildren(null);
-				sub.setIsElementary(true);
-			}
+
+
 
 		}
 
@@ -210,9 +177,11 @@ public class CheckElementaryServicesListener implements ActionListener {
 		int rowIndex = 0;
 		// create a two dimensional array to store display data
 		tableData = new Object[subServiceCount][columnNames.length];
-		for (SimpleService serv : hashes.values()) {
+		for (SimpleService serv : hashes.values()) 
+		{
 			tableData[rowIndex][0] = serv.getName();
-			for (SimpleService servlet : serv.getChildren()) {
+			for (SimpleService servlet : serv.getChildren()) 
+			{
 				tableData[rowIndex][1] = servlet.getName();
 				rowIndex++;
 			}
@@ -221,6 +190,28 @@ public class CheckElementaryServicesListener implements ActionListener {
 
 		Factory.displayResult(tableData, columnNames);
 		
+	}
+	
+	private void recursiveInputAdd(SimpleService parent, SimpleService child, IOVariable out, ArrayList<IOVariable> checkedLocals)
+	{
+		for(IOVariable input : out.inputs)
+		{
+			if(parent.getNameOfVariable().contains(input))
+			{
+				input.setLocal(true);//should be set before but we're just making sure
+				if(!checkedLocals.contains(input))
+				{
+					checkedLocals.add(input);
+					child.addVariable(input);
+					for(IOVariable varOut : input.outputs)
+					{
+						recursiveInputAdd(parent, child, varOut, checkedLocals);//tbh i'm confusing myself here, but i did some desk checks and the logic checks out
+					}
+					//if(subs.containsKey(input)) subs.get(input).add(out); else{ ArrayList<IOVariable> o = new ArrayList<IOVariable>();o.add(out); subs.put(input, o);} TODO: prolly get rid of this
+				}
+				
+			}
+		}
 	}
 
 }

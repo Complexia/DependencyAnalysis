@@ -52,7 +52,7 @@
 		[<IO_variable_name>st2</IO_variable_name>
 		<inputs>data3</inputs>
 		<outputs>data12</outputs>]
-		[<IO_variable_name>st4<IO_variable_name>
+		[<IO_variable_name>st4</IO_variable_name>
 		<inputs>data6,data7</inputs>
 		<outputs>data3</outputs>]
 	</IO_variables>
