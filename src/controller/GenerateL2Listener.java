@@ -21,6 +21,7 @@ public class GenerateL2Listener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		if(Factory.getL2Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
 		nodes = Factory.getNodes();
 		scsList = new ArrayList<StronglyConnectedService>();
 		tarjanIndex = 0;
@@ -61,6 +62,7 @@ public class GenerateL2Listener implements ActionListener{
 
 		}
 		Factory.displayResult(tableData, columnNames);
+		Factory.setL2Generated(true);
 		
 	}
 	

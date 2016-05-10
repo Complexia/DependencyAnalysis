@@ -21,7 +21,7 @@ public class GenerateL1Listener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		if(Factory.getL1Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
 		elementaryServices = new ArrayList<Service>();
 		columnNames = new Object[] { "Main Service", "Sub Service", "inputs", "outputs", "name of variable",
 				"inputs  variable", "outputs variable" };
@@ -126,6 +126,7 @@ public class GenerateL1Listener implements ActionListener {
 		}
 		Factory.displayResult(tableData, columnNames);
 		Factory.setElementaryServices(elementaryServices);
+		Factory.setL1Generated(true);
 		
 	}
 

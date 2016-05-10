@@ -20,7 +20,7 @@ public class StronglyConnectedServicesListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		if(Factory.getSCSGenerated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
 		columnNames = new Object[] { "Service", "Type of node", "Predecessors", "Successors", "Has System inputs",
 		"Has System outputs" };
         tableData = new Object[20][columnNames.length];
@@ -81,6 +81,7 @@ for (ServiceNode node : nodes) {
 
 Factory.setNodes(nodes);
 Factory.displayResult(tableData, columnNames);
+Factory.setSCSGenerated(true);
 
 		
 	}

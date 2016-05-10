@@ -34,6 +34,11 @@ public class UploadFileListener implements ActionListener {
 				
 				lstData = UploadFile.readFromXML(selectedFile);
 				Factory.setLstData(lstData);
+				Factory.setL0Generated(false);
+				Factory.setL1Generated(false);
+				Factory.setL2Generated(false);
+				Factory.setChkElemServGenerated(false);
+				Factory.setSCSGenerated(false);
 			}
 
 			catch (Exception e1)// TODO: use correct exception type
