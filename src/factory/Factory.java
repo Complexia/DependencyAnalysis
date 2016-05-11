@@ -26,6 +26,82 @@ public class Factory {
 	static ArrayList<Service> elementaryServices;
 	static List<model.Service> lstData;
 	static ArrayList<ServiceNode> nodes;
+	static Boolean L0Generated;
+	static Boolean L1Generated;
+	static Boolean chkElemServGenerated;
+	static Boolean L2Generated;
+	static Boolean SCSGenerated;
+	/**
+	 * @return the l0Generated
+	 */
+	public static Boolean getL0Generated() {
+		return L0Generated;
+	}
+
+	/**
+	 * @param l0Generated the l0Generated to set
+	 */
+	public static void setL0Generated(Boolean l0Generated) {
+		L0Generated = l0Generated;
+	}
+
+	/**
+	 * @return the l1Generated
+	 */
+	public static Boolean getL1Generated() {
+		return L1Generated;
+	}
+
+	/**
+	 * @param l1Generated the l1Generated to set
+	 */
+	public static void setL1Generated(Boolean l1Generated) {
+		L1Generated = l1Generated;
+	}
+
+	/**
+	 * @return the chkElemServGenerated
+	 */
+	public static Boolean getChkElemServGenerated() {
+		return chkElemServGenerated;
+	}
+
+	/**
+	 * @param chkElemServGenerated the chkElemServGenerated to set
+	 */
+	public static void setChkElemServGenerated(Boolean chkElemServGenerated) {
+		Factory.chkElemServGenerated = chkElemServGenerated;
+	}
+
+	/**
+	 * @return the l2Generated
+	 */
+	public static Boolean getL2Generated() {
+		return L2Generated;
+	}
+
+	/**
+	 * @param l2Generated the l2Generated to set
+	 */
+	public static void setL2Generated(Boolean l2Generated) {
+		L2Generated = l2Generated;
+	}
+
+	/**
+	 * @return the sCSGenerated
+	 */
+	public static Boolean getSCSGenerated() {
+		return SCSGenerated;
+	}
+
+	/**
+	 * @param sCSGenerated the sCSGenerated to set
+	 */
+	public static void setSCSGenerated(Boolean sCSGenerated) {
+		SCSGenerated = sCSGenerated;
+	}
+
+	
 	
 	public static void setNodes(ArrayList<ServiceNode> nodes1){
 		nodes = nodes1;

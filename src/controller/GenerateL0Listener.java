@@ -23,7 +23,7 @@ public class GenerateL0Listener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		if(Factory.getL0Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
 		elementaryServices = new ArrayList<Service>();
 		columnNames = new Object[] { "Name of Service", "Input Data", "Output Data", "Name of Variable",
 				"Input Variable", "Output Variable" };
@@ -113,6 +113,7 @@ public class GenerateL0Listener implements ActionListener {
 
 		}
 		Factory.displayResult(tableData, columnNames);
+		Factory.setL0Generated(true);
 	}
 
 	// **************************************************************************************************************

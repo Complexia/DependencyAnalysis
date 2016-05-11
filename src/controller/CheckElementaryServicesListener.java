@@ -25,6 +25,7 @@ public class CheckElementaryServicesListener implements ActionListener {
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 
 		int subServiceCount = 0;
+		if(Factory.getChkElemServGenerated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
 
 		for (SimpleService service : hashes.values()) 
 		{
@@ -191,6 +192,7 @@ public class CheckElementaryServicesListener implements ActionListener {
 		}
 
 		Factory.displayResult(tableData, columnNames);
+		Factory.setChkElemServGenerated(true);
 		
 	}
 	
