@@ -11,6 +11,11 @@ import javax.swing.JFileChooser;
 import factory.Factory;
 import model.UploadFile;
 
+/**
+ * Encapsulates and implements the upload functionality of {@link UploadFile}
+ * @deprecated Replaced with UploadAndGenerateListener.
+ *  
+ */
 public class UploadFileListener implements ActionListener {
 	
 	File selectedFile = null;

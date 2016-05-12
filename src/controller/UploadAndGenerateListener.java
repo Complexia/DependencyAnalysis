@@ -163,6 +163,10 @@ public class UploadAndGenerateListener implements ActionListener {
 
 	// **************************************************************************************************************
 	// Create method for removing duplicates?
+	/**
+	 * Removes any duplicate entries in the given list
+	 * @param list the list to be cleaned out
+	 */
 	public static void removeDuplicateWithOrder(ArrayList<String> list) {
 		Set set = new HashSet();
 		List newList = new ArrayList();

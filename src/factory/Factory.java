@@ -16,22 +16,65 @@ import graphic.MainWindow;
 import model.Service;
 import model.ServiceNode;
 
+/**
+ * Contains all necessary global data in a centralised location for ease of access and modification.
+ *
+ */
 public class Factory {
 	
+	/**
+	 * The root JFrame containing the GUI
+	 */
 	static MainWindow mainWindow;
 //	static ButtonPanel buttonPanel;
 //	static ButtonPanel1 buttonPanel1;
+	/**
+	 * The file chosen by the user
+	 */
 	static File selectedFile;
+	/**
+	 * Jpanel that contains and displays all output data
+	 */
 	static JPanel dataPanel;
+	/**
+	 * Container for all the other GUI components
+	 */
 	static JPanel programPanel;
+	/**
+	 * Container for the GUI buttons
+	 */
 	static JToolBar buttonPanel;
+	/**
+	 * List containing all identified elementary services
+	 */
 	static ArrayList<Service> elementaryServices;
+	/**
+	 * List containing all the services
+	 */
 	static List<model.Service> lstData;
+	/**
+	 * List containing all service nodes
+	 */
 	static ArrayList<ServiceNode> nodes;
+	/**
+	 * Boolean to track whether L0 was previously generated for the current file
+	 */
 	static Boolean L0Generated;
+	/**
+	 * Boolean to track whether L1 was previously generated for the current file
+	 */
 	static Boolean L1Generated;
+	/**
+	 * Boolean to track whether check elementary services was previously run for the current file
+	 */
 	static Boolean chkElemServGenerated;
+	/**
+	 * Boolean to track whether L2 was previously generated for the current file
+	 */
 	static Boolean L2Generated;
+	/**
+	 * Boolean to track whether Strongly connected services was previously run for the current file
+	 */
 	static Boolean SCSGenerated;
 	/**
 	 * @return the l0Generated
@@ -105,14 +148,24 @@ public class Factory {
 
 	
 	
+	/**
+	 * Default setter for nodes.
+	 * @param nodes1 input list of nodes to set
+	 */
 	public static void setNodes(ArrayList<ServiceNode> nodes1){
 		nodes = nodes1;
 	}
 	
+	/**
+	 * @return A list of the currently stored nodes
+	 */
 	public static ArrayList<ServiceNode> getNodes(){
 		return nodes;
 	}
 	
+	/**
+	 * @param lstData1 list of services to set
+	 */
 	public static void setLstData(List<model.Service> lstData1){
 		
 		lstData = lstData1;
@@ -120,6 +173,9 @@ public class Factory {
 		
 	}
 	
+	/**
+	 * @return list of stored services
+	 */
 	public static List<model.Service> getLstData(){
 		
 		return lstData;
@@ -127,18 +183,30 @@ public class Factory {
 		
 	}
 	
+	/**
+	 * @return list of elementary services
+	 */
 	public static ArrayList<Service> getElementaryServices(){
 		return elementaryServices;
 	}
 	
+	/**
+	 * @param elementaryServices1 list of elementary services to set
+	 */
 	public static void setElementaryServices(ArrayList<Service> elementaryServices1){
 		elementaryServices = elementaryServices1;
 	}
 	
+	/**
+	 * @param dataPanel1 JPanel to set as data panel
+	 */
 	public static void setDataPanel(JPanel dataPanel1){
 		dataPanel = dataPanel1;
 	}
 	
+	/**
+	 * @param programPanel1 JPanel to set as program container
+	 */
 	public static void setProgramPanel(JPanel programPanel1){
 		programPanel = programPanel1;
 	}
@@ -157,12 +225,21 @@ public class Factory {
 		Factory.buttonPanel = buttonPanel;
 	}
 
+	/**
+	 * @param selectedFile1 the input file to set
+	 */
 	public static void setSelectedFile(File selectedFile1){
 		
 		selectedFile = selectedFile1;
 		
 	}
 	
+	/**
+	 * Tabulate input data from any of the generate methods and display it in
+	 * a clear table form
+	 * @param tableData The data to input into the table
+	 * @param columnNames The names of the columns of the table
+	 */
 	public static void displayResult(Object[][] tableData, Object[] columnNames) {
 		if (tableData != null && columnNames != null) {
 			programPanel.remove(dataPanel);
@@ -182,10 +259,16 @@ public class Factory {
 		}
 	}
 	
+	/**
+	 * @return current input file
+	 */
 	public static File getSelectedFile(){
 		return selectedFile;
 	}
 	
+	/**
+	 * @param mainWindow1 JFrame to set as the program GUI root pane
+	 */
 	public static void setMainWindow(MainWindow mainWindow1){
 		mainWindow = mainWindow1;
 	}
@@ -201,6 +284,9 @@ public class Factory {
 //		
 //	}
 //	
+	/**
+	 * @return the program GUI root JFrame
+	 */
 	public static MainWindow getMainWindow(){
 		return mainWindow;
 	}

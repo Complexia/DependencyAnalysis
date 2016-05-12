@@ -11,6 +11,11 @@ import model.SimpleService;
 import model.UploadFile;
 import model.IOVariable;
 
+/**
+ * Encapsulates and implements the functionality for generating level 1 of the system.
+ * works in conjunction with checkElementaryServices to create the level 1 system view.
+ *
+ */
 public class GenerateL1Listener implements ActionListener {
 	
 	private Object[][] tableData;

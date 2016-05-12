@@ -67,6 +67,9 @@ public class MainWindow extends JFrame {
 	private Object[][] tableData;
 	private Object[] columnNames;
 
+	/**
+	 * Default constructor, defines the standard GUI layout
+	 */
 	public MainWindow() {
 
 		setBounds(50, 50, 1000, 400);

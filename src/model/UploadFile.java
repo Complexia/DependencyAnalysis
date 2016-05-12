@@ -26,11 +26,29 @@ import org.w3c.dom.NodeList;
  */
 public class UploadFile {
 
+	/**
+	 * Stores the parsed xml {@link Document} object.
+	 */
 	private static Document doc1;
 	
+	/**
+	 * Stores the string data for the services.
+	 * currently unused.
+	 */
 	private static ArrayList<String> variables = new ArrayList();
+	/**
+	 * Stores all {@link SimpleService} objects using their names as a key.
+	 */
 	private static HashMap<String, SimpleService> variablesMap = new HashMap<>();
+	/**
+	 * Stores a list of variablesMaps.
+	 * currently unused.
+	 */
 	private static ArrayList<HashMap> hashMaps = new ArrayList<>();
+	/**
+	 * Stores a list of Services.
+	 * @deprecated replaced with variablesMap
+	 */
 	private static ArrayList<Service> elements = new ArrayList();
 
 	/**
@@ -120,6 +138,10 @@ public class UploadFile {
 		UploadFile.doc1 = doc1;
 	}
 	
+	/**
+	 * @param file the file object to be parsed
+	 * @return A list of Services. The value is currently unused.
+	 */
 	public static List<Service> readFromXML(File file) {
 		List<Service> listOfService = null;
 		try {
@@ -139,6 +161,10 @@ public class UploadFile {
 
 
 
+	/**
+	 * @param file The file to be parsed
+	 * Works in conjuction with readFromXml to parse the file and extract the SimpleService data
+	 */
 	public static void uploadL0(File file) {
 		try {
 
