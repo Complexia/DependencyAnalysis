@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
@@ -101,8 +102,9 @@ public class MainWindow extends JFrame {
 		programButtons = new JButton[] { btnUpload, btnGenerateL0, btnCheckElementaryService, btnGenerateL1, btnFindSCS,
 				btnGenerateL2 };
 		programPanel = new JPanel();
-		programPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		final JPanel buttonPanel = new JPanel();
+		programPanel.setLayout(new BorderLayout());
+		final JToolBar buttonPanel = new JToolBar();
+		//buttonPanel.setFloatable(false);
 		dataPanel = new JPanel();
 		buttonPanel.setBackground(Color.WHITE);
 		buttonPanel.setLayout(new GridLayout(1, 11));
@@ -113,7 +115,7 @@ public class MainWindow extends JFrame {
 		if (defaults.get("Table.alternateRowColor") == null)
 			defaults.put("Table.alternateRowColor", new Color(240, 240, 240));
 
-		buttonPanel.setLocation(5, 5);
+		//buttonPanel.setLocation(5, 5);
 		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
 		buttonPanel.setPreferredSize(new Dimension(750, 50));
 
@@ -128,8 +130,8 @@ public class MainWindow extends JFrame {
 		dataPanel.setLayout(new BorderLayout());
 		dataPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
 		Factory.displayResult(tableData, columnNames);
-		programPanel.add(buttonPanel);
-		programPanel.add(dataPanel);
+		programPanel.add(buttonPanel, BorderLayout.PAGE_START);
+		programPanel.add(dataPanel, BorderLayout.CENTER);
 		add(programPanel);
 		// add(buttonPanel(), BorderLayout.NORTH);
 		pack();
@@ -146,6 +148,7 @@ public class MainWindow extends JFrame {
 		add(programPanel);
 		Factory.setProgramPanel(programPanel);
 		Factory.setDataPanel(dataPanel);
+		Factory.setButtonPanel(buttonPanel);
 		pack();
 
 	}

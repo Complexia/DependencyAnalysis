@@ -1,5 +1,6 @@
 package factory;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
+import javax.swing.JToolBar;
 
 import graphic.MainWindow;
 import model.Service;
@@ -23,6 +24,7 @@ public class Factory {
 	static File selectedFile;
 	static JPanel dataPanel;
 	static JPanel programPanel;
+	static JToolBar buttonPanel;
 	static ArrayList<Service> elementaryServices;
 	static List<model.Service> lstData;
 	static ArrayList<ServiceNode> nodes;
@@ -141,6 +143,20 @@ public class Factory {
 		programPanel = programPanel1;
 	}
 	
+	/**
+	 * @return the buttonPanel
+	 */
+	public static JToolBar getButtonPanel() {
+		return buttonPanel;
+	}
+
+	/**
+	 * @param buttonPanel the buttonPanel to set
+	 */
+	public static void setButtonPanel(JToolBar buttonPanel) {
+		Factory.buttonPanel = buttonPanel;
+	}
+
 	public static void setSelectedFile(File selectedFile1){
 		
 		selectedFile = selectedFile1;
@@ -150,14 +166,16 @@ public class Factory {
 	public static void displayResult(Object[][] tableData, Object[] columnNames) {
 		if (tableData != null && columnNames != null) {
 			programPanel.remove(dataPanel);
+			programPanel.remove(buttonPanel);
 			dataPanel = new JPanel();
 			JTable table = new JTable(tableData, columnNames);
 			table.setSize(800, 350);
 			table.setPreferredScrollableViewportSize(new Dimension(800, 350));
-			table.setFillsViewportHeight(true);
+			//table.setFillsViewportHeight(true);
 			dataPanel.add(new JScrollPane(table));
 			dataPanel.setPreferredSize(new Dimension(795, 350));
-			programPanel.add(dataPanel);
+			programPanel.add(buttonPanel, BorderLayout.PAGE_START);
+			programPanel.add(dataPanel, BorderLayout.CENTER);
 			//mainWindow.updateUI();
 			programPanel.revalidate();
 			programPanel.repaint();
