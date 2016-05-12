@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import factory.Factory;
 import model.ServiceNode;
 import model.StronglyConnectedService;
-
+/**
+ * Encapsulates the GenerateL2 function and attaches it to a button.
+ *
+ */
 public class GenerateL2Listener implements ActionListener{
 	
 	private ArrayList <StronglyConnectedService> scsList;

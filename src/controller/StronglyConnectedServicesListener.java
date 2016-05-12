@@ -8,7 +8,10 @@ import java.util.List;
 import factory.Factory;
 import model.Service;
 import model.ServiceNode;
-
+/**
+ * Encapsulates the find strongly connected services function and attaches it to a button.
+ *
+ */
 public class StronglyConnectedServicesListener implements ActionListener {
 	
 	private Object[][] tableData;

@@ -12,7 +12,10 @@ import java.util.Set;
 import factory.Factory;
 import model.SimpleService;
 import model.UploadFile;
-
+/**
+ * Encapsulates the Generate L0 function and attaches it to a button.
+ *
+ */
 public class GenerateL0Listener implements ActionListener {
 	
 	private Object[][] tableData;

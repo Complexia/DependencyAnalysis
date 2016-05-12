@@ -153,7 +153,7 @@ public class UploadFile {
 			doc.getDocumentElement().normalize();
 			NodeList nList = doc.getElementsByTagName("service");
 			
-			constructIOVariables(doc);
+			//constructIOVariables(doc);
 			
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);

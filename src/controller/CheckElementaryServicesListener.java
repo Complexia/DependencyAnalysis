@@ -12,7 +12,12 @@ import factory.Factory;
 import model.IOVariable;
 import model.SimpleService;
 import model.UploadFile;
-
+/**
+ * Encapsulates the check elementary services function and attaches it to a button.
+ * Mainly responsible for the decomposition of services into their elementary components,
+ * it works in conjunction with GenerateL1 to create the level 1 of the system view.
+ *
+ */
 public class CheckElementaryServicesListener implements ActionListener {
 	
 	private Object[][] tableData;

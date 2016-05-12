@@ -16,6 +16,12 @@ import factory.Factory;
 import model.SimpleService;
 import model.UploadFile;
 
+/**
+ * Encapsulates the upload and generate L0 functionality.
+ * It is primarily responsible for formatting the data to be displayed on screen
+ * along with prompting the user for an input file to be parsed with {@link UploadFile}
+ *
+ */
 public class UploadAndGenerateListener implements ActionListener {
 	
 	private Object[][] tableData;

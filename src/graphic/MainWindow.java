@@ -25,6 +25,11 @@ import controller.UploadAndGenerateListener;
 import controller.UploadFileListener;
 import factory.Factory;
 
+/**
+ * The main body of the GUI, it holds all the elements and functions as the root component.
+ * MainWindow uses the javax.swing library for all of its graphics with the exception of a few legacy components.
+ *
+ */
 public class MainWindow extends JFrame {
 
 	// Create button labels
@@ -70,7 +75,6 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		btnUpload = new JButton(BUTTON_LABEL_UPLOAD);
-		//btnUpload.addActionListener(new UploadFileListener());
 		btnUpload.addActionListener(new UploadAndGenerateListener());
 
 		btnGenerateL0 = new JButton(BUTTON_LABEL_GENERATE_LO);
@@ -106,7 +110,7 @@ public class MainWindow extends JFrame {
 		programPanel = new JPanel();
 		programPanel.setLayout(new BorderLayout());
 		final JToolBar buttonPanel = new JToolBar();
-		//buttonPanel.setFloatable(false);
+		buttonPanel.setFloatable(false);
 		dataPanel = new JPanel();
 		buttonPanel.setBackground(Color.WHITE);
 		buttonPanel.setLayout(new GridLayout(1, 11));
