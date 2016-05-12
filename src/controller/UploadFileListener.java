@@ -14,7 +14,7 @@ import model.UploadFile;
 public class UploadFileListener implements ActionListener {
 	
 	File selectedFile = null;
-	
+	List<model.Service> lstData = null;
 	public File getSelectedFile(){
 		return selectedFile;
 	}
@@ -22,7 +22,7 @@ public class UploadFileListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		List<model.Service> lstData = null;
+		
 		
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));

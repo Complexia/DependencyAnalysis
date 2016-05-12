@@ -21,6 +21,7 @@ import controller.GenerateL0Listener;
 import controller.GenerateL1Listener;
 import controller.GenerateL2Listener;
 import controller.StronglyConnectedServicesListener;
+import controller.UploadAndGenerateListener;
 import controller.UploadFileListener;
 import factory.Factory;
 
@@ -69,7 +70,8 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		btnUpload = new JButton(BUTTON_LABEL_UPLOAD);
-		btnUpload.addActionListener(new UploadFileListener());
+		//btnUpload.addActionListener(new UploadFileListener());
+		btnUpload.addActionListener(new UploadAndGenerateListener());
 
 		btnGenerateL0 = new JButton(BUTTON_LABEL_GENERATE_LO);
 		btnGenerateL0.addActionListener(new GenerateL0Listener());
