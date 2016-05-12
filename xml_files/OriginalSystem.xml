@@ -46,14 +46,20 @@
 	</service>
 
 <IO_variables>
-		<IO_variable_name>st1</IO_variable_name>
-		<inputs>data1</inputs>
-		<outputs>data10</outputs>
-		<IO_variable_name>st2</IO_variable_name>
-		<inputs>data3</inputs>
-		<outputs>data12</outputs>]
-		[<IO_variable_name>st4</IO_variable_name>
-		<inputs>data6,data7</inputs>
-		<outputs>data3</outputs>
+		<IOVariable>
+			<IO_variable_name>st1</IO_variable_name>
+			<inputs>data1</inputs>
+			<outputs>data10</outputs>
+		</IOVariable>
+		<IOVariable>
+			<IO_variable_name>st2</IO_variable_name>
+			<inputs>data3</inputs>
+			<outputs>data12</outputs>
+		</IOVariable>
+		<IOVariable>
+			<IO_variable_name>st4</IO_variable_name>
+			<inputs>data6,data7</inputs>
+			<outputs>data3</outputs>
+		</IOVariable>
 	</IO_variables>
 </company>

@@ -152,6 +152,9 @@ public class UploadFile {
 			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
 			NodeList nList = doc.getElementsByTagName("service");
+			
+			constructIOVariables(doc);
+			
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
 
@@ -270,10 +273,60 @@ public class UploadFile {
 		} 
 		catch (Exception e) 
 		{
-			System.out.println("an unexpected erroroccured during operation");
+			System.out.println("an unexpected error occured during operation");
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * uses the information in the xml file to generate the IOVariables and their references to each other.
+	 * this might be extended later on to allow parsing of non xml file input
+	 * @param doc the input xml document
+	 * @throws NullPointerException
+	 */
+	private static void constructIOVariables(Document doc)
+	{
+		NodeList IOVars = doc.getElementsByTagName("IOVariable");
+		HashMap<String, IOVariable> IOHash = new HashMap<String, IOVariable>();
+		//make the io variables first so we can form the connections later
+		for(int i = 0; i < IOVars.getLength(); i++)
+		{
+			Node IOV = IOVars.item(i);
+			if (IOV.getNodeType() == Node.ELEMENT_NODE)
+			{
+				Element IOElem = (Element) IOV;
+				IOHash.put(IOElem.getElementsByTagName("IO_variable_name").item(0).getTextContent(), new IOVariable());
+			}
+		}
+		//a lot of this code is going to be a carbon copy of the above loop because they are both accessing the same data, 
+		//above was only getting the names and making the empty objects
+		//whereas below is taking the inputs and outputs strings and making the appropriate connections
+		for(int i = 0; i < IOVars.getLength(); i++)
+		{
+			Node IOV = IOVars.item(i);
+			if (IOV.getNodeType() == Node.ELEMENT_NODE)
+			{
+				Element IOElem = (Element) IOV;
+				String name = IOElem.getElementsByTagName("IO_variable_name").item(0).getTextContent();
+				IOVariable currVar = IOHash.get(name);
+				//get a list of all inputs for the variable and put the IOVariable objects associated with that name into the inputs list of the object itself
+				for(String in : IOElem.getElementsByTagName("inputs").item(0).getTextContent().split(","))
+				{
+					IOVariable tmp = IOHash.get(in);
+					
+					if(tmp == null) throw new NullPointerException(); else currVar.inputs.add(tmp);
+				}
+				//same as above for the outputs
+				for(String out : IOElem.getElementsByTagName("outputs").item(0).getTextContent().split(","))
+				{
+					IOVariable tmp = IOHash.get(out);
+					
+					if(tmp == null) throw new NullPointerException(); else currVar.outputs.add(tmp);
+				}
+			}
+		}
+		
 	}
 
 }
