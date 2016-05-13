@@ -18,6 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import exceptions.InvalidIOVariableReferenceException;
 import exceptions.ServiceException;
 import exceptions.ServiceIOException;
 
@@ -171,7 +172,7 @@ public class UploadFile {
 	 * Works in conjuction with readFromXml to parse the file and extract the SimpleService data
 	 * @throws {@link ServiceIOException}
 	 */
-	public static void uploadL0(File file) throws ServiceIOException {
+	public static void uploadL0(File file) throws ServiceIOException, InvalidIOVariableReferenceException {
 
 		try
 		{
@@ -190,7 +191,7 @@ public class UploadFile {
 			if(doc.getElementsByTagName("service").getLength() == 0) throw new ServiceIOException("no service tag found in file: " + fXmlFile.getName());
 			NodeList nList = doc.getElementsByTagName("service");
 			
-			//constructIOVariables(doc);
+			constructIOVariables(doc, fXmlFile);
 			
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
@@ -337,8 +338,9 @@ public class UploadFile {
 	 * this might be extended later on to allow parsing of non xml file input
 	 * @param doc the input xml document
 	 * @throws NullPointerException
+	 * @throws ServiceIOException
 	 */
-	private static void constructIOVariables(Document doc)
+	private static void constructIOVariables(Document doc, File fXmlFile) throws ServiceIOException, InvalidIOVariableReferenceException
 	{
 		NodeList IOVars = doc.getElementsByTagName("IOVariable");
 		HashMap<String, IOVariable> IOHash = new HashMap<String, IOVariable>();
@@ -349,6 +351,7 @@ public class UploadFile {
 			if (IOV.getNodeType() == Node.ELEMENT_NODE)
 			{
 				Element IOElem = (Element) IOV;
+				if(IOElem.getElementsByTagName("IO_variable_name").getLength() == 0) throw new ServiceIOException("no IO_variable_name tag found in file: " + fXmlFile.getName());
 				IOHash.put(IOElem.getElementsByTagName("IO_variable_name").item(0).getTextContent(), new IOVariable());
 			}
 		}
@@ -361,21 +364,24 @@ public class UploadFile {
 			if (IOV.getNodeType() == Node.ELEMENT_NODE)
 			{
 				Element IOElem = (Element) IOV;
+				if(IOElem.getElementsByTagName("IO_variable_name").getLength() == 0) throw new ServiceIOException("no IO_variable_name tag found in file: " + fXmlFile.getName());
 				String name = IOElem.getElementsByTagName("IO_variable_name").item(0).getTextContent();
 				IOVariable currVar = IOHash.get(name);
 				//get a list of all inputs for the variable and put the IOVariable objects associated with that name into the inputs list of the object itself
+				if(IOElem.getElementsByTagName("inputs").getLength() == 0) throw new ServiceIOException("no inputs tag found in file: " + fXmlFile.getName());
 				for(String in : IOElem.getElementsByTagName("inputs").item(0).getTextContent().split(","))
 				{
 					IOVariable tmp = IOHash.get(in);
 					
-					if(tmp == null) throw new NullPointerException(); else currVar.inputs.add(tmp);
+					if(tmp == null) throw new InvalidIOVariableReferenceException("Input variable name not found in list of defined IOVariables: " + in); else currVar.inputs.add(tmp);
 				}
 				//same as above for the outputs
+				if(IOElem.getElementsByTagName("outputs").getLength() == 0) throw new ServiceIOException("no outputs tag found in file: " + fXmlFile.getName());
 				for(String out : IOElem.getElementsByTagName("outputs").item(0).getTextContent().split(","))
 				{
 					IOVariable tmp = IOHash.get(out);
 					
-					if(tmp == null) throw new NullPointerException(); else currVar.outputs.add(tmp);
+					if(tmp == null) throw new InvalidIOVariableReferenceException("Output variable name not found in list of defined IOVariables: " + out); else currVar.outputs.add(tmp);
 				}
 			}
 		}
