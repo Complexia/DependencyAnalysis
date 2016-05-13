@@ -2,6 +2,7 @@ package model;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,11 +10,16 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import exceptions.ServiceException;
+import exceptions.ServiceIOException;
 
 /**
  * Used to read through input files, extracting all relevant information into {@link SimpleService}.
@@ -151,9 +157,8 @@ public class UploadFile {
 
 		}
 
-		catch (Exception e) {
-			System.out.println("error occured during conversion of xml to service list");
-			e.printStackTrace();
+		catch (ServiceException e) {//TODO make the exception message more user friendly, possibly a popup or something
+			System.out.println(e.getMessage());
 		}
 
 		return listOfService;
@@ -164,46 +169,54 @@ public class UploadFile {
 	/**
 	 * @param file The file to be parsed
 	 * Works in conjuction with readFromXml to parse the file and extract the SimpleService data
+	 * @throws {@link ServiceIOException}
 	 */
-	public static void uploadL0(File file) {
-		try {
+	public static void uploadL0(File file) throws ServiceIOException {
 
+		try
+		{
 			File fXmlFile = file;
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
+		
+		
 
 			// optional, but recommended
 			// read this -
 			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
+			//throws an exception if the specified tag isn't found, is handled by readFromXML.
+			if(doc.getElementsByTagName("service").getLength() == 0) throw new ServiceIOException("no service tag found in file: " + fXmlFile.getName());
 			NodeList nList = doc.getElementsByTagName("service");
 			
 			//constructIOVariables(doc);
 			
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
-
+	
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
 				{
 					Element eElement = (Element) nNode;
 					//experimental build starts here---------------------------------------------------------------------------------------
 					SimpleService tmpSrvce = new SimpleService();
-
+	
 					tmpSrvce.setName(eElement.getElementsByTagName("service_name").item(0).getTextContent());
 					//dirty workaround, needs to be changed once the xml files are changed
 					ArrayList<IOVariable> retypedData = new ArrayList<IOVariable>();
+					if(eElement.getElementsByTagName("input_service").getLength() == 0) throw new ServiceIOException("no input_service tag found in file: " + fXmlFile.getName());
 					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_service").item(0).getTextContent().split(","))))
 					{
 						IOVariable newio = new IOVariable();
 						newio.name = io;
 						retypedData.add(newio);
 					}
-
+	
 					
 					tmpSrvce.setInputService(retypedData); //okay lots of explaining here,
 					
 					retypedData = new ArrayList<IOVariable>();
+					if(eElement.getElementsByTagName("output_service").getLength() == 0) throw new ServiceIOException("no output_service tag found in file: " + fXmlFile.getName());
 					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_service").item(0).getTextContent().split(","))))
 					{
 						IOVariable newio = new IOVariable();
@@ -214,6 +227,7 @@ public class UploadFile {
 					tmpSrvce.setOutputService(retypedData);//first the eElement gets the data from
 					
 					retypedData = new ArrayList<IOVariable>();
+					if(eElement.getElementsByTagName("nameofvariable").getLength() == 0) throw new ServiceIOException("no nameofvariable tag found in file: " + fXmlFile.getName());
 					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("nameofvariable").item(0).getTextContent().split(","))))
 					{
 						IOVariable newio = new IOVariable();
@@ -224,6 +238,7 @@ public class UploadFile {
 					tmpSrvce.setNameOfVariable(retypedData);//then the text is extracted
 					
 					retypedData = new ArrayList<IOVariable>();
+					if(eElement.getElementsByTagName("input_variable").getLength() == 0) throw new ServiceIOException("no input_variable tag found in file: " + fXmlFile.getName());
 					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("input_variable").item(0).getTextContent().split(","))))
 					{
 						IOVariable newio = new IOVariable();
@@ -234,6 +249,7 @@ public class UploadFile {
 					tmpSrvce.setInputVariable(retypedData);//the array is then turned into an arrayList
 					
 					retypedData = new ArrayList<IOVariable>();
+					if(eElement.getElementsByTagName("output_variable").getLength() == 0) throw new ServiceIOException("no output_variable tag found in file: " + fXmlFile.getName());
 					for(String io : new ArrayList<String>(Arrays.asList(eElement.getElementsByTagName("output_variable").item(0).getTextContent().split(","))))
 					{
 						IOVariable newio = new IOVariable();
@@ -246,42 +262,42 @@ public class UploadFile {
 					variablesMap.put(tmpSrvce.getName(), tmpSrvce);
 					
 					//experimental build ends here-----------------------------------------------------------------------------------
-
+	
 					/*
 					 { 
 					  System.out.println("Name of Service : "
 							+ eElement.getElementsByTagName("service_name").item(0).getTextContent());
-
+	
 					variablesMap.put("service_name",
 							eElement.getElementsByTagName("service_name").item(0).getTextContent());
-
+	
 					System.out.println("Input Service : "
 							+ eElement.getElementsByTagName("input_service").item(0).getTextContent());
-
+	
 					variablesMap.put("input_service",
 							eElement.getElementsByTagName("input_service").item(0).getTextContent());
-
+	
 					System.out.println("Output Service : "
 							+ eElement.getElementsByTagName("output_service").item(0).getTextContent());
-
+	
 					variablesMap.put("outputService",
 							eElement.getElementsByTagName("output_service").item(0).getTextContent());
-
+	
 					System.out.println("Name of Variable : "
 							+ eElement.getElementsByTagName("nameofvariable").item(0).getTextContent());
-
+	
 					variablesMap.put("nameOfVariable",
 							eElement.getElementsByTagName("nameofvariable").item(0).getTextContent());
-
+	
 					System.out.println("Input Variable : "
 							+ eElement.getElementsByTagName("input_variable").item(0).getTextContent());
-
+	
 					variablesMap.put("inputVariable",
 							eElement.getElementsByTagName("input_variable").item(0).getTextContent());
-
+	
 					System.out.println("Output Variable : "
 							+ eElement.getElementsByTagName("output_variable").item(0).getTextContent());
-
+	
 					variablesMap.put("outputVariable",
 							eElement.getElementsByTagName("output_variable").item(0).getTextContent());
 							}*/
@@ -290,20 +306,31 @@ public class UploadFile {
 					
 					//System.out.println("KJJSNNNJSJJ" + UploadFile.getHashMaps().get(0).get("service_name"));
 					
-
+	
 				}
-
+	
 			}
-
+	
 			doc1 = doc;
 		} 
-		catch (Exception e) 
+		catch (ParserConfigurationException PCEx)
 		{
-			System.out.println("an unexpected error occured during operation");
-			e.printStackTrace();
+			System.out.println(PCEx.toString());
 		}
-
+		
+		catch (IOException IO)
+		{
+			System.out.println(IO.toString());
+		}
+		
+		catch (SAXException SAX)
+		{
+			System.out.println(SAX.toString());
+		}
 	}
+	
+
+
 	
 	/**
 	 * uses the information in the xml file to generate the IOVariables and their references to each other.

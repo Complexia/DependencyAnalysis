@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 
+import exceptions.ServiceException;
 import factory.Factory;
 import model.SimpleService;
 import model.UploadFile;
@@ -56,10 +57,9 @@ public class UploadAndGenerateListener implements ActionListener {
 				Factory.setSCSGenerated(false);
 			}
 
-			catch (Exception e1)// TODO: use correct exception type
+			catch (Exception e1)// catch any of the general exceptions
 			{
-				System.out.println("error occured during reading of input file.");
-				e1.printStackTrace();
+				System.out.println(e1.getMessage());
 			}
 		    
 		}
