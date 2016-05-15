@@ -13,22 +13,22 @@ service has no local variables
 	<IOVariables>
 		<IOVariable>
 			<IOName>data4</IOName>
-			<ipnputs></inputs>
+			<inputs></inputs>
 			<outputs>data6</outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data5</IOName>
-			<ipnputs></inputs>
+			<inputs></inputs>
 			<outputs>data7</outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data6</IOName>
-			<ipnputs>data4</inputs>
+			<inputs>data4</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data7</IOName>
-			<ipnputs>data5</inputs>
+			<inputs>data5</inputs>
 			<outputs></outputs>
 		</IOvariable>
 	</IOVariables>

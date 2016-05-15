@@ -29,6 +29,13 @@ public class IOVariable {
 		inputs = new ArrayList<IOVariable>();
 		outputs = new ArrayList<IOVariable>();
 	}
+	
+	public IOVariable(String newName)
+	{
+		name = newName;
+		inputs = new ArrayList<IOVariable>();
+		outputs = new ArrayList<IOVariable>();
+	}
 
 	/**
 	 * Standard getter for the name variable

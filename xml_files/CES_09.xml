@@ -13,32 +13,32 @@ service has two local variables, both dependant on each other. has some outputs 
 	<IOVariables>
 		<IOVariable>
 			<IOName>st1</IOName>
-			<ipnputs>st2</inputs>
+			<inputs>st2</inputs>
 			<outputs>data1, data2, st2</outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data1</IOName>
-			<ipnputs>st1</inputs>
+			<inputs>st1</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data2</IOName>
-			<ipnputs>st1, st2</inputs>
+			<inputs>st1, st2</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data3</IOName>
-			<ipnputs>st2</inputs>
+			<inputs>st2</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data4</IOName>
-			<ipnputs></inputs>
+			<inputs></inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>st2</IOName>
-			<ipnputs>st1</inputs>
+			<inputs>st1</inputs>
 			<outputs>data2, data3, st3</outputs>
 		</IOvariable>
 	</IOVariables>		

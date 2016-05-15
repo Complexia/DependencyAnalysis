@@ -351,8 +351,9 @@ public class UploadFile {
 			if (IOV.getNodeType() == Node.ELEMENT_NODE)
 			{
 				Element IOElem = (Element) IOV;
-				if(IOElem.getElementsByTagName("IO_variable_name").getLength() == 0) throw new ServiceIOException("no IO_variable_name tag found in file: " + fXmlFile.getName());
-				IOHash.put(IOElem.getElementsByTagName("IO_variable_name").item(0).getTextContent(), new IOVariable());
+				if(IOElem.getElementsByTagName("IOName").getLength() == 0) throw new ServiceIOException("no IO_variable_name tag found in file: " + fXmlFile.getName());
+				String name = IOElem.getElementsByTagName("IOName").item(0).getTextContent();
+				IOHash.put(name, new IOVariable(name));
 			}
 		}
 		//a lot of this code is going to be a carbon copy of the above loop because they are both accessing the same data, 
@@ -364,24 +365,33 @@ public class UploadFile {
 			if (IOV.getNodeType() == Node.ELEMENT_NODE)
 			{
 				Element IOElem = (Element) IOV;
-				if(IOElem.getElementsByTagName("IO_variable_name").getLength() == 0) throw new ServiceIOException("no IO_variable_name tag found in file: " + fXmlFile.getName());
-				String name = IOElem.getElementsByTagName("IO_variable_name").item(0).getTextContent();
+				if(IOElem.getElementsByTagName("IOName").getLength() == 0) throw new ServiceIOException("no IO_variable_name tag found in file: " + fXmlFile.getName());
+				String name = IOElem.getElementsByTagName("IOName").item(0).getTextContent();
+				name = name.trim();//strings are immutable, so you have to store the new string reference into the variable
 				IOVariable currVar = IOHash.get(name);
 				//get a list of all inputs for the variable and put the IOVariable objects associated with that name into the inputs list of the object itself
 				if(IOElem.getElementsByTagName("inputs").getLength() == 0) throw new ServiceIOException("no inputs tag found in file: " + fXmlFile.getName());
 				for(String in : IOElem.getElementsByTagName("inputs").item(0).getTextContent().split(","))
 				{
-					IOVariable tmp = IOHash.get(in);
-					
-					if(tmp == null) throw new InvalidIOVariableReferenceException("Input variable name not found in list of defined IOVariables: " + in); else currVar.inputs.add(tmp);
+					in = in.trim();
+					if(in != "")
+					{
+						IOVariable tmp = IOHash.get(in);
+						
+						if(tmp == null) throw new InvalidIOVariableReferenceException("Input variable name not found in list of defined IOVariables: " + in); else currVar.inputs.add(tmp);
+					}
 				}
 				//same as above for the outputs
 				if(IOElem.getElementsByTagName("outputs").getLength() == 0) throw new ServiceIOException("no outputs tag found in file: " + fXmlFile.getName());
 				for(String out : IOElem.getElementsByTagName("outputs").item(0).getTextContent().split(","))
 				{
-					IOVariable tmp = IOHash.get(out);
-					
-					if(tmp == null) throw new InvalidIOVariableReferenceException("Output variable name not found in list of defined IOVariables: " + out); else currVar.outputs.add(tmp);
+					out = out.trim();
+					if(out != "")
+					{
+						IOVariable tmp = IOHash.get(out);
+						
+						if(tmp == null) throw new InvalidIOVariableReferenceException("Output variable name not found in list of defined IOVariables: " + out); else currVar.outputs.add(tmp);
+					}
 				}
 			}
 		}

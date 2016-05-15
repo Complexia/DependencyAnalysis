@@ -19,7 +19,7 @@
 	<IOVariables>
 		<IOVariable>
 			<IOName>data1</IOName>
-			<ipnputs></inputs>
+			<inputs></inputs>
 			<outputs>data3</outputs>
 		<IOVariable>
 

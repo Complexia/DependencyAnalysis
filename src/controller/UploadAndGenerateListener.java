@@ -60,6 +60,7 @@ public class UploadAndGenerateListener implements ActionListener {
 			catch (Exception e1)// catch any of the general exceptions
 			{
 				System.out.println(e1.getMessage());
+				e1.printStackTrace();
 			}
 		    
 		}

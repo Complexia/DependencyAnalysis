@@ -20,22 +20,22 @@
 	<IOVariables>
 		<IOVariable>
 			<IOName>st1</IOName>
-			<ipnputs></inputs>
+			<inputs></inputs>
 			<outputs>data1, data2</outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data1</IOName>
-			<ipnputs>st1</inputs>
+			<inputs>st1</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data2</IOName>
-			<ipnputs>st1</inputs>
+			<inputs>st1</inputs>
 			<outputs>data3</outputs>
 		</IOvariable>
 		<IOVariable>
 			<IOName>data3</IOName>
-			<ipnputs>data2</inputs>
+			<inputs>data2</inputs>
 			<outputs></outputs>
 		</IOvariable>
 	</IOVariables>		
