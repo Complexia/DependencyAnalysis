@@ -1,42 +1,42 @@
 <?xml version="1.0"?>
 <company>
-	<service serviceName="A1">
-		<serviceName>A1</serviceName>
-		<inputService></inputService>
-		<outputService>data1, data2, data3, data4</outputService>
-		<nameOfVariable>st1, st2</nameOfVariable>
-		<inputVariable></inputVariable>
-		<outputVariable></outputVariable>
+	<service service_name="A1">
+		<service_name>A1</service_name>
+		<input_service></input_service>
+		<output_service>data1, data2, data3, data4</output_service>
+		<nameofvariable>st1, st2</nameofvariable>
+		<input_variable></input_variable>
+		<output_variable></output_variable>
 	</service>
 
 	<IOVariables>
 		<IOVariable>
-			<IOName>st1</IOName>
+			<IO_variable_name>st1</IO_variable_name>
 			<inputs></inputs>
 			<outputs>data1, data2</outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>data1</IOName>
+			<IO_variable_name>data1</IO_variable_name>
 			<inputs>st1</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>data2</IOName>
+			<IO_variable_name>data2</IO_variable_name>
 			<inputs>st1, st2</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>data3</IOName>
+			<IO_variable_name>data3</IO_variable_name>
 			<inputs>st2</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>data4</IOName>
+			<IO_variable_name>data4</IO_variable_name>
 			<inputs></inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>st2</IOName>
+			<IO_variable_name>st2</IO_variable_name>
 			<inputs></inputs>
 			<outputs>data2, data3</outputs>
 		</IOvariable>

@@ -112,6 +112,7 @@ public class UploadAndGenerateListener implements ActionListener {
 			count = 0;
 			for (model.IOVariable str : eachService.getInputService()) 
 			{
+				if(str == null) continue;
 				string += count < size? str.name + ",": str.name;
 				count++;
 			}

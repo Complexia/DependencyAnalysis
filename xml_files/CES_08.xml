@@ -1,7 +1,7 @@
 service has no local variables
 <?xml version="1.0"?>
 <company>
-	<service serviceName="A1">
+	<service service_name="A1">
 		<service_name>A1</service_name>
 		<input_service>data4,data5</input_service>
 		<output_service>data6,data7</output_service>
@@ -12,22 +12,22 @@ service has no local variables
 
 	<IOVariables>
 		<IOVariable>
-			<IOName>data4</IOName>
+			<IO_variable_name>data4</IO_variable_name>
 			<inputs></inputs>
 			<outputs>data6</outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>data5</IOName>
+			<IO_variable_name>data5</IO_variable_name>
 			<inputs></inputs>
 			<outputs>data7</outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>data6</IOName>
+			<IO_variable_name>data6</IO_variable_name>
 			<inputs>data4</inputs>
 			<outputs></outputs>
 		</IOvariable>
 		<IOVariable>
-			<IOName>data7</IOName>
+			<IO_variable_name>data7</IO_variable_name>
 			<inputs>data5</inputs>
 			<outputs></outputs>
 		</IOvariable>

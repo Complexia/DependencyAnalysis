@@ -182,7 +182,7 @@ public class UploadFile {
 				throw new ServiceIOException("no service tag found in file: " + fXmlFile.getName());
 			NodeList nList = doc.getElementsByTagName("service");
 
-			constructIOVariables(doc, fXmlFile);
+			HashMap<String, IOVariable> IOHash = new HashMap<String, IOVariable>(constructIOVariables(doc, fXmlFile));
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
@@ -194,20 +194,16 @@ public class UploadFile {
 					SimpleService tmpSrvce = new SimpleService();
 
 					tmpSrvce.setName(eElement.getElementsByTagName("service_name").item(0).getTextContent());
-					// dirty workaround, needs to be changed once the xml files
-					// are changed
 					ArrayList<IOVariable> retypedData = new ArrayList<IOVariable>();
 					if (eElement.getElementsByTagName("input_service").getLength() == 0)
 						throw new ServiceIOException("no input_service tag found in file: " + fXmlFile.getName());
 					for (String io : new ArrayList<String>(Arrays.asList(
 							eElement.getElementsByTagName("input_service").item(0).getTextContent().split(",")))) {
-						IOVariable newio = new IOVariable();
-						newio.name = io;
+						IOVariable newio = IOHash.get(io);
 						retypedData.add(newio);
 					}
 
-					tmpSrvce.setInputService(retypedData); // okay lots of
-															// explaining here,
+					tmpSrvce.setInputService(retypedData);
 
 					retypedData = new ArrayList<IOVariable>();
 					if (eElement.getElementsByTagName("output_service").getLength() == 0)
@@ -218,10 +214,7 @@ public class UploadFile {
 						newio.name = io;
 						retypedData.add(newio);
 					}
-					// lets go inside to out
-					tmpSrvce.setOutputService(retypedData);// first the eElement
-															// gets the data
-															// from
+					tmpSrvce.setOutputService(retypedData);
 
 					retypedData = new ArrayList<IOVariable>();
 					if (eElement.getElementsByTagName("nameofvariable").getLength() == 0)
@@ -232,9 +225,7 @@ public class UploadFile {
 						newio.name = io;
 						retypedData.add(newio);
 					}
-					// the area in the xml denoted by the tag name
-					tmpSrvce.setNameOfVariable(retypedData);// then the text is
-															// extracted
+					tmpSrvce.setNameOfVariable(retypedData);
 
 					retypedData = new ArrayList<IOVariable>();
 					if (eElement.getElementsByTagName("input_variable").getLength() == 0)
@@ -245,10 +236,7 @@ public class UploadFile {
 						newio.name = io;
 						retypedData.add(newio);
 					}
-					// and split by commas into an array of strings
-					tmpSrvce.setInputVariable(retypedData);// the array is then
-															// turned into an
-															// arrayList
+					tmpSrvce.setInputVariable(retypedData);
 
 					retypedData = new ArrayList<IOVariable>();
 					if (eElement.getElementsByTagName("output_variable").getLength() == 0)
@@ -259,7 +247,6 @@ public class UploadFile {
 						newio.name = io;
 						retypedData.add(newio);
 					}
-					// and the list is put into the service variable
 					tmpSrvce.setOutputVariable(retypedData);
 
 					variablesMap.put(tmpSrvce.getName(), tmpSrvce);
@@ -350,7 +337,7 @@ public class UploadFile {
 	 * @throws NullPointerException
 	 * @throws ServiceIOException
 	 */
-	private static void constructIOVariables(Document doc, File fXmlFile)
+	private static HashMap<String, IOVariable> constructIOVariables(Document doc, File fXmlFile)
 			throws ServiceIOException, InvalidIOVariableReferenceException {
 		NodeList IOVars = doc.getElementsByTagName("IOVariable");
 		HashMap<String, IOVariable> IOHash = new HashMap<String, IOVariable>();
@@ -415,6 +402,7 @@ public class UploadFile {
 				}
 			}
 		}
+		return IOHash;
 
 	}
 
