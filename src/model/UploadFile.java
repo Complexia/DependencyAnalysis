@@ -182,7 +182,7 @@ public class UploadFile {
 				throw new ServiceIOException("no service tag found in file: " + fXmlFile.getName());
 			NodeList nList = doc.getElementsByTagName("service");
 
-			// constructIOVariables(doc, fXmlFile);
+			constructIOVariables(doc, fXmlFile);
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
