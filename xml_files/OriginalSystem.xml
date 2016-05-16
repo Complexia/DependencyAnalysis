@@ -32,7 +32,7 @@
 		<input_service>data6,data7</input_service>
 		<output_service>data3,data8</output_service>
 		<nameofvariable>st4</nameofvariable>
-		<input_variable>data6,data7</input_variable>
+		<input_variable>data6,data7,dat13</input_variable>
 		<output_variable>data3</output_variable>
 	</service>
 
