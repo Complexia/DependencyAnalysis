@@ -44,11 +44,11 @@
 		<input_variable></input_variable>
 		<output_variable></output_variable>
 	</service>
-
+	
 <IO_variables>
 		<IOVariable>
 			<IO_variable_name>st1</IO_variable_name>
-			<inputs>data1</inputs>
+				<inputs>data1</inputs>
 			<outputs>data10</outputs>
 		</IOVariable>
 		<IOVariable>
@@ -59,7 +59,68 @@
 		<IOVariable>
 			<IO_variable_name>st4</IO_variable_name>
 			<inputs>data6,data7</inputs>
-			<outputs>data3</outputs>
+		<outputs>data3</outputs>
+
+		</IOVariable>
+				<IOVariable>
+			<IO_variable_name>data1</IO_variable_name>
+			<inputs></inputs>
+			<outputs>st1,data2</outputs>
+		</IOVariable>
+				<IOVariable>
+			<IO_variable_name>data2</IO_variable_name>
+			<inputs>data1</inputs>
+			<outputs>data11,data4,data5</outputs>
+		</IOVariable>
+				<IOVariable>
+			<IO_variable_name>data3</IO_variable_name>
+			<inputs>st4</inputs>
+			<outputs>st2</outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data4</IO_variable_name>
+			<inputs>data2,st2</inputs>
+			<outputs>data6</outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data5</IO_variable_name>
+			<inputs>data2</inputs>
+			<outputs>data7</outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data6</IO_variable_name>
+			<inputs>data4</inputs>
+			<outputs>st4</outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data7</IO_variable_name>
+			<inputs>data5</inputs>
+			<outputs>st4</outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data8</IO_variable_name>
+			<inputs>data13</inputs>
+			<outputs>data9</outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data9</IO_variable_name>
+			<inputs>data8</inputs>
+			<outputs></outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data10</IO_variable_name>
+			<inputs>st1</inputs>
+			<outputs></outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data11</IO_variable_name>
+			<inputs>data2</inputs>
+			<outputs></outputs>
+		</IOVariable>
+						<IOVariable>
+			<IO_variable_name>data12</IO_variable_name>
+			<inputs>st2</inputs>
+			<outputs></outputs>
 		</IOVariable>
 	</IO_variables>
 </company>
