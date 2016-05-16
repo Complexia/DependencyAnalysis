@@ -19,6 +19,7 @@ public class StronglyConnectedServicesListener implements ActionListener {
 	private ArrayList<ServiceNode> nodes;
 	private ArrayList<Service> elementaryServices;
 	private List<Service> lstData;
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

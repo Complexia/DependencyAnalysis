@@ -16,10 +16,13 @@ import javax.swing.JToolBar;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
+import controller.CheckElemAndGenerateL1Listener;
 import controller.CheckElementaryServicesListener;
+import controller.FindSCSandGenerateL2Listener;
 import controller.GenerateL0Listener;
 import controller.GenerateL1Listener;
 import controller.GenerateL2Listener;
+import controller.RemoteComHighLoadListener;
 import controller.StronglyConnectedServicesListener;
 import controller.UploadAndGenerateListener;
 import controller.UploadFileListener;
@@ -80,35 +83,36 @@ public class MainWindow extends JFrame {
 		btnUpload = new JButton(BUTTON_LABEL_UPLOAD);
 		btnUpload.addActionListener(new UploadAndGenerateListener());
 
-		btnGenerateL0 = new JButton(BUTTON_LABEL_GENERATE_LO);
-		btnGenerateL0.addActionListener(new GenerateL0Listener());
+//		btnGenerateL0 = new JButton(BUTTON_LABEL_GENERATE_LO);
+//		btnGenerateL0.addActionListener(new GenerateL0Listener());
 
-		btnCheckElementaryService = new JButton(BUTTON_LABEL_CHECK_ELE_SERVICE);
-		btnCheckElementaryService.addActionListener(new CheckElementaryServicesListener());
+//		btnCheckElementaryService = new JButton(BUTTON_LABEL_CHECK_ELE_SERVICE);
+//		btnCheckElementaryService.addActionListener(new CheckElementaryServicesListener());
 
 		btnGenerateL1 = new JButton(BUTTON_LABEL_GENERATE_L1);
-		btnGenerateL1.addActionListener(new GenerateL1Listener());
+		btnGenerateL1.addActionListener(new CheckElemAndGenerateL1Listener());
 
-		btnFindSCS = new JButton(BUTTON_LABEL_FIND_SCS);
-		btnFindSCS.addActionListener(new StronglyConnectedServicesListener());
+//		btnFindSCS = new JButton(BUTTON_LABEL_FIND_SCS);
+//		btnFindSCS.addActionListener(new StronglyConnectedServicesListener());
 
 		btnGenerateL2 = new JButton(BUTTON_LABEL_GENERATE_L2);
-		btnGenerateL2.addActionListener(new GenerateL2Listener());
+		btnGenerateL2.addActionListener(new FindSCSandGenerateL2Listener());
 
 		btnCheckProperty = new JButton(BUTTON_LABEL_CHECK_PROPERTY);
 
 		btnRemoteComputation = new JButton(BUTTON_LABEL_Remote_Computation);
+		btnRemoteComputation.addActionListener(new RemoteComHighLoadListener());
 
 		// = new JButton("Find SCS");
 
 		btnCheckProperty = new JButton("Check property");
-		btnRemoteComputation = new JButton("RemoteCom HighLoad");
+		//btnRemoteComputation = new JButton("RemoteCom HighLoad");
 		new JButton("RemoteCom HighPerf");
 
 		// JPanel northPanel = new JPanel(new GridLayout(2, 1));
 		// buttonPanel.add(northPanel, BorderLayout.NORTH);
 
-		programButtons = new JButton[] { btnUpload, btnGenerateL0, btnCheckElementaryService, btnGenerateL1, btnFindSCS,
+		programButtons = new JButton[] { btnUpload,  btnGenerateL1, 
 				btnGenerateL2 };
 		programPanel = new JPanel();
 		programPanel.setLayout(new BorderLayout());
