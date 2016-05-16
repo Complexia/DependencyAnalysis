@@ -122,5 +122,10 @@
 			<inputs>st2</inputs>
 			<outputs></outputs>
 		</IOVariable>
+								<IOVariable>
+			<IO_variable_name>data13</IO_variable_name>
+			<inputs></inputs>
+			<outputs>data8</outputs>
+		</IOVariable>
 	</IO_variables>
 </company>
