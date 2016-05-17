@@ -26,7 +26,7 @@ public class CheckElemAndGenerateL1Listener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+		//-------------------------------------checkElementaryServices--------------------------------------------------------------------------------------------------------------
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 
 		int subServiceCount = 0;
@@ -34,6 +34,7 @@ public class CheckElemAndGenerateL1Listener implements ActionListener{
 
 		for (SimpleService service : hashes.values()) 
 		{
+			// !!DEPRECTAED!!
 			// performing a rough and dirty clone so we have something to break
 			// up into subservices without destroying the original
 			//SimpleService meatTray = new SimpleService("meat", service.getInputService(), service.getOutputService(),
@@ -69,6 +70,8 @@ public class CheckElemAndGenerateL1Listener implements ActionListener{
 			ArrayList<IOVariable>checkedLocals = new ArrayList<IOVariable>();//somewhere to keep track of what was evaluated
 			for (IOVariable out : outs) 
 			{
+				if(out == null) continue;//skip it. workaround for now to get it displaying then i'll track down where the null is getting in
+				//TODO: properly debug the source and reason for the null objects in the lists
 				if(Collections.disjoint(service.getNameOfVariable(),out.inputs))
 				{
 					SimpleService subService = new SimpleService();
@@ -201,6 +204,9 @@ public class CheckElemAndGenerateL1Listener implements ActionListener{
 //		}
 //
 //		Factory.displayResult(tableData, columnNames);
+		
+		//-----------------------GenerateL1-------------------------------------------------------------------------------------------------------------------
+		
 		if(Factory.getL1Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
 		elementaryServices = new ArrayList<Service>();
 		columnNames = new Object[] { "Main Service", "Sub Service", "inputs", "outputs", "name of variable",
@@ -320,7 +326,7 @@ public class CheckElemAndGenerateL1Listener implements ActionListener{
 			if(parent.getNameOfVariable().contains(input))
 			{
 				input.setLocal(true);//should be set before but we're just making sure
-				if(!checkedLocals.contains(input))
+				if(!checkedLocals.contains(input))//probably where the bug is occurring HERE!!!!!--------------
 				{
 					checkedLocals.add(input);
 					child.addVariable(input);
@@ -328,7 +334,7 @@ public class CheckElemAndGenerateL1Listener implements ActionListener{
 					{
 						recursiveInputAdd(parent, child, varOut, checkedLocals);//tbh i'm confusing myself here, but i did some desk checks and the logic checks out
 					}
-					//if(subs.containsKey(input)) subs.get(input).add(out); else{ ArrayList<IOVariable> o = new ArrayList<IOVariable>();o.add(out); subs.put(input, o);} TODO: prolly get rid of this
+					//if(subs.containsKey(input)) subs.get(input).add(out); else{ ArrayList<IOVariable> o = new ArrayList<IOVariable>();o.add(out); subs.put(input, o);} TODO: probably get rid of this
 				}
 				
 			}

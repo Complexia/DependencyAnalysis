@@ -16,8 +16,8 @@ import java.util.List;
 public class IOVariable {
 	// everything public because there isn't much need for encapsulation here
 	public String name;
-	public List<IOVariable> inputs;
-	public List<IOVariable> outputs;
+	public ArrayList<IOVariable> inputs;
+	public ArrayList<IOVariable> outputs;
 	public Boolean isLocal;
 
 	/**
@@ -65,7 +65,7 @@ public class IOVariable {
 		return inputs;
 	}
 
-	public void setInputs(List<IOVariable> inputs) {
+	public void setInputs(ArrayList<IOVariable> inputs) {
 		this.inputs = inputs;
 	}
 
@@ -84,7 +84,7 @@ public class IOVariable {
 	 * @param outputs
 	 *            the outputs to set
 	 */
-	public void setOutputs(List<IOVariable> outputs) {
+	public void setOutputs(ArrayList<IOVariable> outputs) {
 		this.outputs = outputs;
 	}
 	

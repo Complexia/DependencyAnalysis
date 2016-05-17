@@ -123,6 +123,7 @@ public class UploadAndGenerateListener implements ActionListener {
 			count = 0;
 			for (model.IOVariable str : eachService.getOutputService()) 
 			{
+				if(str == null) continue;
 				string += count < size? str.name + ",": str.name;
 				count++;
 			}
@@ -132,6 +133,7 @@ public class UploadAndGenerateListener implements ActionListener {
 			count = 0;
 			for (model.IOVariable str : eachService.getNameOfVariable()) 
 			{
+				if(str == null) continue;
 				string += count < size? str.name + ",": str.name;
 				count++;
 			}
@@ -141,6 +143,7 @@ public class UploadAndGenerateListener implements ActionListener {
 			count = 0;
 			for (model.IOVariable str : eachService.getInputVariable()) 
 			{
+				if(str == null) continue;
 				string += count < size? str.name + ",": str.name;
 				count++;
 			}
@@ -150,6 +153,7 @@ public class UploadAndGenerateListener implements ActionListener {
 			count = 0;
 			for (model.IOVariable str : eachService.getOutputVariable()) 
 			{
+				if(str == null) continue;
 				string += count < size? str.name + ",": str.name;
 				count++;
 			}

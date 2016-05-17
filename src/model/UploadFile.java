@@ -210,8 +210,7 @@ public class UploadFile {
 						throw new ServiceIOException("no output_service tag found in file: " + fXmlFile.getName());
 					for (String io : new ArrayList<String>(Arrays.asList(
 							eElement.getElementsByTagName("output_service").item(0).getTextContent().split(",")))) {
-						IOVariable newio = new IOVariable();
-						newio.name = io;
+						IOVariable newio = IOHash.get(io);
 						retypedData.add(newio);
 					}
 					tmpSrvce.setOutputService(retypedData);
@@ -221,8 +220,7 @@ public class UploadFile {
 						throw new ServiceIOException("no nameofvariable tag found in file: " + fXmlFile.getName());
 					for (String io : new ArrayList<String>(Arrays.asList(
 							eElement.getElementsByTagName("nameofvariable").item(0).getTextContent().split(",")))) {
-						IOVariable newio = new IOVariable();
-						newio.name = io;
+						IOVariable newio = IOHash.get(io);
 						retypedData.add(newio);
 					}
 					tmpSrvce.setNameOfVariable(retypedData);
@@ -232,8 +230,7 @@ public class UploadFile {
 						throw new ServiceIOException("no input_variable tag found in file: " + fXmlFile.getName());
 					for (String io : new ArrayList<String>(Arrays.asList(
 							eElement.getElementsByTagName("input_variable").item(0).getTextContent().split(",")))) {
-						IOVariable newio = new IOVariable();
-						newio.name = io;
+						IOVariable newio = IOHash.get(io);
 						retypedData.add(newio);
 					}
 					tmpSrvce.setInputVariable(retypedData);
@@ -243,8 +240,7 @@ public class UploadFile {
 						throw new ServiceIOException("no output_variable tag found in file: " + fXmlFile.getName());
 					for (String io : new ArrayList<String>(Arrays.asList(
 							eElement.getElementsByTagName("output_variable").item(0).getTextContent().split(",")))) {
-						IOVariable newio = new IOVariable();
-						newio.name = io;
+						IOVariable newio = IOHash.get(io);
 						retypedData.add(newio);
 					}
 					tmpSrvce.setOutputVariable(retypedData);
@@ -372,17 +368,20 @@ public class UploadFile {
 				// IOVariable objects associated with that name into the inputs
 				// list of the object itself
 				if (IOElem.getElementsByTagName("inputs").getLength() == 0)
-					throw new ServiceIOException("no inputs tag found in file: " + fXmlFile.getName());
+					throw new ServiceIOException("no inputs tag found in file: " + fXmlFile.getName() + "\nfor IOVariable:" + currVar.name);
 				for (String in : IOElem.getElementsByTagName("inputs").item(0).getTextContent().split(",")) {
 					in = in.trim();
 					if (in != "") {
 						IOVariable tmp = IOHash.get(in);
 
 						if (tmp == null)
-							throw new InvalidIOVariableReferenceException(
-									"Input variable name not found in list of defined IOVariables: " + in);
+						{
+							throw new InvalidIOVariableReferenceException("Input variable name not found in list of defined IOVariables: " + in);
+						}
 						else
+						{
 							currVar.inputs.add(tmp);
+						}
 					}
 				}
 				// same as above for the outputs
