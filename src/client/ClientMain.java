@@ -7,6 +7,7 @@ import factory.Factory;
 //import graphic.ButtonPanel1;
 import graphic.MainWindow;
 import graphic.MainWindow;
+import model.SystemGenerator;
 import model.UploadFile;
 
 /**
@@ -21,6 +22,7 @@ public class ClientMain {
 		
 		
 		Factory.setMainWindow(new MainWindow());
+		Factory.setSystemGenerator(new SystemGenerator());
 
 		
 		

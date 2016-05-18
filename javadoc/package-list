@@ -1,5 +1,6 @@
 client
 controller
+exceptions
 factory
 graphic
 model

@@ -15,6 +15,7 @@ import javax.swing.JToolBar;
 import graphic.MainWindow;
 import model.Service;
 import model.ServiceNode;
+import model.SystemGenerator;
 
 /**
  * Contains all necessary global data in a centralised location for ease of access and modification.
@@ -28,10 +29,11 @@ public class Factory {
 	static MainWindow mainWindow;
 //	static ButtonPanel buttonPanel;
 //	static ButtonPanel1 buttonPanel1;
+	static SystemGenerator systemGenerator;
 	/**
 	 * The file chosen by the user
 	 */
-	static File selectedFile;
+	static File selectedFile = null;
 	/**
 	 * Jpanel that contains and displays all output data
 	 */
@@ -59,23 +61,23 @@ public class Factory {
 	/**
 	 * Boolean to track whether L0 was previously generated for the current file
 	 */
-	static Boolean L0Generated;
+	static Boolean L0Generated = false;
 	/**
 	 * Boolean to track whether L1 was previously generated for the current file
 	 */
-	static Boolean L1Generated;
+	static Boolean L1Generated = false;
 	/**
 	 * Boolean to track whether check elementary services was previously run for the current file
 	 */
-	static Boolean chkElemServGenerated;
+	static Boolean chkElemServGenerated = false;
 	/**
 	 * Boolean to track whether L2 was previously generated for the current file
 	 */
-	static Boolean L2Generated;
+	static Boolean L2Generated = false;
 	/**
 	 * Boolean to track whether Strongly connected services was previously run for the current file
 	 */
-	static Boolean SCSGenerated;
+	static Boolean SCSGenerated = false;
 	/**
 	 * @return the l0Generated
 	 */
@@ -186,7 +188,7 @@ public class Factory {
 	/**
 	 * @return list of elementary services
 	 */
-	public static ArrayList<Service> getElementaryServices(){
+	public static ArrayList<model.Service> getElementaryServices(){
 		return elementaryServices;
 	}
 	
@@ -298,6 +300,22 @@ public class Factory {
 //	public static ButtonPanel1 getButtonPanel1(){
 //		return buttonPanel1;
 //	}
+
+	/**
+	 * @return the systemGenerator
+	 */
+	public static SystemGenerator getSystemGenerator()
+	{
+		return systemGenerator;
+	}
+
+	/**
+	 * @param systemGenerator the systemGenerator to set
+	 */
+	public static void setSystemGenerator(SystemGenerator systemGenerator)
+	{
+		Factory.systemGenerator = systemGenerator;
+	}
 	
 	
 	
