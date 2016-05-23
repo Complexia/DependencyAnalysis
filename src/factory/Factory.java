@@ -15,6 +15,7 @@ import javax.swing.JToolBar;
 import graphic.MainWindow;
 import model.Service;
 import model.ServiceNode;
+import model.SimpleService;
 import model.SystemGenerator;
 
 /**
@@ -49,11 +50,11 @@ public class Factory {
 	/**
 	 * List containing all identified elementary services
 	 */
-	static ArrayList<Service> elementaryServices;
+	static ArrayList<SimpleService> elementaryServices;
 	/**
 	 * List containing all the services
 	 */
-	static List<model.Service> lstData;
+	static List<model.SimpleService> lstData;
 	/**
 	 * List containing all service nodes
 	 */
@@ -168,7 +169,7 @@ public class Factory {
 	/**
 	 * @param lstData1 list of services to set
 	 */
-	public static void setLstData(List<model.Service> lstData1){
+	public static void setLstData(List<model.SimpleService> lstData1){
 		
 		lstData = lstData1;
 		
@@ -178,7 +179,7 @@ public class Factory {
 	/**
 	 * @return list of stored services
 	 */
-	public static List<model.Service> getLstData(){
+	public static List<model.SimpleService> getLstData(){
 		
 		return lstData;
 		
@@ -188,14 +189,14 @@ public class Factory {
 	/**
 	 * @return list of elementary services
 	 */
-	public static ArrayList<model.Service> getElementaryServices(){
+	public static ArrayList<model.SimpleService> getElementaryServices(){
 		return elementaryServices;
 	}
 	
 	/**
 	 * @param elementaryServices1 list of elementary services to set
 	 */
-	public static void setElementaryServices(ArrayList<Service> elementaryServices1){
+	public static void setElementaryServices(ArrayList<SimpleService> elementaryServices1){
 		elementaryServices = elementaryServices1;
 	}
 	

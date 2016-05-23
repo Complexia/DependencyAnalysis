@@ -8,11 +8,18 @@ import java.util.List;
 public class ServiceNode {
 	private List<ServiceNode> successors;
 	private List<ServiceNode> predecesors;
-	public Service service;
+	public SimpleService service;
 	private int tarjanIndex;
 	private int tarjanLowLink;
 
-	public ServiceNode(Service s) {
+//	public ServiceNode(Service s) {
+//		this.service = s;
+//		successors = new ArrayList<ServiceNode>();
+//		predecesors = new ArrayList<ServiceNode>();
+//		tarjanIndex = -1; // UNDEFINED
+//	}
+	
+	public ServiceNode(SimpleService s) {
 		this.service = s;
 		successors = new ArrayList<ServiceNode>();
 		predecesors = new ArrayList<ServiceNode>();
@@ -20,16 +27,16 @@ public class ServiceNode {
 	}
 
 	public boolean hasSystemInputs() {
-		return service.getInputs().size() > predecesors.size();
+		return service.getInputService().size() > predecesors.size();
 	}
 
-	public List<String> getSystemInputs() {
-		ArrayList<String> systemInputs = new ArrayList<String>();
-		for (String input : service.getInputs()) {
+	public List<IOVariable> getSystemInputs() {
+		ArrayList<IOVariable> systemInputs = new ArrayList<IOVariable>();
+		for (IOVariable input : service.getInputService()) {
 			boolean isSystemInput = true;
 
 			for (ServiceNode pred : predecesors) {
-				if (pred.getService().outputs.contains(input)) {
+				if (pred.getService().getOutputService().contains(input)) {
 					isSystemInput = false;
 				}
 			}
@@ -42,16 +49,16 @@ public class ServiceNode {
 	}
 
 	public boolean hasSystemOutputs() {
-		return service.getOutputs().size() > successors.size();
+		return service.getOutputService().size() > successors.size();
 	}
 
-	public List<String> getSystemOutputs() {
-		ArrayList<String> systemOutputs = new ArrayList<String>();
-		for (String output : service.getOutputs()) {
+	public List<IOVariable> getSystemOutputs() {
+		ArrayList<IOVariable> systemOutputs = new ArrayList<IOVariable>();
+		for (IOVariable output : service.getOutputService()) {
 			boolean isSystemOutput = true;
 
 			for (ServiceNode successor : successors) {
-				if (successor.getService().inputs.contains(output)) {
+				if (successor.getService().getInputService().contains(output)) {
 					isSystemOutput = false;
 				}
 			}
@@ -141,10 +148,10 @@ public class ServiceNode {
 	}
 
 	public String getName() {
-		return service.getname();
+		return service.getName();
 	}
 
-	public Service getService() {
+	public SimpleService getService() {
 		return service;
 	}
 

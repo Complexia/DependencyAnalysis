@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import factory.Factory;
+import model.IOVariable;
 import model.Service;
 import model.ServiceNode;
+import model.SimpleService;
 import model.StronglyConnectedService;
 
 public class FindSCSandGenerateL2Listener implements ActionListener {
@@ -16,8 +18,8 @@ public class FindSCSandGenerateL2Listener implements ActionListener {
 	private Object[][] tableData;
 	private Object[] columnNames;
 	private ArrayList<ServiceNode> nodes;
-	private ArrayList<Service> elementaryServices;
-	private List<Service> lstData;
+	private ArrayList<SimpleService> elementaryServices;
+	private List<SimpleService> lstData;
 	private ArrayList <StronglyConnectedService> scsList;
 	private int tarjanIndex;
 	private ArrayDeque <ServiceNode> tarjanStack;
@@ -34,15 +36,15 @@ public class FindSCSandGenerateL2Listener implements ActionListener {
         nodes = new ArrayList<ServiceNode>();
         elementaryServices = Factory.getElementaryServices();
         // Creates the initial list of service nodes
-        for (Service elem : elementaryServices) {
+        for (SimpleService elem : elementaryServices) {
         	ServiceNode node = new ServiceNode(elem);
         	nodes.add(node);
         }
         lstData = Factory.getLstData();
 
-        for (Service eachService : lstData) {
+        for (SimpleService eachService : lstData) {
         	// check if service has elementary services
-        	if (eachService.getelementaryServices().size() == 0) {
+        	if (eachService.getElementaryServices().size() == 0) {
         		ServiceNode node = new ServiceNode(eachService);
         		nodes.add(node);
         	}
@@ -50,11 +52,11 @@ public class FindSCSandGenerateL2Listener implements ActionListener {
 
         // Connect the graphs of service nodes
         for (ServiceNode n1 : nodes) {
-        	List<String> outputs = n1.getService().getOutputs();
-        	for (String output : outputs) {
+        	ArrayList<IOVariable> outputs = n1.getService().getOutputService();
+        	for (IOVariable output : outputs) {
         		// Look for matching input to this output
         		for (ServiceNode n2 : nodes) {
-        			for (String input : n2.getService().getInputs()) {
+        			for (IOVariable input : n2.getService().getInputService()) {
         				if (input.equals(output)) {
         					// Attach nodes in graph
 						if (!n1.getSuccessors().contains(n2)) {

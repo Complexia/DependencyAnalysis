@@ -54,6 +54,11 @@ public class SimpleService {
 	 * stores all elements, currently unused
 	 */
 	private ArrayList<String> elements;
+	
+	/**
+	 * component for woking with legacy code, stores the elementary services.
+	 */
+	private ArrayList<SimpleService> elementaryServices;
 
 	/**
 	 * default constructor used whenever a service is needed but the info to
@@ -230,6 +235,22 @@ public class SimpleService {
 	 */
 	public void setElements(ArrayList<String> elements) {
 		this.elements = elements;
+	}
+
+	/**
+	 * @return the elementaryServices
+	 */
+	public ArrayList<SimpleService> getElementaryServices()
+	{
+		return elementaryServices;
+	}
+
+	/**
+	 * @param elementaryServices the elementaryServices to set
+	 */
+	public void setElementaryServices(ArrayList<SimpleService> elementaryServices)
+	{
+		this.elementaryServices = elementaryServices;
 	}
 
 	/**
