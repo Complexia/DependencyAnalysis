@@ -40,7 +40,7 @@ public class SystemGenerator
 	public void uploadFile()
 	{
 		
-		List<model.Service> lstData = null;
+		List<SimpleService> lstData = null;
 		
 		File selectedFile = null;
 		
@@ -82,11 +82,8 @@ public class SystemGenerator
 		if(Factory.getSelectedFile() == null) uploadFile();
 		Object[][] tableData = null;
 		Object[] columnNames = null;
-		ArrayList<model.Service> elementaryServices;
-		ArrayList<SimpleService> lstData1;
 		
 		if(Factory.getL0Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
-		elementaryServices = new ArrayList<model.Service>();
 		columnNames = new Object[] { "Name of Service", "Input Data", "Output Data", "Name of Variable",
 				"Input Variable", "Output Variable" };
 
@@ -94,9 +91,9 @@ public class SystemGenerator
 		int rowIndex = 0;
 
 		int index = 0;
-		lstData1 = new ArrayList<SimpleService>();
-		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 		
+		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
+		Factory.setLstData(new ArrayList<SimpleService>(hashes.values()));
 		int size, count;
 		for (SimpleService eachService : hashes.values()) {
 
@@ -174,7 +171,7 @@ public class SystemGenerator
 		Object[][] tableData = null;
 		Object[] columnNames = null;
 		
-		ArrayList<model.Service> elementaryServices = null;
+		ArrayList<SimpleService> elementaryServices = null;
 		ArrayList<SimpleService> lstData1;
 		
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
@@ -204,6 +201,8 @@ public class SystemGenerator
 					subService.setIsElementary(true);
 					service.addChild(subService);
 					subServiceCount++;
+					
+					elementaryServices.add(subService);
 				}
 				else
 				{
@@ -238,6 +237,8 @@ public class SystemGenerator
 					service.addChild(subService);
 					subServiceCount++;
 					
+					elementaryServices.add(subService);
+					
 				}
 			}
 
@@ -261,13 +262,13 @@ public class SystemGenerator
 		//private HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 
 		int subServiceCount = 0;
-		ArrayList<Service> elementaryServices;
+		ArrayList<SimpleService> elementaryServices;
 		ArrayList<SimpleService> lstData1;
 		
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 		
 		if(Factory.getL1Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
-		elementaryServices = new ArrayList<Service>();
+		elementaryServices = new ArrayList<SimpleService>();
 		columnNames = new Object[] { "Main Service", "Sub Service", "inputs", "outputs", "name of variable",
 				"inputs  variable", "outputs variable" };
 

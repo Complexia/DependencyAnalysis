@@ -55,7 +55,7 @@ public class UploadFile {
 	 * 
 	 * @deprecated replaced with variablesMap
 	 */
-	private static ArrayList<Service> elements = new ArrayList();
+	private static List<SimpleService> elements = new ArrayList();
 
 	/**
 	 * The default getter for doc1
@@ -69,7 +69,7 @@ public class UploadFile {
 	/**
 	 * @return the elements
 	 */
-	public static ArrayList<Service> getElements() {
+	public static List<SimpleService> getElements() {
 		return elements;
 	}
 
@@ -77,7 +77,7 @@ public class UploadFile {
 	 * @param elements
 	 *            the elements to set
 	 */
-	public static void setElements(ArrayList<Service> elements) {
+	public static void setElements(List<SimpleService> elements) {
 		UploadFile.elements = elements;
 	}
 
@@ -139,8 +139,8 @@ public class UploadFile {
 	 *            the file object to be parsed
 	 * @return A list of Services. The value is currently unused.
 	 */
-	public static List<Service> readFromXML(File file) {
-		List<Service> listOfService = null;
+	public static List<SimpleService> readFromXML(File file) {
+		List<SimpleService> listOfService = null;
 		try {
 			UploadFile.uploadL0(file);
 			Document doc = UploadFile.getDoc();
