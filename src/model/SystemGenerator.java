@@ -199,6 +199,7 @@ public class SystemGenerator
 					subService.setParent(service);
 					subService.setIsElementary(true);
 					service.addChild(subService);
+					service.addElementaryService(subService);//for legacy compatibility
 					subServiceCount++;
 					
 					elementaryServices.add(subService);
@@ -234,6 +235,7 @@ public class SystemGenerator
 					subService.setParent(service);
 					subService.setIsElementary(true);
 					service.addChild(subService);
+					service.addElementaryService(subService);//for legacy compatibility
 					subServiceCount++;
 					
 					elementaryServices.add(subService);
