@@ -171,8 +171,7 @@ public class SystemGenerator
 		Object[][] tableData = null;
 		Object[] columnNames = null;
 		
-		ArrayList<SimpleService> elementaryServices = null;
-		ArrayList<SimpleService> lstData1;
+		ArrayList<SimpleService> elementaryServices = new ArrayList<SimpleService>();
 		
 		HashMap<String, SimpleService> hashes = UploadFile.getVariablesMap();
 

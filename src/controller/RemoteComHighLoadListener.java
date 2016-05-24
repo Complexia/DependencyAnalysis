@@ -62,7 +62,7 @@ public class RemoteComHighLoadListener implements ActionListener{
 				f2.setBounds(300, 100, 600, 500);
 				f2.setLayout(new GridLayout(20, 1));
 				for (int i = 0; i < nodes.size(); i++) {
-					JCheckBox CB = new JCheckBox(nodes.get(i).getService().name);
+					JCheckBox CB = new JCheckBox(nodes.get(i).getService().getName());
 					programCheckBoxes2.add(CB);
 				}
 				for (JCheckBox ok : programCheckBoxes2) {
@@ -155,7 +155,7 @@ public class RemoteComHighLoadListener implements ActionListener{
 		for (ArrayList<StronglyConnectedService> SCSList : RSList2) {
 			for (StronglyConnectedService SCS2 : SCSList) {
 				for (ServiceNode SN : SCS2.getServiceNodes()) {
-					if (SN.getService().name.equals(AL1)) {
+					if (SN.getService().getName().equals(AL1)) {
 						k = SCS2.index;
 					}
 				}
@@ -168,10 +168,10 @@ public class RemoteComHighLoadListener implements ActionListener{
 		SCSN = SCS.getServiceNodes();
 		for (int i = 0; i < SCSN.size(); i++) {
 			for (int j = SCSN.size() - 1; j > i; j--) {
-				if ((SCSN.get(i).service.outputs.contains(Data) && (SCSN.get(j).service.inputs.contains(Data)))) {
+				if ((SCSN.get(i).service.getOutputService().contains(Data) && (SCSN.get(j).service.getInputService().contains(Data)))) {
 					return true;
-				} else if ((SCSN.get(i).service.inputs.contains(Data)
-						&& (SCSN.get(j).service.outputs.contains(Data)))) {
+				} else if ((SCSN.get(i).service.getInputService().contains(Data)
+						&& (SCSN.get(j).service.getOutputService().contains(Data)))) {
 					return true;
 				}
 			}

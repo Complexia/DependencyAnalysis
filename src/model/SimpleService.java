@@ -73,6 +73,7 @@ public class SimpleService {
 		outputVariable = new ArrayList<IOVariable>();
 		parent = null;
 		children = new ArrayList<SimpleService>();
+		this.elementaryServices = new ArrayList<SimpleService>();
 	} // default empty constructor
 
 	/**
@@ -96,6 +97,7 @@ public class SimpleService {
 		this.nameOfVariable = nameOfVariable;
 		this.inputVariable = inputVariable;
 		this.outputVariable = outputVariable;
+		this.elementaryServices = new ArrayList<SimpleService>();
 	}
 
 	/**
@@ -251,6 +253,11 @@ public class SimpleService {
 	public void setElementaryServices(ArrayList<SimpleService> elementaryServices)
 	{
 		this.elementaryServices = elementaryServices;
+	}
+	
+	public void addElementaryService(SimpleService e)
+	{
+		elementaryServices.add(e);
 	}
 
 	/**
