@@ -41,8 +41,7 @@ public class RemoteComHighLoadListener implements ActionListener{
 		f.setBounds(300, 100, 600, 500);// set frame location and size
 		f.setLayout(new GridLayout(20, 1));// set the Grid Layout
 		f.setDefaultCloseOperation(1);
-		if (Flag) // TODO: fix up whatever the reason this kluge is here
-					// for.
+		if (Flag)
 		{
 			for (int i = 0; i < AllData.size(); i++) {
 				JCheckBox CB = new JCheckBox(AllData.get(i));

@@ -47,7 +47,7 @@ public class StronglyConnectedService
 	{
 		for (ServiceNode sn : nodes)
 		{
-			if (sn.getService().getInputs().contains(input))
+			if (sn.getService().getInputService().contains(input))
 			{
 				return true;
 			}
@@ -60,7 +60,7 @@ public class StronglyConnectedService
 	{
 		for (ServiceNode sn : nodes)
 		{
-			if (sn.getService().getOutputs().contains(output))
+			if (sn.getService().getOutputService().contains(output))
 			{
 				return true;
 			}
@@ -69,13 +69,13 @@ public class StronglyConnectedService
 	}
 
 	// Compiles a list of all of the inputs to all of the essential services in me
-	public ArrayList<String> getAllInputs() 
+	public ArrayList<IOVariable> getAllInputs() 
 	{
-		ArrayList<String> inputs = new ArrayList<String>();
+		ArrayList<IOVariable> inputs = new ArrayList<IOVariable>();
 		
 		for (ServiceNode sn : nodes)
 		{
-			for (String input : sn.getService().getInputs())
+			for (IOVariable input : sn.getService().getInputService())
 			{
 				// Avoid duplicates
 				if (!inputs.contains(input))
@@ -89,13 +89,13 @@ public class StronglyConnectedService
 	}
 
 	// Compiles a list of all of the outputs from all of the essential services in me
-	public ArrayList<String> getAllOutputs() 
+	public ArrayList<IOVariable> getAllOutputs() 
 	{
-		ArrayList<String> outputs = new ArrayList<String>();
+		ArrayList<IOVariable> outputs = new ArrayList<IOVariable>();
 		
 		for (ServiceNode sn : nodes)
 		{
-			for (String output : sn.getService().getOutputs())
+			for (IOVariable output : sn.getService().getOutputService())
 			{
 				// Avoid duplicates
 				if (!outputs.contains(output))
@@ -109,16 +109,16 @@ public class StronglyConnectedService
 	}
 	
 	// Returns a list of all dataflows that are connected to this SCS (but not internal ones)
-		public ArrayList<String> getDataFlows() 
+		public ArrayList<IOVariable> getDataFlows() 
 		{
-			ArrayList<String> dataFlows = new ArrayList<String>();
+			ArrayList<IOVariable> dataFlows = new ArrayList<IOVariable>();
 			
 			// First get all the inputs and outputs for every elementary sub-service
-			ArrayList<String> allInputs = getAllInputs();
-			ArrayList<String> allOutputs = getAllOutputs();
+			ArrayList<IOVariable> allInputs = getAllInputs();
+			ArrayList<IOVariable> allOutputs = getAllOutputs();
 			
 			// To avoid internal flows, only add inputs that are not also outputs
-			for (String output : allOutputs)
+			for (IOVariable output : allOutputs)
 			{
 				if (!allInputs.contains(output))
 				{
@@ -127,7 +127,7 @@ public class StronglyConnectedService
 			}
 			
 			// To avoid internal flows, only add outputs that are not also inputs
-			for (String input : allInputs)
+			for (IOVariable input : allInputs)
 			{
 				if (!allOutputs.contains(input))
 				{
