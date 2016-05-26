@@ -218,6 +218,22 @@ public class Factory {
 	}
 	
 	/**
+	 * @return the dataPanel
+	 */
+	public static JPanel getDataPanel()
+	{
+		return dataPanel;
+	}
+
+	/**
+	 * @return the programPanel
+	 */
+	public static JPanel getProgramPanel()
+	{
+		return programPanel;
+	}
+
+	/**
 	 * @return the buttonPanel
 	 */
 	public static JToolBar getButtonPanel() {
@@ -342,6 +358,12 @@ public class Factory {
 		Factory.systemGenerator = systemGenerator;
 	}
 	
+	public static void displayResultCheckProperty(JScrollPane JSP)
+	{
+		programPanel.add(JSP);
+		programPanel.updateUI();
+		programPanel.revalidate();
+	}
 	
 	
 
