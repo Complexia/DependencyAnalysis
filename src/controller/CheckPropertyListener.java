@@ -22,8 +22,7 @@ import model.StronglyConnectedService;
 public class CheckPropertyListener implements ActionListener
 {
 
-	JPanel programPanel = Factory.getProgramPanel();
-	JPanel dataPanel = Factory.getDataPanel();
+	
 	ArrayList<StronglyConnectedService> scsList = Factory.getScsList();
 
 	@Override
@@ -35,6 +34,8 @@ public class CheckPropertyListener implements ActionListener
 	
 	private void checkProperty()
 	{	
+		JPanel programPanel = Factory.getProgramPanel();
+		JPanel dataPanel = Factory.getDataPanel();
 		ArrayList<IOVariable> allLevel2Data= new ArrayList<IOVariable>();
 		ArrayList<IOVariable> systemInputs = new ArrayList<IOVariable>();
 		ArrayList<IOVariable> systemOutputs = new ArrayList<IOVariable>();

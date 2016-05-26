@@ -18,6 +18,7 @@ import javax.swing.UIManager;
 
 import controller.CheckElemAndGenerateL1Listener;
 import controller.CheckElementaryServicesListener;
+import controller.CheckPropertyListener;
 import controller.FindSCSandGenerateL2Listener;
 import controller.GenerateL0Listener;
 import controller.GenerateL2Listener;
@@ -96,15 +97,16 @@ public class MainWindow extends JFrame {
 		btnGenerateL2.addActionListener(new FindSCSandGenerateL2Listener());
 
 		btnCheckProperty = new JButton(BUTTON_LABEL_CHECK_PROPERTY);
+		btnCheckProperty.addActionListener(new CheckPropertyListener());
 
 		btnRemoteComputation = new JButton(BUTTON_LABEL_Remote_Computation);
 		btnRemoteComputation.addActionListener(new RemoteComHighLoadListener());
 
 		// = new JButton("Find SCS");
 
-		btnCheckProperty = new JButton("Check property");
+		//btnCheckProperty = new JButton("Check property");
 		//btnRemoteComputation = new JButton("RemoteCom HighLoad");
-		new JButton("RemoteCom HighPerf");
+		//new JButton("RemoteCom HighPerf");
 
 		// JPanel northPanel = new JPanel(new GridLayout(2, 1));
 		// buttonPanel.add(northPanel, BorderLayout.NORTH);
