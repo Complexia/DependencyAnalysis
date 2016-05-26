@@ -20,7 +20,7 @@ public class FindSCSandGenerateL2Listener implements ActionListener {
 	private ArrayList<ServiceNode> nodes;
 	private ArrayList<SimpleService> elementaryServices;
 	private List<SimpleService> lstData;
-	private ArrayList <StronglyConnectedService> scsList;
+	private ArrayList <StronglyConnectedService> scsList = Factory.getScsList();
 	private int tarjanIndex;
 	private ArrayDeque <ServiceNode> tarjanStack;
 	
@@ -95,7 +95,7 @@ public class FindSCSandGenerateL2Listener implements ActionListener {
 	
 	if(Factory.getL2Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff
 	nodes = Factory.getNodes();
-	scsList = new ArrayList<StronglyConnectedService>();
+	scsList = Factory.getScsList();//make scsList a reference to our global list
 	tarjanIndex = 0;
 	// S := empty
 	tarjanStack = new ArrayDeque<ServiceNode>();

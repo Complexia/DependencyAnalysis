@@ -105,7 +105,9 @@ public class RemoteComHighLoadListener implements ActionListener{
 		});
 		
 	}
-	private void RemoteComputationHP(ArrayList<String> AL) {
+	private void RemoteComputationHP(ArrayList<String> AL) 
+	{
+		ArrayList<StronglyConnectedService> scsList = Factory.getScsList();
 		ArrayList<StronglyConnectedService> SCS = new ArrayList<StronglyConnectedService>();
 		ArrayList<ServiceNode> SNS = new ArrayList<ServiceNode>();
 		for (StronglyConnectedService source : scsList) {

@@ -16,6 +16,7 @@ import graphic.MainWindow;
 import model.Service;
 import model.ServiceNode;
 import model.SimpleService;
+import model.StronglyConnectedService;
 import model.SystemGenerator;
 
 /**
@@ -59,6 +60,8 @@ public class Factory {
 	 * List containing all service nodes
 	 */
 	static ArrayList<ServiceNode> nodes;
+	
+	static ArrayList<StronglyConnectedService> scsList = new ArrayList<StronglyConnectedService>();
 	/**
 	 * Boolean to track whether L0 was previously generated for the current file
 	 */
@@ -269,6 +272,27 @@ public class Factory {
 		return selectedFile;
 	}
 	
+	/**
+	 * @return the scsList
+	 */
+	public static ArrayList<StronglyConnectedService> getScsList()
+	{
+		return scsList;
+	}
+
+	/**
+	 * @param scsList the scsList to set
+	 */
+	public static void setScsList(ArrayList<StronglyConnectedService> scsList)
+	{
+		Factory.scsList = scsList;
+	}
+	
+	public static void addScsList(StronglyConnectedService scs)
+	{
+		scsList.add(scs);
+	}
+
 	/**
 	 * @param mainWindow1 JFrame to set as the program GUI root pane
 	 */
