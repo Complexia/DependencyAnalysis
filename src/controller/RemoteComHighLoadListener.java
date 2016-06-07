@@ -28,9 +28,8 @@ public class RemoteComHighLoadListener implements ActionListener{
 	private Object[][] tableData;
 	private Object[] columnNames;
 	ArrayList<ArrayList<StronglyConnectedService>> RSList2 = new ArrayList<ArrayList<StronglyConnectedService>>();
-	
-
-	@Override
+	ArrayList<StronglyConnectedService> scsList;
+	ArrayList<ArrayList<StronglyConnectedService>> RSList = new ArrayList<ArrayList<StronglyConnectedService>>();
 	public void actionPerformed(ActionEvent e) {
 		
 		nodes = Factory.getNodes();
@@ -105,6 +104,11 @@ public class RemoteComHighLoadListener implements ActionListener{
 		});
 		
 	}
+	/**
+	 * performs the remote computation for high performance services.
+	 * 
+	 * @param AL a list containing the chosen high performance services
+	 */
 	private void RemoteComputationHP(ArrayList<String> AL) 
 	{
 		ArrayList<StronglyConnectedService> scsList = Factory.getScsList();
@@ -140,6 +144,11 @@ public class RemoteComHighLoadListener implements ActionListener{
 		}
 		Factory.displayResult(tableData, columnNames);
 	}
+	/**
+	 * @param SCS Strongly connected service index
+	 * @return the Remote service
+	 */
+	//i have no idea what find RS by string means, this function doesn't even use strings
 	public int FindRSbyString(int SCS) {
 		int j = 0;
 		for (ArrayList<StronglyConnectedService> SCSList : RSList) {
@@ -164,7 +173,14 @@ public class RemoteComHighLoadListener implements ActionListener{
 		}
 		return k;
 	}
+	/**
+	 * looks for a link between two services in the Strongly Connected Service by the link Data
+	 * @param SCS the Strongly Connected Service to be checked
+	 * @param Data the service we are checking for
+	 * @return whether the search found a link
+	 */
 	public boolean CheckInternal(StronglyConnectedService SCS, String Data) {
+		//the way this is functioning i think we need to make it so it looks at the services themselves not the IOs connecting them
 		ArrayList<ServiceNode> SCSN = new ArrayList<ServiceNode>();
 		SCSN = SCS.getServiceNodes();
 		for (int i = 0; i < SCSN.size(); i++) {
@@ -179,7 +195,11 @@ public class RemoteComHighLoadListener implements ActionListener{
 		}
 		return false;
 	}
-	ArrayList<StronglyConnectedService> scsList;
+	
+	/**
+	 * @param ALElementary the service used to find the appropriate SCSs
+	 * @return a list of high load output SCSs
+	 */
 	public ArrayList<StronglyConnectedService> getL2HLO(String ALElementary) {
 		ArrayList<StronglyConnectedService> ALOut = new ArrayList<StronglyConnectedService>();
 		for (StronglyConnectedService scs : scsList) {
@@ -248,7 +268,7 @@ public class RemoteComHighLoadListener implements ActionListener{
 		// return OutputMerge2;
 	}
 	
-	ArrayList<ArrayList<StronglyConnectedService>> RSList = new ArrayList<ArrayList<StronglyConnectedService>>();
+	
 	private void RemoteComputation(ArrayList<String> AL) {
 		ArrayList<StronglyConnectedService> TotalOringinal = new ArrayList<StronglyConnectedService>();
 		
