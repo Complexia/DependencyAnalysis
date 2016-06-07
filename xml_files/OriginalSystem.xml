@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<company>
-	<service serviceName="A1">
+<root>
+	<service>
 		<service_name>A1</service_name>
 		<input_service>data1</input_service> 		  
 		<output_service>data2,data10</output_service>
@@ -9,7 +9,7 @@
 		<output_variable>data10</output_variable>
 	</service>
 
-	<service serviceName="A2">
+	<service>
 		<service_name>A2</service_name>
 		<input_service>data2,data3</input_service>
 		<output_service>data4,data5,data11,data12</output_service>
@@ -18,7 +18,7 @@
 		<output_variable>data4,data12</output_variable>
 	</service>
 
-	<service serviceName="A3">
+	<service>
 		<service_name>A3</service_name>
 		<input_service>data4,data5</input_service>
 		<output_service>data6,data7</output_service>
@@ -27,7 +27,7 @@
 		<output_variable></output_variable>
 	</service>
 
-	<service serviceName="A4">
+	<service>
 		<service_name>A4</service_name>
 		<input_service>data6,data7</input_service>
 		<output_service>data3,data8</output_service>
@@ -36,7 +36,7 @@
 		<output_variable>data3</output_variable>
 	</service>
 
-	<service serviceName="A5">
+	<service>
 		<service_name>A5</service_name>
 		<input_service>data8</input_service>
 		<output_service>data9</output_service>
@@ -128,4 +128,4 @@
 			<outputs>data8</outputs>
 		</IOVariable>
 	</IO_variables>
-</company>
+</root>
