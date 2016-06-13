@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 
 import factory.Factory;
 import model.ServiceNode;
+import model.SimpleService;
 import model.StronglyConnectedService;
 
 
@@ -111,37 +112,53 @@ public class RemoteComHighLoadListener implements ActionListener{
 	 */
 	private void RemoteComputationHP(ArrayList<String> AL) 
 	{
-		ArrayList<StronglyConnectedService> scsList = Factory.getScsList();
-		ArrayList<StronglyConnectedService> SCS = new ArrayList<StronglyConnectedService>();
-		ArrayList<ServiceNode> SNS = new ArrayList<ServiceNode>();
-		for (StronglyConnectedService source : scsList) {
-			SNS = source.getServiceNodes();
-			for (ServiceNode SN : SNS) {
-				for (String Ser : AL) {
-					if (SN.getName().equals(Ser)) {
-						SCS.add(source);
-					}
-				}
+//		ArrayList<StronglyConnectedService> scsList = Factory.getScsList();
+//		ArrayList<StronglyConnectedService> SCS = new ArrayList<StronglyConnectedService>();
+//		ArrayList<ServiceNode> SNS = new ArrayList<ServiceNode>();
+//		for (StronglyConnectedService source : scsList) {
+//			SNS = source.getServiceNodes();
+//			for (ServiceNode SN : SNS) {
+//				for (String Ser : AL) {
+//					if (SN.getName().equals(Ser)) {
+//						SCS.add(source);
+//					}
+//				}
+//			}
+//		}
+//		for (StronglyConnectedService source2 : SCS) {
+//			for (ArrayList<StronglyConnectedService> Al : RSList) {
+//				if (Al.contains(source2)) {
+//					RSList2.add(Al);
+//				}
+//			}
+//		}
+//		columnNames = new Object[] { "The name of HighPerf Component ", "StronglyConnectedService(L2)",
+//				"RemoteComp(L3)" };
+//		tableData = new Object[Factory.getLstData().size()][columnNames.length];
+//		int index, rowIndex = 0;
+//		for (String HPC : AL) {
+//			index = 0;
+//			tableData[rowIndex][index++] = HPC;
+//			tableData[rowIndex][index++] = "S" + FindSCSbyString(HPC);
+//			tableData[rowIndex][index++] = "RS" + (FindRSbyString(FindSCSbyString(HPC)) + 1);
+//			rowIndex++;
+//		}
+		
+		/* experimental build starts here
+		 * ----------------------------------------------------------------------------
+		 */
+		ArrayList<SimpleService> services = Factory.getElementaryServices();
+		ArrayList<SimpleService> chosenHighPerfTargets = new ArrayList<SimpleService>(AL.size());//define new array big enough to hold the services
+																								 //chosen to be high performance
+		for(String serv : AL)
+		{
+			for(SimpleService Eserv : services)
+			{
+				if(Eserv.getName() == serv) chosenHighPerfTargets.add(Eserv);//look for elementary services that match the names in AL, errors will occur if services don't have unique names
 			}
+			
 		}
-		for (StronglyConnectedService source2 : SCS) {
-			for (ArrayList<StronglyConnectedService> Al : RSList) {
-				if (Al.contains(source2)) {
-					RSList2.add(Al);
-				}
-			}
-		}
-		columnNames = new Object[] { "The name of HighPerf Component ", "StronglyConnectedService(L2)",
-				"RemoteComp(L3)" };
-		tableData = new Object[Factory.getLstData().size()][columnNames.length];
-		int index, rowIndex = 0;
-		for (String HPC : AL) {
-			index = 0;
-			tableData[rowIndex][index++] = HPC;
-			tableData[rowIndex][index++] = "S" + FindSCSbyString(HPC);
-			tableData[rowIndex][index++] = "RS" + (FindRSbyString(FindSCSbyString(HPC)) + 1);
-			rowIndex++;
-		}
+		//TODO: do more stuff to make remcom work right _b
 		Factory.displayResult(tableData, columnNames);
 	}
 	/**
