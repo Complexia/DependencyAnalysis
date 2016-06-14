@@ -21,7 +21,6 @@ public class GenerateL2Listener implements ActionListener{
 	private Object[][] tableData;
 	private Object[] columnNames;
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		if(Factory.getL2Generated()){ Factory.displayResult(tableData, columnNames); return;}//if it was done already, just reshow the old stuff

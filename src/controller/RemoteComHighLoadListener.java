@@ -6,11 +6,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 
 import factory.Factory;
+import model.IOVariable;
 import model.ServiceNode;
 import model.SimpleService;
 import model.StronglyConnectedService;
@@ -23,9 +25,9 @@ public class RemoteComHighLoadListener implements ActionListener{
 	private  boolean Flag = true;
 	private ArrayList<JCheckBox> programCheckBoxes = new ArrayList<JCheckBox>();
 	private ArrayList<JCheckBox> programCheckBoxes2 = new ArrayList<JCheckBox>();
-	private ArrayList<ServiceNode> nodes;
+	private HashMap<String,IOVariable> channels;
 	public ArrayList<String> DataStore = new ArrayList<String>();
-	public ArrayList<String> DataStore2 = new ArrayList<String>();
+	public ArrayList<IOVariable> DataStore2 = new ArrayList<IOVariable>();
 	private Object[][] tableData;
 	private Object[] columnNames;
 	ArrayList<ArrayList<StronglyConnectedService>> RSList2 = new ArrayList<ArrayList<StronglyConnectedService>>();
@@ -33,7 +35,8 @@ public class RemoteComHighLoadListener implements ActionListener{
 	ArrayList<ArrayList<StronglyConnectedService>> RSList = new ArrayList<ArrayList<StronglyConnectedService>>();
 	public void actionPerformed(ActionEvent e) {
 		
-		nodes = Factory.getNodes();
+		channels = Factory.getIOVariables();//TODO: make iovar store in factory, also factory is a misnomer
+		//it's not actually a factory, just a bank of data in singleton form.
 		
 		final JFrame f = new JFrame("Select the data");// Create frame
 		
@@ -60,8 +63,8 @@ public class RemoteComHighLoadListener implements ActionListener{
 				final Frame f2 = new Frame("Select the Service");
 				f2.setBounds(300, 100, 600, 500);
 				f2.setLayout(new GridLayout(20, 1));
-				for (int i = 0; i < nodes.size(); i++) {
-					JCheckBox CB = new JCheckBox(nodes.get(i).getService().getName());
+				for (int i = 0; i < channels.size(); i++) {
+					JCheckBox CB = new JCheckBox(channels.get(i).getName());
 					programCheckBoxes2.add(CB);
 				}
 				for (JCheckBox ok : programCheckBoxes2) {
@@ -75,7 +78,7 @@ public class RemoteComHighLoadListener implements ActionListener{
 						for (JCheckBox CB : programCheckBoxes2) {
 							boolean selected = CB.isSelected();
 							if (selected) {
-								DataStore2.add(CB.getText());
+								DataStore2.add(channels.get(CB.getText()));
 							}
 							f2.setVisible(false);
 							f.setVisible(false);
@@ -110,7 +113,7 @@ public class RemoteComHighLoadListener implements ActionListener{
 	 * 
 	 * @param AL a list containing the chosen high performance services
 	 */
-	private void RemoteComputationHP(ArrayList<String> AL) 
+	private void RemoteComputationHP(ArrayList<IOVariable> AL) 
 	{
 //		ArrayList<StronglyConnectedService> scsList = Factory.getScsList();
 //		ArrayList<StronglyConnectedService> SCS = new ArrayList<StronglyConnectedService>();
@@ -147,19 +150,26 @@ public class RemoteComHighLoadListener implements ActionListener{
 		/* experimental build starts here
 		 * ----------------------------------------------------------------------------
 		 */
-		ArrayList<SimpleService> services = Factory.getElementaryServices();
-		ArrayList<SimpleService> chosenHighPerfTargets = new ArrayList<SimpleService>(AL.size());//define new array big enough to hold the services
-																								 //chosen to be high performance
-		for(String serv : AL)
-		{
-			for(SimpleService Eserv : services)
-			{
-				if(Eserv.getName() == serv) chosenHighPerfTargets.add(Eserv);//look for elementary services that match the names in AL, errors will occur if services don't have unique names
-			}
-			
-		}
+		//this is fundamentally wrong, we don't need to define the sevices but the data channels and work with that
+		//we simply need to make new groups based on what channels were chosen by connecting all their outputs into single groups
+		//that's it, it's actually pretty basic.
+		ArrayList<SimpleService> services = Factory.getElementaryServices();//might not be needed
+		//TODO:get rid of this after the solution is finished if it hasn't been used
+		ArrayList<IOVariable> chosenHighPerfTargets = new ArrayList<IOVariable>(AL.size());//define new array big enough to hold the services
+																						   //chosen to be high performance
+		//TODO: remove this comment later. quick Q? why am i doing this here instead of just passing the list of already associated objects? Answer: cause i'm an idiot who followed the legacy design -_-
+		
+		/*start at an initial service then recurse over connections staring with outputs then moving onto inputs, keep a list of visited nodes
+		 * travelled edges adding any services not yet encountered to the current group. single services are their own group.
+		 * if channel/IOVariable has an external source then pretend there is a stand in service and use the channels output list for the recursion
+		 * it's a bit of a weird solution but it seems the cleanest way of dealing with the case
+		 */
+		
+		
+		
 		//TODO: do more stuff to make remcom work right _b
 		Factory.displayResult(tableData, columnNames);
+		//TODO: remove the gazillion todos i seem to love so much
 	}
 	/**
 	 * @param SCS Strongly connected service index
