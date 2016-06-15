@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 import exceptions.InvalidIOVariableReferenceException;
 import exceptions.ServiceException;
 import exceptions.ServiceIOException;
+import factory.Factory;
 
 /**
  * Used to read through input files, extracting all relevant information into
@@ -247,64 +248,11 @@ public class UploadFile {
 
 					variablesMap.put(tmpSrvce.getName(), tmpSrvce);
 
-					// experimental build ends
-					// here-----------------------------------------------------------------------------------
-
-					/*
-					 * { System.out.println("Name of Service : " +
-					 * eElement.getElementsByTagName("service_name").item(0).
-					 * getTextContent());
-					 * 
-					 * variablesMap.put("service_name",
-					 * eElement.getElementsByTagName("service_name").item(0).
-					 * getTextContent());
-					 * 
-					 * System.out.println("Input Service : " +
-					 * eElement.getElementsByTagName("input_service").item(0).
-					 * getTextContent());
-					 * 
-					 * variablesMap.put("input_service",
-					 * eElement.getElementsByTagName("input_service").item(0).
-					 * getTextContent());
-					 * 
-					 * System.out.println("Output Service : " +
-					 * eElement.getElementsByTagName("output_service").item(0).
-					 * getTextContent());
-					 * 
-					 * variablesMap.put("outputService",
-					 * eElement.getElementsByTagName("output_service").item(0).
-					 * getTextContent());
-					 * 
-					 * System.out.println("Name of Variable : " +
-					 * eElement.getElementsByTagName("nameofvariable").item(0).
-					 * getTextContent());
-					 * 
-					 * variablesMap.put("nameOfVariable",
-					 * eElement.getElementsByTagName("nameofvariable").item(0).
-					 * getTextContent());
-					 * 
-					 * System.out.println("Input Variable : " +
-					 * eElement.getElementsByTagName("input_variable").item(0).
-					 * getTextContent());
-					 * 
-					 * variablesMap.put("inputVariable",
-					 * eElement.getElementsByTagName("input_variable").item(0).
-					 * getTextContent());
-					 * 
-					 * System.out.println("Output Variable : " +
-					 * eElement.getElementsByTagName("output_variable").item(0).
-					 * getTextContent());
-					 * 
-					 * variablesMap.put("outputVariable",
-					 * eElement.getElementsByTagName("output_variable").item(0).
-					 * getTextContent()); }
-					 */
+					
 
 					hashMaps.add(variablesMap);
 
-					// System.out.println("KJJSNNNJSJJ" +
-					// UploadFile.getHashMaps().get(0).get("service_name"));
-
+					
 				}
 
 			}
@@ -401,6 +349,7 @@ public class UploadFile {
 				}
 			}
 		}
+		Factory.setIOVariables(IOHash);
 		return IOHash;
 
 	}

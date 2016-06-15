@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 
 import graphic.MainWindow;
+import model.IOVariable;
 import model.Service;
 import model.ServiceNode;
 import model.SimpleService;
@@ -60,6 +62,11 @@ public class Factory {
 	 * List containing all service nodes
 	 */
 	static ArrayList<ServiceNode> nodes;
+	
+	/**
+	 * list containing all IO variables
+	 */
+	static HashMap<String, IOVariable> IOVariableList;
 	
 	static ArrayList<StronglyConnectedService> scsList = new ArrayList<StronglyConnectedService>();
 	/**
@@ -363,6 +370,20 @@ public class Factory {
 		programPanel.add(JSP);
 		programPanel.updateUI();
 		programPanel.revalidate();
+	}
+
+	/**
+	 * @return the iOVariableList
+	 */
+	public static HashMap<String, IOVariable> getIOVariables() {
+		return IOVariableList;
+	}
+
+	/**
+	 * @param iOVariableList the iOVariableList to set
+	 */
+	public static void setIOVariables(HashMap<String, IOVariable> iOVariableList) {
+		IOVariableList = iOVariableList;
 	}
 	
 	

@@ -35,8 +35,7 @@ public class RemoteComHighLoadListener implements ActionListener{
 	ArrayList<ArrayList<StronglyConnectedService>> RSList = new ArrayList<ArrayList<StronglyConnectedService>>();
 	public void actionPerformed(ActionEvent e) {
 		
-		channels = Factory.getIOVariables();//TODO: make iovar store in factory, also factory is a misnomer
-		//it's not actually a factory, just a bank of data in singleton form.
+		channels = Factory.getIOVariables();
 		
 		final JFrame f = new JFrame("Select the data");// Create frame
 		
