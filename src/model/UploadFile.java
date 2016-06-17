@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -151,7 +152,7 @@ public class UploadFile {
 
 		catch (ServiceException e) {// TODO make the exception message more user
 									// friendly, possibly a popup or something
-			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(Factory.getProgramPanel(), e.getMessage(), "general service input error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 
@@ -259,15 +260,15 @@ public class UploadFile {
 
 			doc1 = doc;
 		} catch (ParserConfigurationException PCEx) {
-			System.out.println(PCEx.toString());
+			JOptionPane.showMessageDialog(Factory.getProgramPanel(), PCEx.getMessage(), "document parser error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		catch (IOException IO) {
-			System.out.println(IO.toString());
+			JOptionPane.showMessageDialog(Factory.getProgramPanel(), IO.getMessage(), "Input/output error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		catch (SAXException SAX) {
-			System.out.println(SAX.toString());
+			JOptionPane.showMessageDialog(Factory.getProgramPanel(), SAX.getMessage(), "Xml error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

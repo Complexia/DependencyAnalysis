@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import factory.Factory;
 
@@ -63,8 +64,8 @@ public class SystemGenerator
 
 			catch (Exception e1)// catch any of the general exceptions
 			{
-				System.out.println(e1.getMessage());
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(Factory.getProgramPanel(), e1.getMessage(), "Unknown error", JOptionPane.ERROR_MESSAGE);
+				//e1.printStackTrace(); uncomment for debugging purposes
 			}
 		    
 		}
